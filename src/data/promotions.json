@@ -1,0 +1,83 @@
+[
+{
+    "msg": "{{manager}} can get you a slot in the local Battle of the Bands",
+    "action": "Will you do it?",
+    "promotion": "battle",
+    "consequence": "promotion",
+    "schedule":
+    {
+        "title": "Battle of the Bands"
+    },
+    "questions": [
+    {
+        "text": "Preform which song?",
+        "action": "addSongs",
+        "options": [
+            "New untested material",
+            "Improvise"
+        ]
+    },
+    {
+        "text": "Adress which issues before the song?",
+        "action": "",
+        "options": [
+            "Politics",
+            "War",
+            "Love",
+            "Pain",
+            "Beauty",
+            "Nothing"
+        ]
+    },
+    {
+        "text": "Stage dive?",
+        "action": "",
+        "options": [
+            "Yes",
+            "No"
+        ]
+    },
+    {
+        "text": "Bow?",
+        "action": "",
+        "options": [
+            "Yes",
+            "No"
+        ]
+    }]
+},
+{
+    "msg": "{{manager}} can book you an interview on the local radio 'RGXY'",
+    "action": "Will you do it?",
+    "promotion": "interview",
+    "consequence": "promotion",
+    "schedule":
+    {
+        "title": "Radio interview"
+    },
+    "questions": [
+    {
+        "text": "What does your band name mean?",
+        "action": "",
+        "options": [
+            "That's a secret!",
+            "Nothing really, just sounded funny",
+            "It means the essence of life, the universe adn everything for me and my mates",
+            "Society man... I mean you pick some name for a group and all of a sudden you have to be catagirized and put in little boxes and...."
+        ]
+    },
+    {
+        "text": "Who is your biggest influence?",
+        "action": "addBands",
+        "options": [
+            "Nobody"
+        ]
+    },
+    {
+        "text": "Who do you sound like?",
+        "action": "addBands",
+        "options": [
+            "Nobody"
+        ]
+    }]
+}]

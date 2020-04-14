@@ -1,0 +1,22 @@
+<div class="modal event-dialogue">
+	<div class="modal-inner">
+		<h2 class="modal-header">{{schedule.title}}</h2>
+		<div class="modal-content">
+			<div class="modal-questions">
+				{{#each questions}}
+					<div class="modal-question" data-step="{{@index}}">
+						<span>{{text}}</span>
+						<div class="modal-options">
+							<select class="modal-select">
+								<option value="" selected disabled>Please select</option>
+								{{#each options}}
+									<option value="{{this}}">{{this}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</div>

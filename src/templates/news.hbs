@@ -1,0 +1,18 @@
+<div class="newspaper">
+	<div class="head">
+		<h1>Daily Rockstr Gazette</h1>
+		<small>{{formatDate date}}</small>
+	</div>
+	<div class="body">
+		<div class="articles">
+			{{#each nyt}}
+				<div class="article">
+					<h3>{{replaceNews headline.main}} <small>{{replaceNews byline.original}}</small></h3>
+					<p>{{replaceNews lead_paragraph}}</p>
+				</div>
+			{{/each}}
+		</div>
+	</div>
+</div>
+
+

@@ -1,0 +1,8 @@
+.modal-questions{
+	.modal-question{
+		display: none;
+		&.active{
+			display: block;
+		}
+	}
+}

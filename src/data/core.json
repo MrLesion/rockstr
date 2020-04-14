@@ -1,0 +1,275 @@
+{
+    "charts": {
+        "updateRate": 5
+    },
+    "costs":
+    {
+        "daily": 2,
+        "doctor": 20,
+        "shrink": 50,
+        "rehab":{
+            "daily": 5,
+            "total": 75
+        },
+        "holiday":
+        {
+            "duration":
+            {
+                "long": 150,
+                "medium": 75,
+                "short": 35
+            },
+            "place":
+            {
+                "expensive": 250,
+                "moderate": 120,
+                "cheap": 60
+            }
+        }
+    },
+    "addictLevels":
+    {
+        "low": "Experimentation",
+        "medium": "Risky usages",
+        "high": "Addict"
+    },
+    "record":{
+        "cost": 0,
+        "studios":{
+            "Headless Garage":{
+                "quality": 1,
+                "cost": 15
+            },
+            "MiCity":{
+                "quality": 2,
+                "cost": 30
+            },
+            "Moon Records":{
+                "quality": 3,
+                "cost": 45
+            },
+            "Crappy Road Studios":{
+                "quality": 4,
+                "cost": 65
+            }
+        }
+    },
+    "tour":
+    {
+        "cost": 0,
+        "geo":
+        {
+            "local":
+            {
+                "cost": 15,
+                "label": "Local gigs",
+                "value": "local"
+            },
+            "national":
+            {
+                "cost": 60,
+                "label": "National tour",
+                "value": "national"
+            },
+            "international":
+            {
+                "cost": 180,
+                "label": "International tour",
+                "value": "international"
+            },
+            "world":
+            {
+                "cost": 250,
+                "label": "World tour",
+                "value": "world"
+            }
+        },
+        "venue":
+        {
+            "tiny":
+            {
+                "cost": 3,
+                "label": "Pubs/clubs",
+                "value": "tiny"
+            },
+            "small":
+            {
+                "cost": 7,
+                "label": "Small venues",
+                "value": "small"
+            },
+            "large":
+            {
+                "cost": 15,
+                "label": "Large venues",
+                "value": "large"
+            },
+            "stadium":
+            {
+                "cost": 30,
+                "label": "Stadiums",
+                "value": "stadium"
+            }
+        },
+        "time":
+        {
+            "1":
+            {
+                "cost": 5,
+                "label": "1 week",
+                "value": 1
+            },
+            "2":
+            {
+                "cost": 10,
+                "label": "2 weeks",
+                "value": 2
+            },
+            "3":
+            {
+                "cost": 15,
+                "label": "3 weeks",
+                "value": 3
+            },
+            "4":
+            {
+                "cost": 20,
+                "label": "4 weeks",
+                "value": 4
+            }
+        }
+    },
+    "promotions":
+    {
+        "battle":
+        {
+            "modifier": 3,
+            "duration": 3,
+            "update":
+            {
+                "fame":
+                {
+                    "value": 10
+                },
+                "health":
+                {
+                    "value": -2
+                }
+            }
+        }
+    },
+    "addictions":
+    {
+        "lsd":
+        {
+            "modifier": 3,
+            "update":
+            {
+                "health":
+                {
+                    "value": -4
+                },
+                "creativity":
+                {
+                    "value": 10
+                },
+                "mentality":
+                {
+                    "value": -6
+                },
+                "happiness":
+                {
+                    "value": 7
+                }
+            }
+        },
+        "alcohol":
+        {
+            "modifier": 1,
+            "update":
+            {
+                "health":
+                {
+                    "value": -2
+                },
+                "creativity":
+                {
+                    "value": 2
+                },
+                "mentality":
+                {
+                    "value": -2
+                },
+                "happiness":
+                {
+                    "value": 1
+                }
+            }
+        },
+        "marijuana":
+        {
+            "modifier": 2,
+            "update":
+            {
+                "health":
+                {
+                    "value": -2
+                },
+                "creativity":
+                {
+                    "value": 6
+                },
+                "mentality":
+                {
+                    "value": -1
+                },
+                "happiness":
+                {
+                    "value": 4
+                }
+            }
+        },
+        "cocaine":
+        {
+            "modifier": 4,
+            "update":
+            {
+                "health":
+                {
+                    "value": 2
+                },
+                "creativity":
+                {
+                    "value": -2
+                },
+                "mentality":
+                {
+                    "value": -4
+                }
+            }
+        },
+        "heroin":
+        {
+            "modifier": 5,
+            "update":
+            {
+                "health":
+                {
+                    "value": -13
+                },
+                "creativity":
+                {
+                    "value": 12
+                },
+                "mentality":
+                {
+                    "value": -10
+                },
+                "happiness":
+                {
+                    "value": 8
+                }
+            }
+        }
+    }
+}

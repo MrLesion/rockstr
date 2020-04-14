@@ -1,0 +1,27 @@
+{{#each this}}
+	{{#if key}}
+		<p><small class="text-muted">{{date}}</small><br />{{getText key replaceObj}}</p>
+	{{/if}}
+	{{#if event}}
+		<p>
+			<small class="text-muted">{{date}}</small>
+			<br />
+			{{replacePerson event.msg}}
+			<br />
+			<small>
+				{{#each event.update}}
+					{{@key}}({{this.value}})
+				{{/each}}
+			</small>
+			{{#if event.action}}
+			  {{#compare @index '===' 0}}
+					<strong class="feed-event-action">
+						{{event.action}}
+						<button class="btn feed-event-action-yes" type="button">Yeah</button>
+						<button class="btn feed-event-action-no" type="button">Nah</button>
+					</strong>
+				{{/compare}}
+			{{/if}}
+		</p>
+	{{/if}}
+{{/each}}

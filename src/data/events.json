@@ -1,0 +1,292 @@
+{
+  "hospital":
+  {
+    "msg": "Your are rushed to the hospital",
+    "duration": 14,
+    "update":
+    {
+      "health":
+      {
+        "value": 40,
+        "icon": "heartbeat"
+      },
+      "creativity":
+      {
+        "value": -10,
+        "icon": "fire"
+      },
+      "mentality":
+      {
+        "value": -5,
+        "icon": "puzzle-piece"
+      },
+      "happiness":
+      {
+        "value": -5,
+        "icon": "smile-o"
+      }
+    }
+  },
+  "doctor":
+  {
+    "msg": "You should really stop smoking... and try to eat an apple a day - okay... Here takes these meds, they might do you some good.",
+    "duration": 2,
+    "update":
+    {
+      "health":
+      {
+        "value": 30
+      },
+      "happiness":
+      {
+        "value": -5
+      },
+      "money":
+      {
+        "value": -20
+      }
+    }
+  },
+  "loan":
+  {
+    "msg": "Your manager sets up a loan for you. You get 200 - and you need to repay them within a year.",
+    "duration": 1,
+    "update":
+    {
+      "money":
+      {
+        "value": 200,
+        "icon": "money"
+      }
+    }
+  },
+  "shrink":
+  {
+    "msg": "A trip to your shrink eases the demons in your head.. and your wallet a bit",
+    "duration": 3,
+    "update":
+    {
+      "mentality":
+      {
+        "value": 30,
+        "icon": "puzzle-piece"
+      },
+      "happiness":
+      {
+        "value": 10,
+        "icon": "smile-o"
+      },
+      "money":
+      {
+        "value": -50,
+        "icon": "money"
+      }
+    }
+  },
+  "busk": [
+  {
+    "msg": "You setup down the street and play some old crooner songs.",
+    "duration": 1,
+    "update":
+    {
+      "happiness":
+      {
+        "value": 2
+      },
+      "creativity":
+      {
+        "value": -1
+      },
+      "money":
+      {
+        "value": 5,
+        "add": false
+      },
+      "fame":
+      {
+        "value": 1
+      },
+      "skill":
+      {
+        "value": 1
+      }
+    }
+  },
+  {
+    "msg": "You find a good spot in the park and play some of your new material.",
+    "duration": 1,
+    "update":
+    {
+      "happiness":
+      {
+        "value": 4
+      },
+      "mentality":
+      {
+        "value": 5
+      },
+      "creativity":
+      {
+        "value": 6
+      },
+      "money":
+      {
+        "value": 11
+      },
+      "fame":
+      {
+        "value": 2
+      },
+      "skill":
+      {
+        "value": 1
+      }
+    }
+  },
+  {
+    "msg": "You play a few blues covers down on the corner..",
+    "duration": 1,
+    "update":
+    {
+      "happiness":
+      {
+        "value": -3
+      },
+      "mentality":
+      {
+        "value": -3
+      },
+      "creativity":
+      {
+        "value": 1
+      },
+      "money":
+      {
+        "value": 1
+      }
+    }
+  },
+  {
+    "msg": "You setup on campus and get great responds",
+    "duration": 1,
+    "update":
+    {
+      "happiness":
+      {
+        "value": 2
+      },
+      "mentality":
+      {
+        "value": 1
+      },
+      "creativity":
+      {
+        "value": 2
+      },
+      "money":
+      {
+        "value": 2
+      },
+      "fame":
+      {
+        "value": 6
+      }
+    }
+  },
+  {
+    "msg": "You get mugged while playing a set in the park!",
+    "duration": 3,
+    "update":
+    {
+      "happiness":
+      {
+        "value": -10
+      },
+      "health":
+      {
+        "value": -10
+      },
+      "mentality":
+      {
+        "value": -10
+      },
+      "money":
+      {
+        "value": -50
+      },
+      "skill":
+      {
+        "value": -3
+      }
+    }
+  },
+  {
+    "msg": "You go downtown and jam in front of City Hall",
+    "duration": 3,
+    "update":
+    {
+      "happiness":
+      {
+        "value": 2
+      },
+      "health":
+      {
+        "value": -1
+      },
+      "money":
+      {
+        "value": 3
+      },
+      "fame":
+      {
+        "value": 2
+      }
+    }
+  },
+{
+    "msg": "You get arrested for begging and thrown in jail for a couple of days",
+    "duration": 4,
+    "update":
+    {
+      "happiness":
+      {
+        "value": -10
+      },
+      "health":
+      {
+        "value": -4
+      },
+      "money":
+      {
+        "value": -15
+      },
+      "fame":
+      {
+        "value": -5
+      }
+    }
+  },
+{
+    "msg": "While playing some new material in the park, a drunken business man tosses a wad of cash in your guitar case",
+    "duration": 4,
+    "update":
+    {
+      "happiness":
+      {
+        "value": 15
+      },
+      "health":
+      {
+        "value": -1
+      },
+      "money":
+      {
+        "value": 100
+      },
+      "fame":
+      {
+        "value": 1
+      }
+    }
+  }]
+}

@@ -1,0 +1,89 @@
+#charts table {
+    border-spacing: 0;
+    width: 100%;
+    font-size: .85em;
+
+    tr {
+        th {
+            text-align: left;
+            border-bottom: 2px solid;
+            padding: 3px 5px;
+
+            &:first-child {
+                text-align: center;
+            }
+        }
+
+        td {
+            text-transform: capitalize;
+            padding: 2px 5px;
+
+            &:first-child {
+                text-align: center;
+
+                &.down {
+                    &::before {
+                        content: '\21E3'
+                    }
+                }
+
+                &.up {
+                    &::before {
+                        content: '\21E1'
+                    }
+                }
+
+                &.stay {
+                    &::before {
+                        content: '\21E2';
+                    }
+                }
+            }
+
+            &:last-child {
+                font-weight: normal;
+            }
+        }
+
+        &:nth-child(odd) {
+            td {
+                background-color: darken($light, 10%);
+            }
+        }
+    }
+}
+
+.chart-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #999;
+    color: #fff;
+}
+
+.chart-icon-new {
+    &::after {
+        content: '☆';
+    }
+}
+
+.chart-icon-week-at-one {
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #999;
+    color: #fff;
+
+    @for $i from 1 through 10 {
+        &.weeksAsOne-count-#{$i} {
+            &::after {
+                content:'#{$i}';
+            }
+        }
+    }
+}

@@ -1,0 +1,80 @@
+<div class="progress-bar">
+    <span class="progress-ticks {{#getProgressAchievement protagonist.fame 0}}achieved{{/getProgressAchievement}}" style="left:0%;"></span>
+    <span class="progress-ticks {{#getProgressAchievement protagonist.fame 25}}achieved{{/getProgressAchievement}}" style="left:25%;"></span>
+    <span class="progress-ticks {{#getProgressAchievement protagonist.fame 50}}achieved{{/getProgressAchievement}}" style="left:50%;"></span>
+    <span class="progress-ticks {{#getProgressAchievement protagonist.fame 75}}achieved{{/getProgressAchievement}}" style="left:75%;"></span>
+    <span class="progress-ticks {{#getProgressAchievement protagonist.fame 100}}achieved{{/getProgressAchievement}}" style="left:100%;"></span>
+    <span class="fame-progress" style="width:{{getProgress protagonist.fame 'fame'}}%"></span>
+</div>
+<div class="container p-0">
+    
+    <div class="top-bar">
+        <div class="top-bar-item">
+            <span>{{protagonist.name}}</span> (<span>{{protagonist.activity}}</span>)
+        </div>
+        <div class="flex-right">
+            <div class="top-bar-item {{#compare protagonist.money '<' 1}}danger-color{{/compare}}">
+                Money: £{{protagonist.money}}
+            </div>
+            <div class="top-bar-item">
+                {{formatDate time.date}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container p-0 small">
+    <div class="top-bar">
+        {{#if npc}}
+         <div class="top-bar-item">
+            <div class="dropdown">
+              <button class="dropbtn">Known associates</button>
+              <div class="dropdown-content">
+                {{#each npc}}
+                    <span>{{name}} ({{job}})</span>
+                {{/each}}
+              </div>
+            </div>
+        </div>
+        {{/if}}
+         {{#if addictions}}
+         <div class="top-bar-item">
+            <div class="dropdown">
+              <button class="dropbtn">Drug use</button>
+              <div class="dropdown-content">
+                {{#each addictions}}
+                    <span class="capitalize">{{@key}} ({{addictionText}})</span>
+                {{/each}}
+              </div>
+            </div>
+        </div>
+        {{/if}}
+        <div class="flex-right">
+            <div class="top-bar-item stats-bar-item">
+                Health
+                <div class="progress-bar small-bar">
+                    <span class="stats-progress {{#compare protagonist.health '<' 10}}danger{{/compare}}" style="width:{{getProgress protagonist.health}}%"></span>
+                </div>
+            </div>
+            <div class="top-bar-item stats-bar-item">
+                Creativity
+                 <div class="progress-bar small-bar">
+                    <span class="stats-progress {{#compare protagonist.creativity '<' 10}}danger{{/compare}}" style="width:{{getProgress protagonist.creativity}}%"></span>
+                </div>
+            </div>
+            <div class="top-bar-item stats-bar-item">
+                
+                Mentality
+                <div class="progress-bar small-bar">
+                    <span class="stats-progress {{#compare protagonist.mentality '<' 10}}danger{{/compare}}" style="width:{{getProgress protagonist.mentality}}%"></span>
+                </div>
+            </div>
+            <div class="top-bar-item stats-bar-item">
+                
+                Happiness
+                <div class="progress-bar small-bar">
+                    <span class="stats-progress {{#compare protagonist.happiness '<' 10}}danger{{/compare}}" style="width:{{getProgress protagonist.happiness}}%"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

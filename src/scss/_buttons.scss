@@ -1,0 +1,54 @@
+.btn {
+    background: $primary;
+    color: $light;
+    border-radius: 3px;
+    padding: 3px 7px;
+    border: 0;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+
+    .dropbtn {
+        background-color: transparent;
+        color: $light;
+        border: none;
+        cursor: pointer;
+
+        &::after {
+            content: '∨';
+            font-size: .75em;
+            margin-left: 5px;
+        }
+
+        &:focus {
+            outline: none;
+
+            +.dropdown-content {
+                display: block;
+            }
+        }
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: $light;
+        color: $dark;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba($dark, .2);
+        z-index: 1;
+        left: 5px;
+
+        span {
+            display: block;
+            padding: 5px;
+        }
+    }
+}

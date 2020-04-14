@@ -1,0 +1,49 @@
+@keyframes load2 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse-danger {
+  0% {
+    background-color: $danger;
+  }
+  50% {
+    background-color: $tertiary;
+  }
+  100% {
+    background-color: $danger;
+  }
+}
+
+[data-hidden="true"], .d-none {
+    display: none !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.d-block{
+    display: block;
+}
+
+.text-muted {
+    color: #999;
+}
+.text-center{
+    text-align: center;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+
+.danger-color {
+    color: $danger;
+}

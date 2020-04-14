@@ -1,0 +1,308 @@
+[
+{
+    "msg": "You find a lost pick in your pocket..",
+    "duration": 1,
+    "update":
+    {
+        "mentality":
+        {
+            "value": 1
+        },
+        "happiness":
+        {
+            "value": 5
+        }
+    }
+},
+{
+    "msg": "There is no food anywhere - you starve a bit",
+    "duration": 1,
+    "update":
+    {
+        "health":
+        {
+            "value": -5
+        },
+        "happiness":
+        {
+            "value": -2
+        }
+    }
+},
+{
+    "msg": "You won a small prize in a lottery",
+    "duration": 1,
+    "update":
+    {
+        "money":
+        {
+            "value": 13
+        },
+        "happiness":
+        {
+            "value": 4
+        }
+    }
+},
+{
+    "msg": "Your best friend {{bff}}, demands you repay a loan",
+    "duration": 1,
+    "update":
+    {
+        "money":
+        {
+            "value": -20
+        },
+        "happiness":
+        {
+            "value": -2
+        }
+    }
+},
+{
+    "msg": "Your lover is leaving you for a somewhat cooler musician.. You are devastated and spend the night getting drunk and crying your heart out.",
+    "duration": 2,
+    "update":
+    {
+
+        "mentality":
+        {
+            "value": -5
+        },
+        "happiness":
+        {
+            "value": -10
+        }
+    }
+},
+{
+    "msg": "You feel depressed, due to your lack of success",
+    "duration": 1,
+    "update":
+    {
+
+        "mentality":
+        {
+            "value": -10
+        },
+        "happiness":
+        {
+            "value": -10
+        },
+        "creativity":
+        {
+            "value": -5
+        }
+    }
+},
+{
+    "msg": "You laze around for a day or so.. doing nothing.",
+    "duration": 1,
+    "update":
+    {
+        "health":
+        {
+            "value": 1,
+            "icon": "heartbeat"
+        },
+        "creativity":
+        {
+            "value": -1,
+            "icon": "fire"
+        }
+    }
+},
+{
+    "msg": "You stare at the wall for a few days",
+    "duration": 2,
+    "update":
+    {
+        "health":
+        {
+            "value": 2,
+            "icon": "heartbeat"
+        },
+        "creativity":
+        {
+            "value": -4,
+            "icon": "fire"
+        },
+        "mentality":
+        {
+            "value": -4,
+            "icon": "puzzle-piece"
+        }
+    }
+},
+{
+    "msg": "You play games all day long.",
+    "duration": 1,
+    "update":
+    {
+        "health":
+        {
+            "value": 1,
+            "icon": "heartbeat"
+        },
+        "mentality":
+        {
+            "value": -1,
+            "icon": "puzzle-piece"
+        },
+        "creativity":
+        {
+            "value": -2,
+            "icon": "fire"
+        }
+    }
+},
+{
+    "msg": "You clean your shabby place..",
+    "duration": 1,
+    "update":
+    {
+        "health":
+        {
+            "value": 1,
+            "icon": "heartbeat"
+        },
+        "mentality":
+        {
+            "value": -1,
+            "icon": "puzzle-piece"
+        },
+        "creativity":
+        {
+            "value": -1,
+            "icon": "fire"
+        }
+    }
+},
+{
+    "msg": "You strum a few chords and write a few lines.",
+    "duration": 1,
+    "update":
+    {
+        "happiness":
+        {
+            "value": 1
+        },
+        "creativity":
+        {
+            "value": 1
+        },
+        "skill":
+        {
+            "value": 1
+        }
+    }
+},
+{
+    "msg": "You have some great progress on your magnum opus",
+    "duration": 1,
+    "update":
+    {
+        "happiness":
+        {
+            "value": 5
+        },
+        "creativity":
+        {
+            "value": 5
+        },
+        "skill":
+        {
+            "value": 5
+        }
+    }
+},
+{
+    "msg": "You are mind blown by your bassist's new finger technique",
+    "duration": 1,
+    "update":
+    {
+        "happiness":
+        {
+            "value": 2
+        },
+        "creativity":
+        {
+            "value": 2
+        },
+        "skill":
+        {
+            "value": 1
+        }
+    }
+},
+{
+    "msg": "You finally master that f***ing chord-progression!",
+    "duration": 2,
+    "update":
+    {
+        "happiness":
+        {
+            "value": 3,
+            "icon": "smile-o"
+        },
+        "mentality":
+        {
+            "value": 2,
+            "icon": "puzzle-piece"
+        },
+        "creativity":
+        {
+            "value": 2,
+            "icon": "fire"
+        },
+        "skill":
+        {
+            "value": 2
+        }
+    }
+},
+{
+    "msg": "You jam away the night with your bandmates",
+    "duration": 1,
+    "update":
+    {
+        "health":
+        {
+            "value": -1,
+            "icon": "heartbeat"
+        },
+        "mentality":
+        {
+            "value": 1,
+            "icon": "puzzle-piece"
+        },
+        "creativity":
+        {
+            "value": 2,
+            "icon": "fire"
+        },
+        "skill":
+        {
+            "value": 1
+        }
+    }
+},
+{
+    "msg": "You spend the night arguing over petty issues with the new song",
+    "duration": 1,
+    "update":
+    {
+        "mentality":
+        {
+            "value": -2
+        },
+        "creativity":
+        {
+            "value": -1
+        },
+        "skill":
+        {
+            "value": -1
+        }
+    }
+}]

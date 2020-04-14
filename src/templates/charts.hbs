@@ -1,0 +1,33 @@
+
+
+	<h3>Weekly singles charts</h3>
+	<table >
+		<tr>
+			<th>#</th>
+			<th>Song/Artist</th>
+			<th>Genre</th>
+			<th>Weeks</th>
+			<th></th>
+		</tr>
+		{{#each this}}
+			<tr>
+				<td class="{{chartEvent}}">{{position}}</td>
+				<td>
+					<strong>
+						{{song}}
+					</strong>
+					<br />
+					{{name}}
+					<br />
+					<small class="text-muted">{{formatDate released}}</small>
+				</td>
+				<td>{{genre}}</td>
+				<td>{{weeks}}</td>
+				<td>
+					{{#each icons}}
+						<span class="chart-icon {{this}}"></span>
+					{{/each}}
+				</td>
+			</tr>
+		{{/each}}
+	</table>

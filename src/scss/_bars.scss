@@ -1,0 +1,136 @@
+.top-bar {
+    display: flex;
+    background: $primary;
+    color: $light;
+    border-bottom: 1px solid darken($primary, 10%);
+    flex: 1;
+
+    .flex-right {
+        margin-left: auto;
+        display: flex;
+    }
+
+    .top-bar-item {
+        padding: 10px;
+
+        &.stats-bar-item {
+            width: 75px;
+        }
+    }
+}
+
+.bottom-bar {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+
+    flex: 1;
+
+    .flex-right {
+        margin-left: auto;
+        display: flex;
+    }
+
+    .bottom-bar-item {
+        padding: 1em;
+        cursor: pointer;
+        flex: 1;
+        text-align: center;
+        background: $primary;
+        color: $light;
+        transition: all .3s ease;
+        box-shadow: inset 0 -3px 5px rgba($dark, .3);
+
+        &:hover {
+            background: lighten($primary, 10%);
+            box-shadow: inset 0 3px 5px rgba($dark, .1);
+        }
+
+        &.protagonist-action-laze {}
+    }
+}
+
+.progress-bar {
+    width: 100%;
+    display: block;
+    position: relative;
+    height: 13px;
+    background-color: $secondary;
+
+    &.small-bar {
+        height: 5px;
+    }
+
+    .progress-ticks {
+        position: absolute;
+        transform: translateX(-50%);
+        z-index: 9;
+
+        &::after {
+            position: absolute;
+            transform: translateX(-100px);
+            width: 200px;
+            text-align: center;
+            color: darken($light, 30%);
+        }
+
+        &:nth-child(1) {
+            &::after {
+                content: 'Incompetent';
+                text-align: right;
+            }
+        }
+
+
+        &:nth-child(2) {
+            &::after {
+                content: 'Local Legend';
+
+            }
+        }
+
+        &:nth-child(3) {
+            &::after {
+                content: 'National Star';
+            }
+        }
+
+        &:nth-child(4) {
+            &::after {
+                content: 'International Rock Star';
+            }
+        }
+
+        &:nth-child(5) {
+            &::after {
+                content: 'MEGA STAR';
+                text-align: left;
+            }
+        }
+
+        &.achieved {
+            &::after {
+                color: $primary;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .fame-progress {
+        height: 13px;
+        background-color: $tertiary;
+        position: absolute;
+        transition: all .3s ease;
+    }
+
+    .stats-progress {
+        height: 5px;
+        background-color: $tertiary;
+        position: absolute;
+        transition: all .3s ease;
+        &.danger{
+            animation: pulse-danger .5s infinite;
+        }
+    }
+}
