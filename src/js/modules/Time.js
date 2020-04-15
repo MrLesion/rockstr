@@ -63,7 +63,6 @@ const Time = {
 
         Protagonist.set('activity', activity);
 
-
         Time.ticker = setInterval(() => {
             console.log('Time.run', Time.ticks);
             const eventTick = Utils.randInt(20);

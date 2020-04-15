@@ -5,6 +5,7 @@ import Utils from './Utils.js';
 import Time from './Time.js';
 import Feed from './Feed.js';
 import Protagonist from './Protagonist.js';
+import Bands from './Bands.js';
 import Charts from './Charts.js';
 import Schedule from './Schedule.js';
 

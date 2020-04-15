@@ -1,12 +1,12 @@
 {{#each this}}
 	{{#if key}}
-		<p><small class="text-muted">{{date}}</small><br />{{getText key replaceObj}}</p>
+		<p><small class="text-muted">{{date}}</small><br /><span class="feed-text-to-speech">{{getText key replaceObj}}</span></p>
 	{{/if}}
 	{{#if event}}
 		<p>
 			<small class="text-muted">{{date}}</small>
 			<br />
-			{{replacePerson event.msg}}
+			<span class="feed-text-to-speech">{{replacePerson event.msg}}</span>
 			<br />
 			<small>
 				{{#each event.update}}
@@ -16,7 +16,7 @@
 			{{#if event.action}}
 			  {{#compare @index '===' 0}}
 					<strong class="feed-event-action">
-						{{event.action}}
+						<span class="feed-action-to-speech">{{event.action}}</span>
 						<button class="btn feed-event-action-yes" type="button">Yeah</button>
 						<button class="btn feed-event-action-no" type="button">Nah</button>
 					</strong>

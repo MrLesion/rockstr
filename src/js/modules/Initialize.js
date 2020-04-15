@@ -10,6 +10,7 @@ import Protagonist from './Protagonist.js';
 import Charts from './Charts.js';
 import News from './News.js';
 import Schedule from './Schedule.js';
+import Speech from './Speech.js';
 
 import * as genreSelect from '../../templates/genreSelect.hbs';
 
@@ -24,11 +25,11 @@ const Initialize = {
             Initialize.build();
             Initialize.showIntro();
         } else {
+            Speech.construct();
             Navigation.construct();
             Schedule.construct();
             Time.construct();
             Protagonist.construct();
-
             Charts.construct();
             Initialize.hideIntro();
 

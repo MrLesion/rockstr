@@ -2,6 +2,7 @@ import Settings from '../Settings.js';
 import Utils from './Utils.js';
 import Time from './Time.js';
 import Protagonist from './Protagonist.js';
+import Speech from './Speech.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -48,6 +49,8 @@ const Feed = {
         if (Utils.isNullOrUndefined(eventObj) === false) {
             Feed.bindAction(container, eventObj);
         }
+        let lastEntry = container.querySelector('.feed-text-to-speech').innerText;
+        Speech.speak(lastEntry)
 
     }
 }
