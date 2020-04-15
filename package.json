@@ -1,7 +1,7 @@
 {
   "name": "rockstr_native",
   "version": "1.0.0",
-  "description": "",
+  "description": "Rock Star Simulator",
   "main": "index.js",
   "scripts": {
     "serve": "webpack-dev-server",
@@ -13,7 +13,6 @@
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.8.6",
-    "@beyonk/google-fonts-webpack-plugin": "^1.2.3",
     "autoprefixer": "^9.7.4",
     "babel-loader": "^8.0.6",
     "cross-env": "^7.0.0",

@@ -18,6 +18,10 @@ const Utils = {
     randRanking: (int) => {
         return Math.pow(Math.floor(Math.random() * int), 2);
     },
+    intNegPos: (int) => {
+        int *= Math.floor(Math.random()*2) === 1 ? 1 : -1;
+        return int;
+    },
     shuffleArr: (array) => {
         let counter = array.length;
         while (counter > 0) {

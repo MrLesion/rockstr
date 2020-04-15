@@ -19,16 +19,16 @@ const Protagonist = {
     construct: (stdName = 'PlayerOne', stdGenre = 'Pop') => {
         let savedGamePlayer = Store.get('protagonist');
 
-        let name = savedGamePlayer !== null ? savedGamePlayer.name : stdName;
-        let genre = savedGamePlayer !== null ? savedGamePlayer.genre : stdGenre;
-        let isPlayer = savedGamePlayer !== null ? savedGamePlayer.isPlayer : true;
-        let fame = savedGamePlayer !== null ? savedGamePlayer.fame : 0;
-        let money = savedGamePlayer !== null ? savedGamePlayer.money : 100;
-        let health = savedGamePlayer !== null ? savedGamePlayer.health : 50;
-        let mentality = savedGamePlayer !== null ? savedGamePlayer.mentality : 50;
-        let creativity = savedGamePlayer !== null ? savedGamePlayer.creativity : 50;
-        let happiness = savedGamePlayer !== null ? savedGamePlayer.happiness : 50;
-        let activity = savedGamePlayer !== null ? savedGamePlayer.activity : 'idle';
+        let name = Utils.isNullOrUndefined(savedGamePlayer) ? stdName : savedGamePlayer.name;
+        let genre = Utils.isNullOrUndefined(savedGamePlayer) ? stdGenre : savedGamePlayer.genre;
+        let isPlayer = Utils.isNullOrUndefined(savedGamePlayer) ? true : savedGamePlayer.isPlayer;
+        let fame = Utils.isNullOrUndefined(savedGamePlayer) ? 0 : savedGamePlayer.fame;
+        let money = Utils.isNullOrUndefined(savedGamePlayer) ? 100 : savedGamePlayer.money;
+        let health = Utils.isNullOrUndefined(savedGamePlayer) ? 50 : savedGamePlayer.health;
+        let mentality = Utils.isNullOrUndefined(savedGamePlayer) ? 50 : savedGamePlayer.mentality;
+        let creativity = Utils.isNullOrUndefined(savedGamePlayer) ? 50 : savedGamePlayer.creativity;
+        let happiness = Utils.isNullOrUndefined(savedGamePlayer) ? 50 : savedGamePlayer.happiness;
+        let activity = Utils.isNullOrUndefined(savedGamePlayer) ? 'idle' : savedGamePlayer.activity;
 
         Protagonist.model.name = name;
         Protagonist.model.genre = genre;

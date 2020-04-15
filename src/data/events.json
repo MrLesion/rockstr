@@ -105,10 +105,6 @@
       "fame":
       {
         "value": 1
-      },
-      "skill":
-      {
-        "value": 1
       }
     }
   },
@@ -136,10 +132,6 @@
       "fame":
       {
         "value": 2
-      },
-      "skill":
-      {
-        "value": 1
       }
     }
   },
@@ -213,10 +205,6 @@
       "money":
       {
         "value": -50
-      },
-      "skill":
-      {
-        "value": -3
       }
     }
   },

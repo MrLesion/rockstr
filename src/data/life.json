@@ -190,10 +190,6 @@
         "creativity":
         {
             "value": 1
-        },
-        "skill":
-        {
-            "value": 1
         }
     }
 },
@@ -207,10 +203,6 @@
             "value": 5
         },
         "creativity":
-        {
-            "value": 5
-        },
-        "skill":
         {
             "value": 5
         }
@@ -228,10 +220,6 @@
         "creativity":
         {
             "value": 2
-        },
-        "skill":
-        {
-            "value": 1
         }
     }
 },
@@ -254,10 +242,6 @@
         {
             "value": 2,
             "icon": "fire"
-        },
-        "skill":
-        {
-            "value": 2
         }
     }
 },
@@ -280,10 +264,6 @@
         {
             "value": 2,
             "icon": "fire"
-        },
-        "skill":
-        {
-            "value": 1
         }
     }
 },
@@ -297,10 +277,6 @@
             "value": -2
         },
         "creativity":
-        {
-            "value": -1
-        },
-        "skill":
         {
             "value": -1
         }

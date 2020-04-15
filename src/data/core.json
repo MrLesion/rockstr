@@ -144,7 +144,6 @@
         "battle":
         {
             "modifier": 3,
-            "duration": 3,
             "update":
             {
                 "fame":
@@ -154,6 +153,29 @@
                 "health":
                 {
                     "value": -2
+                },
+                "creativity":
+                {
+                    "value": 2
+                }
+            }
+        },
+        "interview":
+        {
+            "modifier": 3,
+            "update":
+            {
+                "fame":
+                {
+                    "value": 20
+                },
+                "health":
+                {
+                    "value": -2
+                },
+                "happiness":
+                {
+                    "value": -5
                 }
             }
         }

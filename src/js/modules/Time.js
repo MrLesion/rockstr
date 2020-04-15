@@ -74,10 +74,10 @@ const Time = {
 
             if (Utils.objectIsEmpty(checkDateForEvent) === false) {
                 Time.end();
-                Time.runScheduledEvent(checkDateForEvent);
+                Events.schedule.run(checkDateForEvent);
             } else if (Utils.isNullOrUndefined(timeObj) === true && eventTick < 5) {
                 Time.pause(eventTick);
-                Time.runEvent();
+                Events.run();
 
             } else if (Time.ticks < 1) {
                 Time.end();
@@ -110,44 +110,6 @@ const Time = {
         wrapper.classList.remove('time-ticking');
         Protagonist.set('activity', 'Idle');
         clearInterval(Time.ticker);
-    },
-    runEvent: () => {
-        let eventTypes = ['life', 'promotions', 'drugs']
-        let eventType = eventTypes[Utils.randIndex(eventTypes.length)];
-        let event = Data[eventType][Utils.randIndex(Data[eventType].length)];
-        if (Utils.isNullOrUndefined(event.update) === false) {
-            Object.keys(event.update).forEach(function(key) {
-                let updatedValue = Protagonist.get(key) + event.update[key].value;
-                Protagonist.set(key, updatedValue);
-            });
-        }
-
-        Events.emit(eventType, event);
-    },
-    runScheduledEvent: (scheduledEventObject) => {
-        let modalContainer = document.querySelector('.modal-backdrop');
-        Object.keys(scheduledEventObject.questions).forEach((questionKey) => {
-            let optionAction = scheduledEventObject.questions[questionKey].action;
-            let options = scheduledEventObject.questions[questionKey].options;
-            let editedOptions = options;
-            if (optionAction === 'addSongs') {
-                editedOptions.push('All songs');
-            } else if (optionAction === 'addBands') {
-                let allBands = Bands.getAllBands();
-                for (let i = allBands.length - 1; i >= 0; i--) {
-                    if (allBands[i].genre === Protagonist.get('genre') ) {
-                        editedOptions.push(allBands[i].name);
-                    }
-                    
-                }
-            }
-        });
-        modalContainer.innerHTML = eventModalTmp(scheduledEventObject);
-        Modal.show(() => {
-            let firstQuestion = modalContainer.querySelector('[data-step="0"]');
-            firstQuestion.classList.add('active');
-            Modal.bindEvents();
-        });
     },
     handleEffects: () => {
         const wrapper = document.querySelector('.wrapper');
