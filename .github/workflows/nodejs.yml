@@ -26,7 +26,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
   FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+    name: Deployment
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -35,7 +35,7 @@ jobs:
     - name: List output files
       run: ls
       
-    - name: FTP-Deploy-Action
+    - name: Deployment FTP
       uses: SamKirkland/FTP-Deploy-Action@3.0.0
       with:
         ftp-server: ftp.lesion.dk/rockstr/
