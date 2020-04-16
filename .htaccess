@@ -1,0 +1,17 @@
+Options All -Indexes
+
+DirectoryIndex index.php index.htm index.html
+
+RewriteEngine on
+RewriteBase /
+
+# Force HTTPS on the subdomains/subdirectories login or admin
+RewriteEngine On 
+RewriteCond %{HTTPS} !=on
+RewriteRule ^/?(.*) https://%{HTTP_HOST}/$1 [R,L]
+
+# Force WWW if no subdomain is given
+RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
+RewriteCond %{HTTP_HOST} !^$
+RewriteCond %{HTTPS}s ^on(s)|
+RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]

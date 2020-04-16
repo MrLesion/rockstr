@@ -4,7 +4,7 @@ import Store from './Store.js';
 
 const Utils = {
     objectIsEmpty: (obj) => {
-        return Object.keys(obj).length === 0;
+        return Utils.isNullOrUndefined(obj) ? true : Object.keys(obj).length === 0;
     },
     isNullOrUndefined: (obj) => {
         return obj === null || obj === undefined;
