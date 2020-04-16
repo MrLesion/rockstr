@@ -23,21 +23,21 @@ const Time = {
     construct: () => {
         Time.model.date = Time.get().date;
         Time.model.daysAlive = Time.get().daysAlive;
-        Store.set('time', Time.model);
+        Store.set( 'time', Time.model );
         Time.update();
     },
-    set: (add, callback) => {
-        Time.model.date = moment(Store.get('time').date).add(add, 'days');
+    set: ( add, callback ) => {
+        Time.model.date = moment( Store.get( 'time' ).date ).add( add, 'days' );
         Time.model.daysAlive += add;
-        Store.set('time', Time.model);
+        Store.set( 'time', Time.model );
         Time.update();
-        if (typeof callback === 'function') {
-            return callback(value);
+        if ( typeof callback === 'function' ) {
+            return callback( value );
         }
     },
     get: () => {
-        let stored = Store.get('time');
-        if (Utils.isNullOrUndefined(stored) === true) {
+        let stored = Store.get( 'time' );
+        if ( Utils.isNullOrUndefined( stored ) === true ) {
             return {
                 date: Settings.STARTDATE,
                 daysAlive: 1
@@ -46,90 +46,90 @@ const Time = {
             return stored;
         }
     },
-    run: (days = 0, type = 'laze', timeObj = null) => {
+    run: ( days = 0, type = 'laze', timeObj = null ) => {
 
-        let activity = Dictionary.get('activity_' + type);
+        let activity = Dictionary.get( 'activity_' + type );
 
-        document.querySelector('.wrapper').classList.add('time-ticking');
+        document.querySelector( '.wrapper' ).classList.add( 'time-ticking' );
 
-        if (Utils.isNullOrUndefined(timeObj) === false) {
+        if ( Utils.isNullOrUndefined( timeObj ) === false ) {
             Time.ticks = timeObj.duration;
         } else {
             Time.ticks += days;
         }
 
-        Protagonist.set('activity', activity);
+        Protagonist.set( 'activity', activity );
 
-        Time.ticker = setInterval(() => {
-            console.log('Time.run', Time.ticks);
-            const eventTick = Utils.randInt(20);
-            Time.set(1);
+        Time.ticker = setInterval( () => {
+            console.log( 'Time.run', Time.ticks );
+            const eventTick = Utils.randInt( 20 );
+            Time.set( 1 );
             let checkDateForEvent = Schedule.updateDate();
             Time.handleModifiers();
-            if (Utils.objectIsEmpty(checkDateForEvent) === false) {
+            if ( Utils.objectIsEmpty( checkDateForEvent ) === false ) {
                 Time.end();
-                Events.schedule.run(checkDateForEvent);
-            } else if (Utils.isNullOrUndefined(timeObj) === true && eventTick < 5) {
-                Time.pause(eventTick);
+                Events.schedule.run( checkDateForEvent );
+            } else if ( Utils.isNullOrUndefined( timeObj ) === true && eventTick < 5 ) {
+                Time.pause( eventTick );
                 Events.run();
 
-            } else if (Time.ticks < 1) {
+            } else if ( Time.ticks < 1 ) {
                 Time.end();
-                if (Utils.isNullOrUndefined(timeObj) === false && timeObj.update) {
-                    Object.keys(timeObj.update).forEach((key) => {
-                        let oldValue = Protagonist.get(key);
-                        Protagonist.set(key, oldValue + timeObj.update[key].value);
-                    });
-                    if (timeObj.callback && typeof timObj.callback === 'function') {
-                        timeObj.callback(type);
+                if ( Utils.isNullOrUndefined( timeObj ) === false && timeObj.update ) {
+                    Object.keys( timeObj.update ).forEach( ( key ) => {
+                        let oldValue = Protagonist.get( key );
+                        Protagonist.set( key, oldValue + timeObj.update[ key ].value );
+                    } );
+                    if ( timeObj.callback && typeof timObj.callback === 'function' ) {
+                        timeObj.callback( type );
                     }
                 }
             }
             let band = Bands.getBand();
             Time.ticks--;
-        }, Settings.TICK);
+        }, Settings.TICK );
     },
 
     end: () => {
-        console.log('Time.end');
-        const wrapper = document.querySelector('.wrapper');
-        wrapper.classList.remove('time-ticking');
-        Protagonist.set('activity', 'Idle');
+        console.log( 'Time.end' );
+        const wrapper = document.querySelector( '.wrapper' );
+        wrapper.classList.remove( 'time-ticking' );
+        Protagonist.set( 'activity', 'Idle' );
         Time.ticks = 0;
-        clearInterval(Time.ticker);
+        clearInterval( Time.ticker );
     },
-    pause: (eventTick) => {
-        console.log('Time.pause', eventTick);
-        const wrapper = document.querySelector('.wrapper');
-        wrapper.classList.remove('time-ticking');
-        Protagonist.set('activity', 'Idle');
-        clearInterval(Time.ticker);
+    pause: ( eventTick ) => {
+        console.log( 'Time.pause', eventTick );
+        const wrapper = document.querySelector( '.wrapper' );
+        wrapper.classList.remove( 'time-ticking' );
+        Protagonist.set( 'activity', 'Idle' );
+        clearInterval( Time.ticker );
     },
     handleModifiers: () => {
-        const wrapper = document.querySelector('.wrapper');
-        let addictions = Store.get('addictions') || {};
+        const wrapper = document.querySelector( '.wrapper' );
+        let addictions = Store.get( 'addictions' ) || {};
 
-        Object.keys(addictions).forEach((key) => {
-            if (addictions[key].trip > 0) {
-                wrapper.classList.add(key + '-trip');
-                addictions[key].trip = addictions[key].trip - 1;
+        Object.keys( addictions ).forEach( ( key ) => {
+            if ( addictions[ key ].trip > 0 ) {
+                wrapper.classList.add( key + '-trip' );
+                addictions[ key ].trip = addictions[ key ].trip - 1;
             } else {
-                wrapper.classList.remove(key + '-trip');
+                wrapper.classList.remove( key + '-trip' );
             }
-        });
+        } );
 
-        Store.set('addictions', addictions);
+        Store.set( 'addictions', addictions );
     },
     update: () => {
-        let dateElement = document.querySelector('[data-prop="date"]');
-        if (Utils.isNullOrUndefined(dateElement) === false) {
-            dateElement.innerHTML = moment(Time.model.date).format(Settings.DATEFORMAT);
+        let dateElement = document.querySelector( '[data-prop="date"]' );
+        if ( Utils.isNullOrUndefined( dateElement ) === false ) {
+            dateElement.innerHTML = moment( Time.model.date ).format( Settings.DATEFORMAT );
         }
-        if (Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.RENTDUE === 0) {
-            Events.emit('rentDue');
+        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.RENTDUE === 0 ) {
+            Events.emit( 'rentDue' );
         }
-        if (Time.model.daysAlive > 1 && Time.model.daysAlive % 7 === 0) {
-            Events.emit('chartsUpdate');
+        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % 7 === 0 ) {
+            Events.emit( 'chartsUpdate' );
         } else {
             News.get();
         }

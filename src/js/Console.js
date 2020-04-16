@@ -2,13 +2,13 @@ import Utils from './modules/Utils.js';
 
 const Console = {
     debug: true,
-    log: (key, obj = {}, type = 'log') => {
-        if (Console.debug === true) {
-            if (Utils.isNullOrUndefined(Console.loggings[key]) === true) {
-                console[type](key, obj);
+    log: ( key, obj = {}, type = 'log' ) => {
+        if ( Console.debug === true ) {
+            if ( Utils.isNullOrUndefined( Console.loggings[ key ] ) === true ) {
+                console[ type ]( key, obj );
 
             } else {
-                console[type](Console.loggings[key], obj);
+                console[ type ]( Console.loggings[ key ], obj );
             }
         }
 

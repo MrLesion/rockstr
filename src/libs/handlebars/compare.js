@@ -1,8 +1,8 @@
-export default function(a, operator, b, options) {
+export default function ( a, operator, b, options ) {
 
     let result;
 
-    switch (operator) {
+    switch ( operator ) {
         case '==':
             result = a == b;
             break;
@@ -32,15 +32,15 @@ export default function(a, operator, b, options) {
             break;
         default:
             {
-                throw new Error('helper {{compare}}: invalid operator: ' + operator);
+                throw new Error( 'helper {{compare}}: invalid operator: ' + operator );
             }
     }
 
 
-    if (result) {
-        return options.fn(this);
+    if ( result ) {
+        return options.fn( this );
     } else {
-        return options.inverse(this);
+        return options.inverse( this );
     }
 
 }

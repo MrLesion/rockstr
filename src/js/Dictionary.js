@@ -1,14 +1,14 @@
 import Utils from './modules/Utils.js';
 
 const Dictionary = {
-    get: (key) => {
-        if (Utils.isNullOrUndefined(Dictionary.texts[key]) === true) {
+    get: ( key ) => {
+        if ( Utils.isNullOrUndefined( Dictionary.texts[ key ] ) === true ) {
             return '!--- Traslation missing ---!';
         } else {
-            if (typeof Dictionary.texts[key] === 'string') {
-                return Dictionary.texts[key]
+            if ( typeof Dictionary.texts[ key ] === 'string' ) {
+                return Dictionary.texts[ key ]
             } else {
-                return Dictionary.texts[key][Utils.randIndex(Dictionary.texts[key].length)]
+                return Dictionary.texts[ key ][ Utils.randIndex( Dictionary.texts[ key ].length ) ]
             }
         }
 

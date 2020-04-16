@@ -16,69 +16,68 @@ import * as genreSelect from '../../templates/genreSelect.hbs';
 
 const Initialize = {
     construct: () => {
-        let savedGamePlayer = Store.get('protagonist');
-        let container = document.querySelector('.intro-container');
-        if (Utils.isNullOrUndefined(savedGamePlayer) === true) {
-            //container.removeChild(loader);
+        let savedGamePlayer = Store.get( 'protagonist' );
+        let container = document.querySelector( '.intro-container' );
+        if ( Utils.isNullOrUndefined( savedGamePlayer ) === true ) {
             Bands.construct();
             Initialize.bindings();
             Initialize.build();
             Initialize.showIntro();
         } else {
-            Speech.construct();
-            Navigation.construct();
-            Schedule.construct();
-            Time.construct();
-            Protagonist.construct();
-            Charts.construct();
-            Initialize.hideIntro();
-
+            Initialize.run();
         }
-        //News.get();
     },
     showIntro: () => {
         Initialize.loader.hide();
     },
     hideIntro: () => {
-        let container = document.querySelector('.intro-container');
-        container.parentElement.removeChild(container);
+        let container = document.querySelector( '.intro-container' );
+        container.parentElement.removeChild( container );
         Initialize.loader.hide();
     },
     bindings: () => {
-        document.querySelector('.intro-generate-band').addEventListener('click', () => {
+        document.querySelector( '.intro-generate-band' ).addEventListener( 'click', () => {
             let band = Bands.generateBand();
-            document.getElementById('rockstrStageName').value = band.name;
-            document.getElementById('rockstrStageGenre').value = band.genre;
-        });
-        document.querySelector('.initialize-game').addEventListener('click', () => {
-            Initialize.run();
-        });
+            document.getElementById( 'rockstrStageName' ).value = band.name;
+            document.getElementById( 'rockstrStageGenre' ).value = band.genre;
+        } );
+        document.querySelector( '.initialize-game' ).addEventListener( 'click', () => {
+            let name = document.getElementById( 'rockstrStageName' ).value;
+            let genre = document.getElementById( 'rockstrStageGenre' ).value;
+
+            Initialize.run( name, genre );
+
+            let container = document.querySelector( '.intro-container' );
+            if ( Utils.isNullOrUndefined( container ) === false ) {
+                container.parentElement.removeChild( container );
+            }
+
+        } );
     },
     build: () => {
-        const container = document.querySelector('.hbs-container-genreSelect');
-        container.innerHTML = genreSelect(Data.genres);
+        const container = document.querySelector( '.hbs-container-genreSelect' );
+        container.innerHTML = genreSelect( Data.genres );
     },
-    run: () => {
-        let name = document.getElementById('rockstrStageName').value;
-        let genre = document.getElementById('rockstrStageGenre').value;
-        Store.construct();
+    run: ( name = '', genre = '' ) => {
+        Protagonist.construct( name, genre );
+        Speech.construct();
+        Navigation.construct();
+        Schedule.construct();
         Time.construct();
-        Protagonist.construct(name, genre);
         Charts.construct();
-        let container = document.querySelector('.intro-container');
-        container.parentElement.removeChild(container);
+        Initialize.hideIntro();
     },
     loader: {
         show: () => {
-            let loader = document.querySelector('.loading-container');
-            if (loader) {
-                loader.classList.remove('d-none');
+            let loader = document.querySelector( '.loading-container' );
+            if ( loader ) {
+                loader.classList.remove( 'd-none' );
             }
         },
         hide: () => {
-            let loader = document.querySelector('.loading-container');
-            if (loader) {
-                loader.classList.add('d-none');
+            let loader = document.querySelector( '.loading-container' );
+            if ( loader ) {
+                loader.classList.add( 'd-none' );
             }
 
         }

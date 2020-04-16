@@ -10,4 +10,4 @@ import * as promotions from '../../data/promotions.json';
 import * as studio from '../../data/studio.json';
 import * as words from '../../data/words.json';
 
-export {core, bands, drugs, events, genres, jobs, life, names, promotions, studio, words};
+export { core, bands, drugs, events, genres, jobs, life, names, promotions, studio, words };

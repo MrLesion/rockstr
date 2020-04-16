@@ -6,12 +6,12 @@ const Speech = {
     construct: () => {
         Speech.synth = speechSynthesis;
     },
-    speak: (txt) => {
-        if (Settings.ACTIVE_MODULES.Speech === true) {
+    speak: ( txt ) => {
+        if ( Settings.ACTIVE_MODULES.Speech === true ) {
             Speech.synth.cancel();
-            let speaking = new SpeechSynthesisUtterance(txt);
+            let speaking = new SpeechSynthesisUtterance( txt );
             speaking.lang = 'en-GB';
-            Speech.synth.speak(speaking);
+            Speech.synth.speak( speaking );
         }
 
     }
