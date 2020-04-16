@@ -36,7 +36,6 @@
     "@fullcalendar/timegrid": "^4.4.0",
     "handlebars": "^4.7.3",
     "handlebars-loader": "^1.7.1",
-    "knockout": "^3.5.1",
     "moment": "^2.24.0"
   }
 }

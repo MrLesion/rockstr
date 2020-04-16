@@ -12,6 +12,9 @@ import Schedule from './Schedule.js';
 /* Vendor */
 import * as moment from 'moment';
 
+/* Templates */
+import * as eventModalTmp from '../../templates/eventModal.hbs';
+
 
 const Events = {
     current: {},
@@ -39,7 +42,7 @@ const Events = {
         Feed.add('eventRentDue', { rent: Settings.RENT });
         Protagonist.set('money', (Protagonist.get('money') - Settings.RENT));
     },
-    ChartsUpdate: (value) => {
+    chartsUpdate: (value) => {
         Feed.add('eventChartsUpdated');
         Charts.update();
     },
@@ -81,26 +84,6 @@ const Events = {
                 firstQuestion.classList.add('active');
                 Modal.bindEvents();
             });
-        }
-    },
-    whileBusking: () => {
-        let randInt = Utils.randInt(5);
-        let factor = Utils.intNegPos(randInt);
-        let fame = Protagonist.get('fame');
-        fame = Math.floor(fame + factor);
-        Protagonist.set('fame', fame);
-        let money = Protagonist.get('money');
-        money = Math.floor(money + factor);
-        Protagonist.set('money', money);
-    },
-    whileDoing: (type) => {
-        switch (type) {
-            case 'busk':
-                return Events.whileBusking();
-                break;
-            default:
-                // statements_def
-                break;
         }
     }
 }

@@ -24,7 +24,7 @@
 </div>
 <div class="container p-0 small">
     <div class="top-bar">
-        {{#if npc}}
+        {{#hasObjectContent npc}}
          <div class="top-bar-item">
             <div class="dropdown">
               <button class="dropbtn">Known associates</button>
@@ -35,8 +35,8 @@
               </div>
             </div>
         </div>
-        {{/if}}
-         {{#if addictions}}
+        {{/hasObjectContent}}
+         {{#hasObjectContent addictions}}
          <div class="top-bar-item">
             <div class="dropdown">
               <button class="dropbtn">Drug use</button>
@@ -47,7 +47,7 @@
               </div>
             </div>
         </div>
-        {{/if}}
+        {{/hasObjectContent}}
         <div class="flex-right">
             <div class="top-bar-item stats-bar-item">
                 Health

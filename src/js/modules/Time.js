@@ -15,9 +15,6 @@ import Modal from './Modal.js';
 /* Vendor */
 import * as moment from 'moment';
 
-/* Templates */
-import * as eventModalTmp from '../../templates/eventModal.hbs';
-
 
 const Time = {
     model: {},
@@ -68,9 +65,7 @@ const Time = {
             const eventTick = Utils.randInt(20);
             Time.set(1);
             let checkDateForEvent = Schedule.updateDate();
-            Time.handleEffects();
-            Events.whileDoing(type);
-
+            Time.handleModifiers();
             if (Utils.objectIsEmpty(checkDateForEvent) === false) {
                 Time.end();
                 Events.schedule.run(checkDateForEvent);
@@ -110,7 +105,7 @@ const Time = {
         Protagonist.set('activity', 'Idle');
         clearInterval(Time.ticker);
     },
-    handleEffects: () => {
+    handleModifiers: () => {
         const wrapper = document.querySelector('.wrapper');
         let addictions = Store.get('addictions') || {};
 
@@ -121,7 +116,6 @@ const Time = {
             } else {
                 wrapper.classList.remove(key + '-trip');
             }
-
         });
 
         Store.set('addictions', addictions);
@@ -135,7 +129,7 @@ const Time = {
             Events.emit('rentDue');
         }
         if (Time.model.daysAlive > 1 && Time.model.daysAlive % 7 === 0) {
-            Events.emit('ChartsUpdate');
+            Events.emit('chartsUpdate');
         } else {
             News.get();
         }

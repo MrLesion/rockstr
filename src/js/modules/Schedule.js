@@ -78,20 +78,18 @@ const Schedule = {
         return returnEvent;
     },
     updateDate: () => {
-        let time = Utils.isNullOrUndefined(Store.get('time')) === false ? Store.get('time').date : Settings.STARTDATE;
-        Schedule.calendar.setOption('now', moment(time).format('YYYY-MM-DD'));
+        let scheduledEvent = {};
+        if (Utils.isNullOrUndefined(Schedule.calendar) === false) {
+            let time = Utils.isNullOrUndefined(Store.get('time')) === false ? Store.get('time').date : Settings.STARTDATE;
+            Schedule.calendar.setOption('now', moment(time).format('YYYY-MM-DD'));
 
-        let scheduledEvent = Schedule.hasEvent();
+            scheduledEvent = Schedule.hasEvent();
 
-        if (Schedule.month !== moment(time).month()) {
-            Schedule.month = moment(time).month();
-            Schedule.calendar.next();
+            if (Schedule.month !== moment(time).month()) {
+                Schedule.month = moment(time).month();
+                Schedule.calendar.next();
+            }
         }
-        /*
-        if (Object.keys(hasScheduledEvent).length) {
-            Time.runScheduledEvent(hasScheduledEvent);
-        }
-        */
         return scheduledEvent;
 
     },

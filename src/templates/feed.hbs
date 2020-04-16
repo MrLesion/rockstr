@@ -7,12 +7,6 @@
 			<small class="text-muted">{{date}}</small>
 			<br />
 			<span class="feed-text-to-speech">{{replacePerson event.msg}}</span>
-			<br />
-			<small>
-				{{#each event.update}}
-					{{@key}}({{this.value}})
-				{{/each}}
-			</small>
 			{{#if event.action}}
 			  {{#compare @index '===' 0}}
 					<strong class="feed-event-action">

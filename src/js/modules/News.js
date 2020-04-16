@@ -33,29 +33,32 @@ const News = {
         News.store.nyt = Utils.sortByInt(daysNews, 'print_page');
         News.store.nyt.length = 15;
         News.store.date = Time.get().date;
-        News.build();
+        if (Settings.ACTIVE_MODULES.News === true) {
+            News.build();
+        }
     },
     get: () => {
         let date = moment(Time.get().date);
         if (News.fetchedMonth !== (date.month() + 1)) {
-            if(News.xhr !== null){
+            if (News.xhr !== null) {
                 console.log(News.xhr.readyState, News.xhr.status);
             }
-            
-            News.xhr = new XMLHttpRequest();
-            News.xhr.open('GET', Settings.NYTURL.replace('{year}', date.year()).replace('{month}', (date.month() + 1)).replace('{key}', Settings.NYTAPIKEY));
-            News.xhr.onload = function() {
-                if (News.xhr.status === 200) {
-                    let json = JSON.parse(News.xhr.responseText);
-                    News.fetchedJSON = json.response.docs;
-                    News.fetchedMonth = (date.month() + 1);
-                    News.set();
+            if (Settings.ACTIVE_MODULES.News === true) {
+                News.xhr = new XMLHttpRequest();
+                News.xhr.open('GET', Settings.NYTURL.replace('{year}', date.year()).replace('{month}', (date.month() + 1)).replace('{key}', Settings.NYTAPIKEY));
+                News.xhr.onload = function() {
+                    if (News.xhr.status === 200) {
+                        let json = JSON.parse(News.xhr.responseText);
+                        News.fetchedJSON = json.response.docs;
+                        News.fetchedMonth = (date.month() + 1);
+                        News.set();
 
-                } else {
-                    console.log('Request failed.  Returned status of ' + News.xhr.status);
-                }
-            };
-            News.xhr.send();
+                    } else {
+                        console.log('Request failed.  Returned status of ' + News.xhr.status);
+                    }
+                };
+                News.xhr.send();
+            }
         } else {
             News.set();
         }

@@ -1,4 +1,8 @@
 const Settings = {
+    ACTIVE_MODULES: {
+        Speech: false,
+        News: true
+    },
     STARTDATE: '1989-01-01T00:00:00.000Z',
     DATEFORMAT: 'MMM. Do YYYY',
     TICK: 500,

@@ -1,6 +1,6 @@
 export default function(a, operator, b, options) {
 
-    var result;
+    let result;
 
     switch (operator) {
         case '==':
@@ -32,7 +32,7 @@ export default function(a, operator, b, options) {
             break;
         default:
             {
-                throw new Error('helper {{compare}}: invalid operator: `' + operator + '`');
+                throw new Error('helper {{compare}}: invalid operator: ' + operator);
             }
     }
 
