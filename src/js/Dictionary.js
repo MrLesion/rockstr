@@ -15,6 +15,7 @@ const Dictionary = {
 
     },
     texts: {
+        activity_idle: 'Idle',
         activity_promotion: 'Doing promotion',
         activity_laze: 'Lazing around',
         activity_busk: 'Busking for money',

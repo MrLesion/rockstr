@@ -89,6 +89,17 @@ const Utils = {
             };
         return npc;
     },
+    delegate: ( event, selector, callback ) => {
+        document.addEventListener( event, function ( e ) {
+            for ( var target = e.target; target && target !== this; target = target.parentNode ) {
+                // loop parent nodes from the target to the delegation node
+                if ( target.matches( selector ) ) {
+                    callback.call( target, e );
+                    break;
+                }
+            }
+        }, false );
+    },
     eventEmitter: {
         events: {},
         on( event, listener ) {
@@ -107,7 +118,7 @@ const Utils = {
             }
         },
         emit( event, ...args ) {
-            console.log(Utils.eventEmitter.events[ event ] );
+            console.log( Utils.eventEmitter.events[ event ] );
             if ( typeof Utils.eventEmitter.events[ event ] === 'object' ) {
                 Utils.eventEmitter.events[ event ].forEach( listener => listener.apply( Utils.eventEmitter, args ) );
             }

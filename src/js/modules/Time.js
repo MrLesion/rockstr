@@ -15,6 +15,9 @@ import Modal from './Modal.js';
 /* Vendor */
 import * as moment from 'moment';
 
+/* Templates */
+import * as bottomTmp from '../../templates/bottombar.hbs';
+
 
 const Time = {
     model: {},
@@ -50,6 +53,8 @@ const Time = {
 
         let activity = Dictionary.get( 'activity_' + type );
 
+        document.querySelector('.hbs-container-bottombar').innerHTML = bottomTmp({activity: type});
+
         document.querySelector( '.wrapper' ).classList.add( 'time-ticking' );
 
         if ( Utils.isNullOrUndefined( timeObj ) === false ) {
@@ -70,7 +75,7 @@ const Time = {
                 Time.end( type );
                 Events.schedule.run( checkDateForEvent );
             } else if ( Utils.isNullOrUndefined( timeObj ) === true && eventTick < 5 ) {
-                Time.pause( eventTick );
+                Time.pause( eventTick, type );
                 Events.run();
 
             } else if ( Time.ticks < 1 ) {
@@ -90,19 +95,22 @@ const Time = {
         }, Settings.TICK );
     },
 
-    end: (type) => {
+    end: (type = 'idle') => {
         console.log( 'Time.end_' + type );
+        document.querySelector('.hbs-container-bottombar').innerHTML = bottomTmp({activity: type});
         Utils.eventEmitter.emit( 'timeend_' + type );
         const wrapper = document.querySelector( '.wrapper' );
         wrapper.classList.remove( 'time-ticking' );
+        
         Protagonist.set( 'activity', 'Idle' );
         Time.ticks = 0;
         clearInterval( Time.ticker );
     },
-    pause: ( eventTick ) => {
+    pause: ( eventTick, type = 'idle' ) => {
         console.log( 'Time.pause', eventTick );
         const wrapper = document.querySelector( '.wrapper' );
         wrapper.classList.remove( 'time-ticking' );
+        document.querySelector('.hbs-container-bottombar').innerHTML = bottomTmp({activity: type});
         Protagonist.set( 'activity', 'Idle' );
         clearInterval( Time.ticker );
     },

@@ -1,0 +1,27 @@
+{{#compare activity '===' 'idle'}}
+	{{log this}}
+	<div class="bottom-bar-item protagonist-action-laze">
+        Laze around
+    </div>
+    <div class="bottom-bar-item protagonist-action-busk">
+        Go busking
+    </div>
+    <div class="bottom-bar-item protagonist-action-gig">
+        Play gigs
+    </div>
+    <div class="bottom-bar-item protagonist-action-record">
+        Record song
+    </div>
+    <div class="bottom-bar-item protagonist-action-holiday">
+        Have a holiday
+    </div>
+    <div class="bottom-bar-item protagonist-action-doctor">
+        See a doctor
+    </div>
+{{/compare}}
+
+{{#compare activity '===' 'record'}}
+	<div class="bottom-bar-item protagonist-action-continue">
+        Continue recording
+    </div>
+{{/compare}}

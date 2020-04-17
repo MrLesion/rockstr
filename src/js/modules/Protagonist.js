@@ -59,19 +59,19 @@ const Protagonist = {
         Protagonist.update( callback );
     },
     bindings: () => {
-        document.querySelector( '.protagonist-action-laze' ).addEventListener( 'click', () => {
+        Utils.delegate( 'click', '.protagonist-action-laze', () => {
             let days = Utils.randInt( 4 );
             Time.run( days, 'laze' );
         } );
 
-        document.querySelector( '.protagonist-action-busk' ).addEventListener( 'click', () => {
+        Utils.delegate( 'click', '.protagonist-action-busk', () => {
             let updateObject = Data.events.busk[ Utils.randIndex( Data.events.busk.length ) ];
             let days = Utils.randInt( 4 );
             Feed.event( updateObject );
             Time.run( days, 'busk', updateObject );
         } );
 
-        document.querySelector( '.protagonist-action-record' ).addEventListener( 'click', () => {
+        Utils.delegate( 'click', '.protagonist-action-record', () => {
             let days = Utils.randInt( 10 );
             //Songs.record();
             console.log( Utils.eventEmitter.events );

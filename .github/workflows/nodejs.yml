@@ -39,8 +39,8 @@ jobs:
     - name: Deployment FTP
       uses: SamKirkland/FTP-Deploy-Action@3.0.0
       with:
-        ftp-server: ftp.lesion.dk/rockstr/
-        ftp-username: lesion.dk
+        ftp-server: ${{ secrets.FTP_SERVER }}
+        ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
         local-dir: dist/
     - name: Slack Notification
