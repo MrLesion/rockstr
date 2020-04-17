@@ -74,7 +74,7 @@ const Protagonist = {
         document.querySelector( '.protagonist-action-record' ).addEventListener( 'click', () => {
             let days = Utils.randInt( 10 );
             //Songs.record();
-            console.log(Utils.eventEmitter.events);
+            console.log( Utils.eventEmitter.events );
             Time.run( days, 'record' );
 
             //Songs.add();
