@@ -13,7 +13,8 @@ const Store = {
             bands: Store.load( 'bands' ),
             jobs: Store.load( 'jobs' ),
             addictions: Store.load( 'addictions' ),
-            schedule: Store.load( 'schedule' )
+            schedule: Store.load( 'schedule' ),
+            songs: Store.load( 'songs' )
         }
     },
 

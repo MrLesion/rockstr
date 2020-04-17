@@ -7,6 +7,7 @@ import Store from './Store.js';
 import Navigation from './Navigation.js';
 import Time from './Time.js';
 import Protagonist from './Protagonist.js';
+import Songs from './Songs.js';
 import Charts from './Charts.js';
 import News from './News.js';
 import Schedule from './Schedule.js';
@@ -63,6 +64,7 @@ const Initialize = {
         Speech.construct();
         Navigation.construct();
         Schedule.construct();
+        Songs.construct();
         Time.construct();
         Charts.construct();
         Initialize.hideIntro();

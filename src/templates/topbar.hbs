@@ -48,6 +48,18 @@
             </div>
         </div>
         {{/hasObjectContent}}
+        {{#if songs}}
+         <div class="top-bar-item">
+            <div class="dropdown">
+              <button class="dropbtn">Songs</button>
+              <div class="dropdown-content">
+                {{#each songs}}
+                    <span class="capitalize">{{song}}</span>
+                {{/each}}
+              </div>
+            </div>
+        </div>
+        {{/if}}
         <div class="flex-right">
             <div class="top-bar-item stats-bar-item">
                 Health

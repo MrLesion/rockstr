@@ -10,7 +10,7 @@
     },
     "questions": [
     {
-        "text": "Preform which song?",
+        "text": "You're almost up - which song do you want to perform?",
         "action": "addSongs",
         "options": [
             "New untested material",
@@ -18,7 +18,7 @@
         ]
     },
     {
-        "text": "Adress which issues before the song?",
+        "text": "You take the staging and sense the mood - address an issues before the song?",
         "action": "",
         "options": [
             "Politics",
@@ -30,7 +30,7 @@
         ]
     },
     {
-        "text": "Stage dive?",
+        "text": "You in the middle of the song and feeling the energy - stage dive?",
         "action": "",
         "options": [
             "Yes",
@@ -38,11 +38,11 @@
         ]
     },
     {
-        "text": "Bow?",
+        "text": "The song is over, you did your best - Will you bow or just leave?",
         "action": "",
         "options": [
-            "Yes",
-            "No"
+            "Bow and say thanks",
+            "Leave the stage"
         ]
     }]
 },

@@ -29,7 +29,7 @@ const News = {
 
             }
         } );
-        //console.log(News.fetchedJSON);
+        console.log(News.fetchedJSON);
         News.store.nyt = Utils.sortByInt( daysNews, 'print_page' );
         News.store.nyt.length = 15;
         News.store.date = Time.get().date;
@@ -66,6 +66,7 @@ const News = {
     },
     build: () => {
         const container = document.querySelector( '.hbs-container-news' );
+        console.log(News.store);
         container.innerHTML = newsTmp( News.store );
     }
 }

@@ -8,6 +8,8 @@ import Protagonist from './Protagonist.js';
 import Bands from './Bands.js';
 import Charts from './Charts.js';
 import Schedule from './Schedule.js';
+import Modal from './Modal.js';
+import Songs from './Songs.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -67,7 +69,10 @@ const Events = {
                 let options = scheduledEventObject.questions[questionKey].options;
                 let editedOptions = options;
                 if (optionAction === 'addSongs') {
-                    editedOptions.push('All songs');
+                    let songs = Songs.get();
+                    for (var i = 0; i < songs.length; i++) {
+                        editedOptions.push(songs[i]);
+                    }
                 } else if (optionAction === 'addBands') {
                     let allBands = Bands.getAllBands();
                     for (let i = allBands.length - 1; i >= 0; i--) {

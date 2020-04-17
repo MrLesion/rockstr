@@ -18,6 +18,7 @@ const Dictionary = {
         activity_promotion: 'Doing promotion',
         activity_laze: 'Lazing around',
         activity_busk: 'Busking for money',
+        activity_record: 'Recording song',
 
         eventRentDue: 'You pay £[rent] in rent',
         eventChartsUpdated: 'The charts has been updated',

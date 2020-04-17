@@ -88,6 +88,35 @@ const Utils = {
                 job: job
             };
         return npc;
+    },
+    eventEmitter: {
+        events: {},
+        on( event, listener ) {
+            if ( typeof Utils.eventEmitter.events[ event ] !== 'object' ) {
+                Utils.eventEmitter.events[ event ] = [];
+            }
+            Utils.eventEmitter.events[ event ].push( listener );
+            return () => Utils.eventEmitter.removeListener( event, listener );
+        },
+        removeListener( event, listener ) {
+            if ( typeof Utils.eventEmitter.events[ event ] === 'object' ) {
+                const idx = Utils.eventEmitter.events[ event ].indexOf( listener );
+                if ( idx > -1 ) {
+                    Utils.eventEmitter.events[ event ].splice( idx, 1 );
+                }
+            }
+        },
+        emit( event, ...args ) {
+            if ( typeof Utils.eventEmitter.events[ event ] === 'object' ) {
+                Utils.eventEmitter.events[ event ].forEach( listener => listener.apply( Utils.eventEmitter, args ) );
+            }
+        },
+        once( event, listener ) {
+            const remove = Utils.eventEmitter.on( event, ( ...args ) => {
+                remove();
+                listener.apply( Utils.eventEmitter, args );
+            } );
+        }
     }
 };
 

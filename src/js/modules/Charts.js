@@ -2,6 +2,7 @@ import Utils from './Utils.js';
 import Console from '../Console.js';
 import Settings from '../Settings.js';
 import Bands from './Bands.js';
+import Songs from './Songs.js';
 import Time from './Time.js';
 import Store from './Store.js';
 import News from './News.js';
@@ -38,12 +39,13 @@ const Charts = {
     generateCharts: ( list ) => {
         let chartList = list || [];
         let newList = [];
+        let userSongs = Songs.get();
 
         for ( let i = 0; i < 20; i++ ) {
             const entry = Charts.addEntry();
             newList.push( entry );
         }
-        let newConcatList = chartList.concat( newList );
+        let newConcatList = chartList.concat( newList, userSongs );
         newConcatList = Charts.sortCharts( newConcatList );
         newConcatList.length = 10;
         return newConcatList;

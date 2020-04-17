@@ -67,14 +67,14 @@ const Time = {
             let checkDateForEvent = Schedule.updateDate();
             Time.handleModifiers();
             if ( Utils.objectIsEmpty( checkDateForEvent ) === false ) {
-                Time.end();
+                Time.end( type );
                 Events.schedule.run( checkDateForEvent );
             } else if ( Utils.isNullOrUndefined( timeObj ) === true && eventTick < 5 ) {
                 Time.pause( eventTick );
                 Events.run();
 
             } else if ( Time.ticks < 1 ) {
-                Time.end();
+                Time.end( type );
                 if ( Utils.isNullOrUndefined( timeObj ) === false && timeObj.update ) {
                     Object.keys( timeObj.update ).forEach( ( key ) => {
                         let oldValue = Protagonist.get( key );
@@ -90,8 +90,9 @@ const Time = {
         }, Settings.TICK );
     },
 
-    end: () => {
-        console.log( 'Time.end' );
+    end: (type) => {
+        console.log( 'Time.end_' + type );
+        Utils.eventEmitter.emit( 'timeend_' + type );
         const wrapper = document.querySelector( '.wrapper' );
         wrapper.classList.remove( 'time-ticking' );
         Protagonist.set( 'activity', 'Idle' );

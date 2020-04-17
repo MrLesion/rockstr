@@ -6,6 +6,7 @@ import Store from './Store.js';
 import Time from './Time.js';
 import Feed from './Feed.js';
 import Schedule from './Schedule.js';
+import Songs from './Songs.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -59,14 +60,31 @@ const Protagonist = {
     },
     bindings: () => {
         document.querySelector( '.protagonist-action-laze' ).addEventListener( 'click', () => {
-            Time.run( 3, 'laze' );
+            let days = Utils.randInt( 4 );
+            Time.run( days, 'laze' );
         } );
 
         document.querySelector( '.protagonist-action-busk' ).addEventListener( 'click', () => {
             let updateObject = Data.events.busk[ Utils.randIndex( Data.events.busk.length ) ];
+            let days = Utils.randInt( 4 );
             Feed.event( updateObject );
-            Time.run( 0, 'busk', updateObject );
+            Time.run( days, 'busk', updateObject );
         } );
+
+        document.querySelector( '.protagonist-action-record' ).addEventListener( 'click', () => {
+            let days = Utils.randInt( 10 );
+            //Songs.record();
+            console.log(Utils.eventEmitter.events);
+            Time.run( days, 'record' );
+
+            //Songs.add();
+        } );
+
+        Utils.eventEmitter.on( 'timeend_record', () => {
+            console.log( 'emitted timeend_record' );
+        } );
+
+
     },
     doDrugs: ( eventObj ) => {
         let addictions = Store.get( 'addictions' ) || {};
@@ -144,7 +162,7 @@ const Protagonist = {
     },
     update: ( fnCallback ) => {
         const container = document.querySelector( '.hbs-container-topbar' );
-        container.innerHTML = topTmp( { protagonist: Protagonist.model, time: Store.get( 'time' ), npc: Store.get( 'jobs' ), addictions: Store.get( 'addictions' ) } );
+        container.innerHTML = topTmp( { protagonist: Protagonist.model, time: Store.get( 'time' ), npc: Store.get( 'jobs' ), addictions: Store.get( 'addictions' ), songs: Store.get( 'songs' ) } );
         if ( typeof fnCallback === 'function' ) {
             fnCallback();
         }

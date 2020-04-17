@@ -11,3 +11,13 @@ $danger: #bb2124;
 $main: 'Anonymous Pro', monospace;
 $news: 'Playfair Display', serif;
 $hand: 'Nanum Brush Script', cursive;
+
+
+// the :export directive is the magic sauce for webpack
+:export {
+  dark: $dark;
+  light: $light;
+  primary: $primary;
+  secondary: $secondary;
+  tertiary: $tertiary;
+}
