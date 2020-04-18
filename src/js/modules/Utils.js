@@ -118,7 +118,7 @@ const Utils = {
             }
         },
         emit( event, ...args ) {
-            console.log( Utils.eventEmitter.events[ event ] );
+            console.log( 'Emitted Event: ', event, ...args );
             if ( typeof Utils.eventEmitter.events[ event ] === 'object' ) {
                 Utils.eventEmitter.events[ event ].forEach( listener => listener.apply( Utils.eventEmitter, args ) );
             }

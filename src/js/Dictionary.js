@@ -21,6 +21,9 @@ const Dictionary = {
         activity_busk: 'Busking for money',
         activity_record: 'Recording song',
 
+        timeend_laze: 'You stop doing nothing and get back to real life',
+        timeend_busk: 'You made a little money and got some pratice, what\'s next then',
+
         eventRentDue: 'You pay £[rent] in rent',
         eventChartsUpdated: 'The charts has been updated',
 

@@ -18,10 +18,8 @@
     <div class="bottom-bar-item protagonist-action-doctor">
         See a doctor
     </div>
-{{/compare}}
-
-{{#compare activity '===' 'record'}}
-	<div class="bottom-bar-item protagonist-action-continue">
-        Continue recording
+{{else}}
+    <div class="bottom-bar-item protagonist-action-continue" data-type="{{activity}}">
+        Continue {{activity}}
     </div>
 {{/compare}}

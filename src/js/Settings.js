@@ -18,6 +18,8 @@ const Settings = {
     CHARTICON_GOLD: 'chart-icon-sales-gold',
     CHARTICON_PLATINIUM: 'chart-icon-sales-platinium',
     CHARTICON_DOUBLEPLATINIUM: 'chart-icon-sales-double-platinum'
+
+
 };
 
 export default Settings;

@@ -74,17 +74,22 @@ const Protagonist = {
         Utils.delegate( 'click', '.protagonist-action-record', () => {
             let days = Utils.randInt( 10 );
             //Songs.record();
-            console.log( Utils.eventEmitter.events );
             Time.run( days, 'record' );
 
             //Songs.add();
         } );
 
-        Utils.eventEmitter.on( 'timeend_record', () => {
-            console.log( 'emitted timeend_record' );
+        Utils.delegate( 'click', '.protagonist-action-continue', (event) => {
+            let type = event.target.dataset.type;
+            Time.run( 0, type );
         } );
 
+        Utils.eventEmitter.on( 'timeend', ( type ) => {
+            if ( type === 'record' ) {
+                console.log( 'emitted timeend_record' );
+            }
 
+        } );
     },
     doDrugs: ( eventObj ) => {
         let addictions = Store.get( 'addictions' ) || {};

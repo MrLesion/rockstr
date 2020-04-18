@@ -1,11 +1,27 @@
+import Utils from './Utils.js';
 import Schedule from './Schedule.js';
+import Feed from './Feed.js';
+
+/* Templates */
+import * as bottomTmp from '../../templates/bottombar.hbs';
 
 const Navigation = {
     construct: () => {
+        Navigation.bindings();
+        Navigation.buildBottomBar( 'idle' );
         Navigation.shortcuts();
     },
     bindings: () => {
-
+        Utils.eventEmitter.on( 'timeend', ( type, prevType ) => {
+            Feed.add('timeend_'+prevType, {type: prevType});
+            Navigation.buildBottomBar( type );
+        } );
+        Utils.eventEmitter.on( 'timepause', ( type ) => {
+            Navigation.buildBottomBar( type );
+        } );
+        Utils.eventEmitter.on( 'timestart', ( type ) => {
+            Navigation.buildBottomBar( type );
+        } );
     },
     shortcuts: () => {
         let hiddenIcons = document.getElementsByClassName( 'hidden-action-icon' );
@@ -34,6 +50,10 @@ const Navigation = {
                 }, false );
             } )( i );
         }
+    },
+    buildBottomBar: ( type ) => {
+        console.log('Building bottombar, ', type);
+        document.querySelector( '.hbs-container-bottombar' ).innerHTML = bottomTmp( { activity: type } );
     }
 };
 
