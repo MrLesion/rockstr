@@ -47,7 +47,6 @@ const Time = {
         }
     },
     run: ( days = 0, type = 'laze', timeObj = null ) => {
-        let activity = Dictionary.get( 'activity_' + type );
         Utils.eventEmitter.emit( 'timestart', type );
         document.querySelector( '.wrapper' ).classList.add( 'time-ticking' );
 
@@ -57,7 +56,7 @@ const Time = {
             Time.ticks += days;
         }
 
-        Protagonist.set( 'activity', activity );
+        Protagonist.set( 'activity', 'activity_'+type );
 
         Time.ticker = setInterval( () => {
             console.log( 'Time.run', Time.ticks );
@@ -93,7 +92,7 @@ const Time = {
         Utils.eventEmitter.emit( 'timeend', 'idle', type );
         const wrapper = document.querySelector( '.wrapper' );
         wrapper.classList.remove( 'time-ticking' );
-        Protagonist.set( 'activity', 'Idle' );
+        Protagonist.set( 'activity', 'activity_idle' );
         Time.ticks = 0;
         clearInterval( Time.ticker );
     },
@@ -101,7 +100,7 @@ const Time = {
         Utils.eventEmitter.emit( 'timepause', type, eventTick );
         const wrapper = document.querySelector( '.wrapper' );
         wrapper.classList.remove( 'time-ticking' );
-        Protagonist.set( 'activity', 'Idle' );
+        Protagonist.set( 'activity', 'activity_'+type);
         clearInterval( Time.ticker );
     },
     handleModifiers: () => {

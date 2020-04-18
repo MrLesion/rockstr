@@ -13,14 +13,14 @@ const Navigation = {
     },
     bindings: () => {
         Utils.eventEmitter.on( 'timeend', ( type, prevType ) => {
-            Feed.add('timeend_'+prevType, {type: prevType});
-            Navigation.buildBottomBar( type );
+            Feed.add('timeend_'+prevType, {type: prevType, manager: });
+            Navigation.buildBottomBar( type , false);
         } );
         Utils.eventEmitter.on( 'timepause', ( type ) => {
-            Navigation.buildBottomBar( type );
+            Navigation.buildBottomBar( type, false );
         } );
         Utils.eventEmitter.on( 'timestart', ( type ) => {
-            Navigation.buildBottomBar( type );
+            Navigation.buildBottomBar( type, true );
         } );
     },
     shortcuts: () => {
@@ -51,9 +51,14 @@ const Navigation = {
             } )( i );
         }
     },
-    buildBottomBar: ( type ) => {
+    buildBottomBar: ( type, running ) => {
         console.log('Building bottombar, ', type);
-        document.querySelector( '.hbs-container-bottombar' ).innerHTML = bottomTmp( { activity: type } );
+        let dataObj = {
+            activity: type,
+            translationKey: 'activity_'+type,
+            running: running
+        }
+        document.querySelector( '.hbs-container-bottombar' ).innerHTML = bottomTmp( dataObj );
     }
 };
 

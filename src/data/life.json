@@ -45,7 +45,7 @@
     }
 },
 {
-    "msg": "Your best friend {{bff}}, demands you repay a loan",
+    "msg": "Your best friend <-bff->, demands you repay a loan",
     "duration": 1,
     "update":
     {

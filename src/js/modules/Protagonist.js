@@ -29,7 +29,7 @@ const Protagonist = {
         let mentality = Utils.isNullOrUndefined( savedGamePlayer ) ? 50 : savedGamePlayer.mentality;
         let creativity = Utils.isNullOrUndefined( savedGamePlayer ) ? 50 : savedGamePlayer.creativity;
         let happiness = Utils.isNullOrUndefined( savedGamePlayer ) ? 50 : savedGamePlayer.happiness;
-        let activity = Utils.isNullOrUndefined( savedGamePlayer ) ? 'idle' : savedGamePlayer.activity;
+        let activity = Utils.isNullOrUndefined( savedGamePlayer ) ? 'activity_idle' : savedGamePlayer.activity;
 
         Protagonist.model.name = name;
         Protagonist.model.genre = genre;

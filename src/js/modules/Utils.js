@@ -51,8 +51,8 @@ const Utils = {
         let isNew = false;
         let newNpc = {};
         let savedJobs = Store.get( 'jobs' ) || [];
-        if ( msg.indexOf( '{{' ) > -1 ) {
-            let npc = msg.match( /{{(.*)}}/ );
+        if ( msg.indexOf( '<-' ) > -1 ) {
+            let npc = msg.match( /<-(.*)->/ );
             let hasNpc = false;
             let oldNpc = {};
             if ( Utils.isNullOrUndefined( savedJobs ) === false ) {

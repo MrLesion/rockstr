@@ -10,7 +10,7 @@
     
     <div class="top-bar">
         <div class="top-bar-item">
-            <span>{{protagonist.name}}</span> (<span>{{protagonist.activity}}</span>)
+            <span>{{protagonist.name}}</span> (<span>{{getText protagonist.activity}}</span>)
         </div>
         <div class="flex-right">
             <div class="top-bar-item {{#compare protagonist.money '<' 1}}danger-color{{/compare}}">

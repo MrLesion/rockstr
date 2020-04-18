@@ -1,6 +1,6 @@
 [
 {
-    "msg": "{{manager}} can get you a slot in the local Battle of the Bands",
+    "msg": "<-manager-> can get you a slot in the local Battle of the Bands",
     "action": "Will you do it?",
     "promotion": "battle",
     "consequence": "promotion",
@@ -47,7 +47,7 @@
     }]
 },
 {
-    "msg": "{{manager}} can book you an interview on the local radio 'RGXY'",
+    "msg": "<-manager-> can book you an interview on the local radio 'RGXY'",
     "action": "Will you do it?",
     "promotion": "interview",
     "consequence": "promotion",

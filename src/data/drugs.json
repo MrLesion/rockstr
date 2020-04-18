@@ -1,10 +1,10 @@
 [{
-    "msg": "Your drummer {{drummer}}, offers you some LSD.",
+    "msg": "Your drummer <-drummer->, offers you some LSD.",
     "action": "Do you take it?",
     "drug": "lsd",
     "consequence": "drug"
 }, {
-    "msg": "Your manager {{manager}}, tells you to smoke more weed, it will increase your creativity.",
+    "msg": "Your manager <-manager->, tells you to smoke more weed, it will increase your creativity.",
     "action": "Do you smoke it?",
     "drug": "marijuana",
     "consequence": "drug"
@@ -19,12 +19,12 @@
     "drug": "marijuana",
     "consequence": "drug"
 }, {
-    "msg": "Your friend, {{bff}} is going on an all-night pub crawl and wants you to come along.",
+    "msg": "Your friend, <-bff-> is going on an all-night pub crawl and wants you to come along.",
     "action": "What do you say?",
     "drug": "alcohol",
     "consequence": "drug"
 }, {
-    "msg": "Your manager {{manager}}, is very happy about your progress and slips you a small bag of heroin.",
+    "msg": "Your manager <-manager->, is very happy about your progress and slips you a small bag of heroin.",
     "action": "Do you shoot up?",
     "drug": "heroin",
     "consequence": "drug"
@@ -49,7 +49,7 @@
     "drug": "lsd",
     "consequence": "drug"
 }, {
-    "msg": "Your bassist {{bassist}}, comes by with a bottle of rum.",
+    "msg": "Your bassist <-bassist->, comes by with a bottle of rum.",
     "action": "Do you share it?",
     "drug": "alcohol",
     "consequence": "drug"
@@ -59,7 +59,7 @@
     "drug": "cocaine",
     "consequence": "drug"
 }, {
-    "msg": "{{bff}} comes around with a bag of snow",
+    "msg": "<-bff-> comes around with a bag of snow",
     "action": "Do you sniff it?",
     "drug": "cocaine",
     "consequence": "drug"

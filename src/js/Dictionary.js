@@ -3,7 +3,7 @@ import Utils from './modules/Utils.js';
 const Dictionary = {
     get: ( key ) => {
         if ( Utils.isNullOrUndefined( Dictionary.texts[ key ] ) === true ) {
-            return '!--- Traslation missing ---!';
+            return '!--- Translation key missing: ' + key + ' ---!';
         } else {
             if ( typeof Dictionary.texts[ key ] === 'string' ) {
                 return Dictionary.texts[ key ]
@@ -23,12 +23,13 @@ const Dictionary = {
 
         timeend_laze: 'You stop doing nothing and get back to real life',
         timeend_busk: 'You made a little money and got some pratice, what\'s next then',
+        timeend_record: 'You are done recording the song <-song-> and <-manager-> sends it out to the media',
 
-        eventRentDue: 'You pay £[rent] in rent',
+        eventRentDue: 'You pay £<-rent-> in rent',
         eventChartsUpdated: 'The charts has been updated',
 
-        doPromotion_battle: '[manager] books a slot for you in Battle of the Bands [days] days from now',
-        doPromotion_interview: '[manager] calls the station an sets it up [days] days from now',
+        doPromotion_battle: '<-manager-> books a slot for you in Battle of the Bands <-days-> days from now',
+        doPromotion_interview: '<-manager-> calls the station an sets it up <-days-> days from now',
 
         doDrugs_alcohol: [
             'The booze makes you woozy',
@@ -40,11 +41,11 @@ const Dictionary = {
         doDrugs_marijuana: 'Marijuana makes everything a bit distorted',
         doDrugs_cocaine: 'The cocaine fills your head with crazy ideas!',
 
-        newsChartsEntryUpdateDown: '[entryName] moved down the charts this week',
-        newsChartsEntryUpdateUp: '[entryName] moved up the charts this week',
-        newsChartsEntryUpdateNumberOne: '[entryName] is still number one',
-        newsChartsEntryEnters: '[entryName] enters the charts as no.[entryPosition]',
-        newsBandGoesOnTour: '[band] goes on tour'
+        newsChartsEntryUpdateDown: '<-entryName-> moved down the charts this week',
+        newsChartsEntryUpdateUp: '<-entryName-> moved up the charts this week',
+        newsChartsEntryUpdateNumberOne: '<-entryName-> is still number one',
+        newsChartsEntryEnters: '<-entryName-> enters the charts as no.<-entryPosition_>',
+        newsBandGoesOnTour: '<-band-> goes on tour'
     }
 
 };

@@ -1,5 +1,4 @@
 import Utils from './Utils.js';
-import Console from '../Console.js';
 import Settings from '../Settings.js';
 import Bands from './Bands.js';
 import Songs from './Songs.js';
@@ -16,13 +15,13 @@ import * as chartsTmp from '../../templates/charts.hbs';
 const Charts = {
     model: {},
     construct: () => {
-        Console.log( 'chartsConstruct' );
+        console.log( 'chartsConstruct' );
         Charts.model.list = Charts.get();
         Charts.set();
     },
     get: () => {
         let stored = Store.get( 'charts' );
-        Console.log( 'chartsGet', stored );
+        console.log( 'chartsGet', stored );
         if ( Utils.isNullOrUndefined( stored ) === true ) {
             return Charts.generateCharts();
         } else {
@@ -77,7 +76,7 @@ const Charts = {
         container.innerHTML = chartsTmp( Charts.model.list );
     },
     updateEntry: ( chartEntry, index ) => {
-        Console.log( 'chartsUpdateEntry', chartEntry );
+        console.log( 'chartsUpdateEntry', chartEntry );
         let time = Store.get( 'time' ) !== null ? Store.get( 'time' ).date : Settings.STARTDATE;
         chartEntry.prevQuality = parseInt( chartEntry.quality );
         chartEntry.prevPostion = ( index + 1 );
@@ -134,7 +133,7 @@ const Charts = {
             entry = Charts.updateEntry( entry, i );
         } );
         list = Charts.generateCharts( list );
-        Console.log( 'chartsUpdate', list );
+        console.log( 'chartsUpdate', list );
         Charts.set( list );
     }
 }

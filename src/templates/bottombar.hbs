@@ -1,25 +1,31 @@
-{{#compare activity '===' 'idle'}}
-	{{log this}}
-	<div class="bottom-bar-item protagonist-action-laze">
-        Laze around
-    </div>
-    <div class="bottom-bar-item protagonist-action-busk">
-        Go busking
-    </div>
-    <div class="bottom-bar-item protagonist-action-gig">
-        Play gigs
-    </div>
-    <div class="bottom-bar-item protagonist-action-record">
-        Record song
-    </div>
-    <div class="bottom-bar-item protagonist-action-holiday">
-        Have a holiday
-    </div>
-    <div class="bottom-bar-item protagonist-action-doctor">
-        See a doctor
+{{#if running}}
+    <div class="bottom-bar-item">
+        {{getText translationKey}}
     </div>
 {{else}}
-    <div class="bottom-bar-item protagonist-action-continue" data-type="{{activity}}">
-        Continue {{activity}}
-    </div>
-{{/compare}}
+    {{#compare activity '===' 'idle'}}
+        {{log this}}
+        <div class="bottom-bar-item protagonist-action-laze">
+            Laze around
+        </div>
+        <div class="bottom-bar-item protagonist-action-busk">
+            Go busking
+        </div>
+        <div class="bottom-bar-item protagonist-action-gig">
+            Play gigs
+        </div>
+        <div class="bottom-bar-item protagonist-action-record">
+            Record song
+        </div>
+        <div class="bottom-bar-item protagonist-action-holiday">
+            Have a holiday
+        </div>
+        <div class="bottom-bar-item protagonist-action-doctor">
+            See a doctor
+        </div>
+    {{else}}
+        <div class="bottom-bar-item protagonist-action-continue" data-type="{{activity}}">
+            Continue {{getText translationKey}}
+        </div>
+    {{/compare}}
+{{/if}}
