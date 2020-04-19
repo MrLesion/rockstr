@@ -1,3 +1,5 @@
+import {TPL_NEWS_PANEL} from '../Templates.js';
+
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
 import Store from './Store.js';
@@ -5,9 +7,6 @@ import Time from './Time.js';
 
 /* Vendor */
 import * as moment from 'moment';
-
-/* Templates */
-import * as newsTmp from '../../templates/news.hbs';
 
 const News = {
     fetchedMonth: null,
@@ -66,8 +65,7 @@ const News = {
     },
     build: () => {
         const container = document.querySelector( '.hbs-container-news' );
-        //console.log(News.store);
-        container.innerHTML = newsTmp( News.store );
+        container.innerHTML = TPL_NEWS_PANEL( News.store );
     }
 }
 

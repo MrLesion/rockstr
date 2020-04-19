@@ -1,3 +1,5 @@
+import {TPL_FEED_PANEL} from '../Templates.js';
+
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
 import Time from './Time.js';
@@ -6,9 +8,6 @@ import Speech from './Speech.js';
 
 /* Vendor */
 import * as moment from 'moment';
-
-/* Templates */
-import * as feedTmp from '../../templates/feed.hbs';
 
 const Feed = {
     store: [],
@@ -45,7 +44,7 @@ const Feed = {
     },
     build: ( eventObj ) => {
         const container = document.querySelector( '.hbs-container-feed' );
-        container.innerHTML = feedTmp( Feed.store );
+        container.innerHTML = TPL_FEED_PANEL( Feed.store );
         if ( Utils.isNullOrUndefined( eventObj ) === false ) {
             Feed.bindAction( container, eventObj );
         }

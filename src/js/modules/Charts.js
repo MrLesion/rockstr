@@ -1,3 +1,5 @@
+import {TPL_CHARTS_PANEL} from '../Templates.js';
+
 import Utils from './Utils.js';
 import Settings from '../Settings.js';
 import Bands from './Bands.js';
@@ -9,8 +11,6 @@ import News from './News.js';
 /* Vendor */
 import * as moment from 'moment';
 
-/* Templates */
-import * as chartsTmp from '../../templates/charts.hbs';
 
 const Charts = {
     model: {},
@@ -73,7 +73,7 @@ const Charts = {
     },
     buildCharts: () => {
         const container = document.querySelector( '.hbs-container-charts' );
-        container.innerHTML = chartsTmp( Charts.model.list );
+        container.innerHTML = TPL_CHARTS_PANEL( Charts.model.list );
     },
     updateEntry: ( chartEntry, index ) => {
         console.log( 'chartsUpdateEntry', chartEntry );

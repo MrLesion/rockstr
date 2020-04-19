@@ -1,4 +1,5 @@
 import * as Data from './Data.js';
+import {TPL_GENRE_SELECT} from '../Templates.js';
 
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
@@ -12,8 +13,6 @@ import Charts from './Charts.js';
 import News from './News.js';
 import Schedule from './Schedule.js';
 import Speech from './Speech.js';
-
-import * as genreSelect from '../../templates/genreSelect.hbs';
 
 const Initialize = {
     construct: () => {
@@ -57,7 +56,7 @@ const Initialize = {
     },
     build: () => {
         const container = document.querySelector( '.hbs-container-genreSelect' );
-        container.innerHTML = genreSelect( Data.genres );
+        container.innerHTML = TPL_GENRE_SELECT( Data.genres );
     },
     run: ( name = '', genre = '' ) => {
         Protagonist.construct( name, genre );

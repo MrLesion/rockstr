@@ -1,3 +1,5 @@
+import {TPL_EVENT_MODAL} from '../Templates.js';
+
 import * as Data from './Data.js';
 
 import Settings from '../Settings.js';
@@ -13,9 +15,6 @@ import Songs from './Songs.js';
 
 /* Vendor */
 import * as moment from 'moment';
-
-/* Templates */
-import * as eventModalTmp from '../../templates/eventModal.hbs';
 
 
 const Events = {
@@ -91,7 +90,7 @@ const Events = {
                     }
                 }
             } );
-            modalContainer.innerHTML = eventModalTmp( scheduledEventObject );
+            modalContainer.innerHTML = TPL_EVENT_MODAL( scheduledEventObject );
             Modal.show( () => {
                 let firstQuestion = modalContainer.querySelector( '[data-step="0"]' );
                 firstQuestion.classList.add( 'active' );

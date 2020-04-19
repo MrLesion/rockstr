@@ -1,3 +1,5 @@
+import {TPL_TOP_BAR, TPL_END_MODAL} from '../Templates.js';
+
 import * as Data from './Data.js';
 
 import Utils from './Utils.js';
@@ -10,10 +12,6 @@ import Songs from './Songs.js';
 
 /* Vendor */
 import * as moment from 'moment';
-
-/* Templates */
-import * as topTmp from '../../templates/topbar.hbs';
-import * as lastMessageTmp from '../../templates/lastMessage.hbs';
 
 const Protagonist = {
     model: {},
@@ -167,7 +165,7 @@ const Protagonist = {
     },
     update: ( fnCallback ) => {
         const container = document.querySelector( '.hbs-container-topbar' );
-        container.innerHTML = topTmp( { protagonist: Protagonist.model, time: Store.get( 'time' ), npc: Store.get( 'jobs' ), addictions: Store.get( 'addictions' ), songs: Store.get( 'songs' ) } );
+        container.innerHTML = TPL_TOP_BAR( { protagonist: Protagonist.model, time: Store.get( 'time' ), npc: Store.get( 'jobs' ), addictions: Store.get( 'addictions' ), songs: Store.get( 'songs' ) } );
         if ( typeof fnCallback === 'function' ) {
             fnCallback();
         }
@@ -191,7 +189,7 @@ const Protagonist = {
         } else if ( key === 'health' ) {
             endObj.msg = 'Your interest in the creative arts have withered. You give up music and become a banker';
         }
-        container.innerHTML = lastMessageTmp( endObj );
+        container.innerHTML = TPL_END_MODAL( endObj );
     }
 };
 

@@ -1,9 +1,8 @@
+import {TPL_BOTTOM_BAR} from '../Templates.js';
+
 import Utils from './Utils.js';
 import Schedule from './Schedule.js';
 import Feed from './Feed.js';
-
-/* Templates */
-import * as bottomTmp from '../../templates/bottombar.hbs';
 
 const Navigation = {
     construct: () => {
@@ -13,7 +12,7 @@ const Navigation = {
     },
     bindings: () => {
         Utils.eventEmitter.on( 'timeend', ( type, prevType ) => {
-            Feed.add('timeend_'+prevType, {type: prevType, manager: });
+            Feed.add('timeend_'+prevType, {type: prevType});
             Navigation.buildBottomBar( type , false);
         } );
         Utils.eventEmitter.on( 'timepause', ( type ) => {
@@ -58,7 +57,7 @@ const Navigation = {
             translationKey: 'activity_'+type,
             running: running
         }
-        document.querySelector( '.hbs-container-bottombar' ).innerHTML = bottomTmp( dataObj );
+        document.querySelector( '.hbs-container-bottombar' ).innerHTML = TPL_BOTTOM_BAR( dataObj );
     }
 };
 
