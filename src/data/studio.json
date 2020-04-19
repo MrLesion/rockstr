@@ -1,6 +1,6 @@
 [
     {
-        "msg": "Your drummer <-drummer->, thinks that changing the title of the song could do wonders for it. The new title suggested is [title].",
+        "msg": "Your drummer <-drummer->, thinks that changing the title of the song could do wonders for it. The new title suggested is '<-songtitle->'",
         "savedValue": null,
         "decide":{
             "yes": {

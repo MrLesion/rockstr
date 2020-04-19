@@ -23,7 +23,7 @@ const Dictionary = {
 
         timeend_laze: 'You stop doing nothing and get back to real life',
         timeend_busk: 'You made a little money and got some pratice, what\'s next then',
-        timeend_record: 'You are done recording the song <-song-> and <-manager-> sends it out to the media',
+        timeend_record: 'You are done recording the song \'<-songtitle->\' and <-manager-> sends it out to the media',
 
         eventRentDue: 'You pay £<-rent-> in rent',
         eventChartsUpdated: 'The charts has been updated',

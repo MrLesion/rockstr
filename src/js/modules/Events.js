@@ -29,12 +29,12 @@ const Events = {
     run: () => {
         let currentActivity = Protagonist.get( 'activity' );
         let event = {};
+        let eventTypes = [ 'life', 'promotions', 'drugs' ];
+        let eventType = eventTypes[ Utils.randIndex( eventTypes.length ) ];
 
         if ( currentActivity === 'activity_record' ) {
             event = Data.studio[ Utils.randIndex( Data.studio.length ) ]
         } else {
-            let eventTypes = [ 'life', 'promotions', 'drugs' ];
-            let eventType = eventTypes[ Utils.randIndex( eventTypes.length ) ];
             event = Data[ eventType ][ Utils.randIndex( Data[ eventType ].length ) ];
         }
 
@@ -44,6 +44,8 @@ const Events = {
                 Protagonist.set( key, updatedValue );
             } );
         }
+
+        console.log();
 
         Events.emit( eventType, event );
     },

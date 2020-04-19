@@ -1,6 +1,7 @@
 import * as Data from './Data.js';
 
 import Store from './Store.js';
+import Songs from './Songs.js';
 
 const Utils = {
     objectIsEmpty: ( obj ) => {
@@ -47,37 +48,55 @@ const Utils = {
         return pieces.join( " " );
     },
     replacePlaceholder: ( msg ) => {
-        let returnMsg = msg;
+        let returnMsg = '';
         let isNew = false;
         let newNpc = {};
         let savedJobs = Store.get( 'jobs' ) || [];
-        if ( msg.indexOf( '<-' ) > -1 ) {
+        if ( msg.indexOf( '<-' ) > -1 && msg.indexOf( '->' ) > -1 ) {
             let npc = msg.match( /<-(.*)->/ );
-            let hasNpc = false;
-            let oldNpc = {};
-            if ( Utils.isNullOrUndefined( savedJobs ) === false ) {
-                savedJobs.forEach( function ( savedJob, index ) {
-                    if ( savedJob.job === npc[ 1 ] ) {
-                        hasNpc = true
-                        oldNpc.job = savedJob.job;
-                        oldNpc.name = savedJob.name;
+            let placeholders = msg.match( /\<-\w+\->/g ).map( s => s );
+
+            placeholders.forEach( ( placeholder ) => {
+                let placeholderMap = placeholder.match( /<-(.*)->/ );
+                let placeholdeTag = placeholderMap[ 0 ];
+                let placeholdeData = placeholderMap[ 1 ];
+                let isNPC = Data.jobs.indexOf( placeholdeData ) > -1;
+
+                if ( isNPC === true ) {
+                    let hasNpc = false;
+                    let oldNpc = {};
+
+                    if ( Utils.isNullOrUndefined( savedJobs ) === false ) {
+                        savedJobs.forEach( function ( savedJob, index ) {
+                            if ( savedJob.job === placeholdeData ) {
+                                hasNpc = true
+                                oldNpc.job = savedJob.job;
+                                oldNpc.name = savedJob.name;
+                            }
+                        } );
                     }
-                } );
-            }
 
-            if ( hasNpc === true ) {
-                returnMsg = msg.replace( npc[ 0 ], oldNpc.name );
-            } else {
-                newNpc = Utils.generateNpc( npc[ 1 ] );
-                if ( newNpc.name ) {
-                    isNew = true;
-                    returnMsg = msg.replace( npc[ 0 ], newNpc.name );
+                    if ( hasNpc === true ) {
+                        msg = msg.replace( placeholdeTag, oldNpc.name );
+                    } else {
+                        newNpc = Utils.generateNpc( placeholdeData );
+                        if ( newNpc.name ) {
+                            isNew = true;
+                            msg = msg.replace( placeholdeTag, newNpc.name );
+                        }
+                        savedJobs.push( newNpc );
+                        Store.set( 'jobs', savedJobs );
+                    }
+                } else{
+
+                    if(placeholdeData === 'songtitle'){
+                        let newSongTitle = Songs.generate();
+                        msg = msg.replace( placeholdeTag, newSongTitle.song);
+                    }
                 }
-                savedJobs.push( newNpc );
-                Store.set( 'jobs', savedJobs );
-            }
-
+            } );
         }
+        returnMsg = msg;
         return returnMsg;
     },
     generateNpc: ( myJob ) => {
