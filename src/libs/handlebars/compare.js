@@ -42,5 +42,4 @@ export default function ( a, operator, b, options ) {
     } else {
         return options.inverse( this );
     }
-
 }

@@ -1,10 +1,9 @@
-import {TPL_EVENT_MODAL} from '../Templates.js';
+import { TPL_EVENT_MODAL } from '../Templates.js';
 
 import * as Data from './Data.js';
 
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
-import Time from './Time.js';
 import Feed from './Feed.js';
 import Protagonist from './Protagonist.js';
 import Bands from './Bands.js';
@@ -13,18 +12,20 @@ import Schedule from './Schedule.js';
 import Modal from './Modal.js';
 import Songs from './Songs.js';
 
-/* Vendor */
-import * as moment from 'moment';
-
 
 const Events = {
     current: {},
     next: {},
-    emit: ( key, value ) => {
-        if ( Utils.isNullOrUndefined( Events[ key ] ) === false ) {
-            Events.current = value;
-            Events[ key ]( value );
-        }
+    construct: () => {
+        Events.bindings();
+    },
+    bindings: () => {
+        Utils.eventEmitter.on( 'rentDue', () => {
+            Events.rentDue();
+        } );
+        Utils.eventEmitter.on( 'chartsUpdate', () => {
+            Events.chartsUpdate();
+        } );
     },
     run: () => {
         let currentActivity = Protagonist.get( 'activity' );
@@ -45,15 +46,16 @@ const Events = {
             } );
         }
 
-        console.log();
-
-        Events.emit( eventType, event );
+        if ( Utils.isNullOrUndefined( Events[ eventType ] ) === false ) {
+            Events.current = event;
+            Events[ eventType ]( event );
+        }
     },
-    rentDue: ( value ) => {
+    rentDue: () => {
         Feed.add( 'eventRentDue', { rent: Settings.RENT } );
         Protagonist.set( 'money', ( Protagonist.get( 'money' ) - Settings.RENT ) );
     },
-    chartsUpdate: ( value ) => {
+    chartsUpdate: () => {
         Feed.add( 'eventChartsUpdated' );
         Charts.update();
     },

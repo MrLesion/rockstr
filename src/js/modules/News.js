@@ -2,7 +2,6 @@ import {TPL_NEWS_PANEL} from '../Templates.js';
 
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
-import Store from './Store.js';
 import Time from './Time.js';
 
 /* Vendor */
@@ -16,10 +15,18 @@ const News = {
         date: '',
         nyt: []
     },
+    construct: () => {
+        News.bindings();
+    },
+    bindings: () => {
+        Utils.eventEmitter.on( 'newsGet', () => {
+            News.get();
+        } );
+    },
     set: () => {
         let daysNews = [];
         let date = moment( Time.get().date );
-        News.fetchedJSON.forEach( ( element, index ) => {
+        News.fetchedJSON.forEach( ( element ) => {
             var elementDate = moment( element.pub_date );
             if ( elementDate.date() === date.date() && element.document_type === Settings.NYTTYPE ) {
                 if ( element.lead_paragraph !== null && element.lead_paragraph.length > 40 ) {

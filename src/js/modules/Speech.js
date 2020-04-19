@@ -1,5 +1,4 @@
 import Settings from '../Settings.js';
-import Utils from './Utils.js';
 
 const Speech = {
     synth: null,

@@ -1,6 +1,17 @@
 import Utils from './Utils.js';
 
 const Modal = {
+    construct: () => {
+        Modal.construct();
+    },
+    bindings: () => {
+        Utils.eventEmitter.on( 'modalShow', () => {
+            Modal.show();
+        } );
+        Utils.eventEmitter.on( 'modalHide', () => {
+            Modal.hide();
+        } );
+    },
     show: ( fnCallback ) => {
         let modal = document.querySelector( '.modal-backdrop' );
         modal.setAttribute( 'data-hidden', 'false' );

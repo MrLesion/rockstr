@@ -1,7 +1,4 @@
-import * as Data from './Data.js';
-
 import Utils from './Utils.js';
-import Settings from '../Settings.js';
 import Store from './Store.js';
 import Protagonist from './Protagonist.js';
 import Bands from './Bands.js';

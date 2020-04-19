@@ -10,4 +10,4 @@ export default function ( optionArr, optionAction ) {
 		}
 	}
 	return optionArr;
-};
+}

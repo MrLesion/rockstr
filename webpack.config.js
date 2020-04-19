@@ -1,7 +1,7 @@
 // Webpack uses this to work with directories
-const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require( 'path' );
+const MiniCssExtractPlugin = require( "mini-css-extract-plugin" );
+const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 
 
 // This is main configuration object.
@@ -14,19 +14,22 @@ module.exports = {
     // Path and filename of your result bundle.
     // Webpack will bundle all JavaScript into this file
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve( __dirname, 'dist' ),
         filename: 'bundle.js'
     },
 
     module: {
-        rules: [{
+        rules: [ {
+                enforce: 'pre',
                 test: /\.js$/,
-                exclude: /(node_modules)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
+                exclude: /node_modules/,
+                loader: 'eslint-loader',
+            }, {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    presets: [ '@babel/preset-env' ]
                 }
             },
             {
@@ -34,7 +37,7 @@ module.exports = {
                 loader: "handlebars-loader",
                 options: {
                     helperDirs: [
-                        path.resolve(__dirname, "src/libs/handlebars"),
+                        path.resolve( __dirname, "src/libs/handlebars" ),
                     ]
                 },
             },
@@ -45,7 +48,7 @@ module.exports = {
                 // Set loaders to transform files.
                 // Loaders are applying from right to left(!)
                 // The first loader will be applied after others
-                use: [{
+                use: [ {
                         // After all CSS loaders we use plugin to do his work.
                         // It gets all transformed CSS and extracts it into separate
                         // single bundled file
@@ -62,7 +65,7 @@ module.exports = {
                         // First we transform SASS to standard CSS
                         loader: "sass-loader",
                         options: {
-                            implementation: require("sass")
+                            implementation: require( "sass" )
                         }
                     }
                 ]
@@ -70,7 +73,7 @@ module.exports = {
             {
                 // Now we apply rule for images
                 test: /\.(png|jpe?g|gif|svg)$/,
-                use: [{
+                use: [ {
                     // Using file-loader for these files
                     loader: "file-loader",
 
@@ -79,21 +82,21 @@ module.exports = {
                     options: {
                         outputPath: './images'
                     }
-                }]
+                } ]
             }
         ]
     },
     plugins: [
 
-        new MiniCssExtractPlugin({
+        new MiniCssExtractPlugin( {
             filename: "bundle.css"
-        }),
-        new HtmlWebpackPlugin({
+        } ),
+        new HtmlWebpackPlugin( {
             title: 'Rockstr',
             template: 'index.html',
-            minify:true,
-            hash:true
-        })
+            minify: true,
+            hash: true
+        } )
 
     ],
     mode: 'development'

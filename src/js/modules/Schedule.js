@@ -1,10 +1,6 @@
-import * as Data from './Data.js';
-
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
 import Store from './Store.js';
-import Time from './Time.js';
-import Feed from './Feed.js';
 
 /* Vendor */
 import * as moment from 'moment';

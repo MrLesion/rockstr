@@ -6,4 +6,4 @@ export default function ( obj, options ) {
 	} else {
 		return options.inverse( this );
 	}
-};
+}

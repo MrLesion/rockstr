@@ -1,11 +1,11 @@
 import * as Data from './Data.js';
-import {TPL_GENRE_SELECT} from '../Templates.js';
+import { TPL_GENRE_SELECT } from '../Templates.js';
 
-import Settings from '../Settings.js';
 import Utils from './Utils.js';
 import Bands from './Bands.js';
 import Store from './Store.js';
 import Navigation from './Navigation.js';
+import Events from './Events.js';
 import Time from './Time.js';
 import Protagonist from './Protagonist.js';
 import Songs from './Songs.js';
@@ -13,11 +13,11 @@ import Charts from './Charts.js';
 import News from './News.js';
 import Schedule from './Schedule.js';
 import Speech from './Speech.js';
+import Modal from './Modal.js';
 
 const Initialize = {
     construct: () => {
         let savedGamePlayer = Store.get( 'protagonist' );
-        let container = document.querySelector( '.intro-container' );
         if ( Utils.isNullOrUndefined( savedGamePlayer ) === true ) {
             Bands.construct();
             Initialize.bindings();
@@ -62,10 +62,13 @@ const Initialize = {
         Protagonist.construct( name, genre );
         Speech.construct();
         Navigation.construct();
+        Events.construct();
         Schedule.construct();
+        News.construct();
         Songs.construct();
         Time.construct();
         Charts.construct();
+        Modal.construct();
         Initialize.hideIntro();
     },
     loader: {

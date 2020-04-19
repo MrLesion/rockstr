@@ -4,9 +4,7 @@ import Utils from './Utils.js';
 import Settings from '../Settings.js';
 import Bands from './Bands.js';
 import Songs from './Songs.js';
-import Time from './Time.js';
 import Store from './Store.js';
-import News from './News.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -76,8 +74,6 @@ const Charts = {
         container.innerHTML = TPL_CHARTS_PANEL( Charts.model.list );
     },
     updateEntry: ( chartEntry, index ) => {
-        console.log( 'chartsUpdateEntry', chartEntry );
-        let time = Store.get( 'time' ) !== null ? Store.get( 'time' ).date : Settings.STARTDATE;
         chartEntry.prevQuality = parseInt( chartEntry.quality );
         chartEntry.prevPostion = ( index + 1 );
         chartEntry.new = false;

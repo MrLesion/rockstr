@@ -1214,7 +1214,7 @@ section#feed::after {
   height: 100vh;
   margin-right: auto;
   margin-left: auto;
-  background: #1a1516 url(images/49dd34857408ce77c7b0d8dadf7a4a73.png);
+  background: #000 url(images/49dd34857408ce77c7b0d8dadf7a4a73.png);
   transition: all 0.3s ease;
 }
 .wrapper .container {

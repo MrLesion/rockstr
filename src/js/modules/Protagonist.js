@@ -8,7 +8,6 @@ import Store from './Store.js';
 import Time from './Time.js';
 import Feed from './Feed.js';
 import Schedule from './Schedule.js';
-import Songs from './Songs.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -86,7 +85,6 @@ const Protagonist = {
             if ( type === 'record' ) {
                 console.log( 'emitted timeend_record' );
             }
-
         } );
     },
     doDrugs: ( eventObj ) => {
@@ -107,7 +105,7 @@ const Protagonist = {
             }
         }
 
-        let addictionsLevels = Data.core.addictLevels;
+        //let addictionsLevels = Data.core.addictLevels;
 
         if ( addictions[ drug ].addictionLevel > 0 && addictions[ drug ].addictionLevel < 5 ) {
             addictions[ drug ].addictionText = Data.core.addictLevels.low;
@@ -131,7 +129,6 @@ const Protagonist = {
     doPromotion: ( eventObj ) => {
         let time = Store.get( 'time' ) !== null ? Store.get( 'time' ).date : Settings.STARTDATE;
         let randEventDays = Utils.randInt( 10 );
-        let promotion = Data.core.promotions[ eventObj.promotion ];
         let eventDate = moment( time ).add( randEventDays, 'days' );
         let jobs = Store.get( 'jobs' );
         let manager = jobs.filter( ( npc ) => {
@@ -177,7 +174,6 @@ const Protagonist = {
             msg: '',
             time: 'You lived the life of a cool musician for ' + timeLived + ' days'
         };
-        let endNotes = '';
         if ( key === 'money' ) {
             endObj.msg = 'You ran out of money';
         } else if ( key === 'mentality' ) {

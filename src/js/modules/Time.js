@@ -1,16 +1,10 @@
-import * as Data from './Data.js';
-
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
 import Bands from './Bands.js';
 import Store from './Store.js';
-import Dictionary from '../Dictionary.js';
-import Charts from './Charts.js';
 import Events from './Events.js';
-import News from './News.js';
 import Protagonist from './Protagonist.js';
 import Schedule from './Schedule.js';
-import Modal from './Modal.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -32,7 +26,7 @@ const Time = {
         Store.set( 'time', Time.model );
         Time.update();
         if ( typeof callback === 'function' ) {
-            return callback( value );
+            return callback();
         }
     },
     get: () => {
@@ -78,12 +72,12 @@ const Time = {
                         let oldValue = Protagonist.get( key );
                         Protagonist.set( key, oldValue + timeObj.update[ key ].value );
                     } );
-                    if ( timeObj.callback && typeof timObj.callback === 'function' ) {
+                    if ( timeObj.callback && typeof timeObj.callback === 'function' ) {
                         timeObj.callback( type );
                     }
                 }
             }
-            let band = Bands.getBand();
+            Bands.getBand();
             Time.ticks--;
         }, Settings.TICK );
     },
@@ -124,12 +118,12 @@ const Time = {
             dateElement.innerHTML = moment( Time.model.date ).format( Settings.DATEFORMAT );
         }
         if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.RENTDUE === 0 ) {
-            Events.emit( 'rentDue' );
+            Utils.eventEmitter.emit( 'rentDue' );
         }
         if ( Time.model.daysAlive > 1 && Time.model.daysAlive % 7 === 0 ) {
-            Events.emit( 'chartsUpdate' );
+            Utils.eventEmitter.emit( 'chartsUpdate' );
         } else {
-            News.get();
+            Utils.eventEmitter.emit( 'newsGet' );
         }
     }
 }

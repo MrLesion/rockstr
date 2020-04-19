@@ -49,12 +49,10 @@ const Utils = {
     },
     replacePlaceholder: ( msg ) => {
         let returnMsg = '';
-        let isNew = false;
         let newNpc = {};
         let savedJobs = Store.get( 'jobs' ) || [];
         if ( msg.indexOf( '<-' ) > -1 && msg.indexOf( '->' ) > -1 ) {
-            let npc = msg.match( /<-(.*)->/ );
-            let placeholders = msg.match( /\<-\w+\->/g ).map( s => s );
+            let placeholders = msg.match( /<-\w+->/g ).map( s => s );
 
             placeholders.forEach( ( placeholder ) => {
                 let placeholderMap = placeholder.match( /<-(.*)->/ );
@@ -67,7 +65,7 @@ const Utils = {
                     let oldNpc = {};
 
                     if ( Utils.isNullOrUndefined( savedJobs ) === false ) {
-                        savedJobs.forEach( function ( savedJob, index ) {
+                        savedJobs.forEach( function ( savedJob ) {
                             if ( savedJob.job === placeholdeData ) {
                                 hasNpc = true
                                 oldNpc.job = savedJob.job;
@@ -81,7 +79,6 @@ const Utils = {
                     } else {
                         newNpc = Utils.generateNpc( placeholdeData );
                         if ( newNpc.name ) {
-                            isNew = true;
                             msg = msg.replace( placeholdeTag, newNpc.name );
                         }
                         savedJobs.push( newNpc );
@@ -111,7 +108,6 @@ const Utils = {
     delegate: ( event, selector, callback ) => {
         document.addEventListener( event, function ( e ) {
             for ( var target = e.target; target && target !== this; target = target.parentNode ) {
-                // loop parent nodes from the target to the delegation node
                 if ( target.matches( selector ) ) {
                     callback.call( target, e );
                     break;
@@ -137,7 +133,6 @@ const Utils = {
             }
         },
         emit( event, ...args ) {
-            console.log( 'Emitted Event: ', event, ...args );
             if ( typeof Utils.eventEmitter.events[ event ] === 'object' ) {
                 Utils.eventEmitter.events[ event ].forEach( listener => listener.apply( Utils.eventEmitter, args ) );
             }
