@@ -2,7 +2,7 @@ import Utils from './Utils.js';
 
 const Modal = {
     construct: () => {
-        Modal.construct();
+        Modal.bindings();
     },
     bindings: () => {
         Utils.eventEmitter.on( 'modal.show', (fnCallback) => {
