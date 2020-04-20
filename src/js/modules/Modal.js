@@ -5,10 +5,10 @@ const Modal = {
         Modal.construct();
     },
     bindings: () => {
-        Utils.eventEmitter.on( 'modalShow', () => {
-            Modal.show();
+        Utils.eventEmitter.on( 'modal.show', (fnCallback) => {
+            Modal.show(fnCallback);
         } );
-        Utils.eventEmitter.on( 'modalHide', () => {
+        Utils.eventEmitter.on( 'modal.hide', () => {
             Modal.hide();
         } );
     },

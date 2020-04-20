@@ -41,7 +41,7 @@ const Time = {
         }
     },
     run: ( days = 0, type = 'laze', timeObj = null ) => {
-        Utils.eventEmitter.emit( 'timestart', type );
+        Utils.eventEmitter.emit( 'time.start', type );
         document.querySelector( '.wrapper' ).classList.add( 'time-ticking' );
 
         if ( Utils.isNullOrUndefined( timeObj ) === false ) {
@@ -50,7 +50,7 @@ const Time = {
             Time.ticks += days;
         }
 
-        Protagonist.set( 'activity', 'activity_'+type );
+        Protagonist.set( 'activity', 'activity_' + type );
 
         Time.ticker = setInterval( () => {
             console.log( 'Time.run', Time.ticks );
@@ -58,6 +58,8 @@ const Time = {
             Time.set( 1 );
             let checkDateForEvent = Schedule.updateDate();
             Time.handleModifiers();
+            Bands.getBand();
+
             if ( Utils.objectIsEmpty( checkDateForEvent ) === false ) {
                 Time.end( type );
                 Events.schedule.run( checkDateForEvent );
@@ -77,13 +79,12 @@ const Time = {
                     }
                 }
             }
-            Bands.getBand();
             Time.ticks--;
         }, Settings.TICK );
     },
 
-    end: (type = 'idle') => {
-        Utils.eventEmitter.emit( 'timeend', 'idle', type );
+    end: ( type = 'idle' ) => {
+        Utils.eventEmitter.emit( 'time.end', 'idle', type );
         const wrapper = document.querySelector( '.wrapper' );
         wrapper.classList.remove( 'time-ticking' );
         Protagonist.set( 'activity', 'activity_idle' );
@@ -91,10 +92,10 @@ const Time = {
         clearInterval( Time.ticker );
     },
     pause: ( eventTick, type = 'idle' ) => {
-        Utils.eventEmitter.emit( 'timepause', type, eventTick );
+        Utils.eventEmitter.emit( 'time.pause', type, eventTick );
         const wrapper = document.querySelector( '.wrapper' );
         wrapper.classList.remove( 'time-ticking' );
-        Protagonist.set( 'activity', 'activity_'+type);
+        Protagonist.set( 'activity', 'activity_' + type );
         clearInterval( Time.ticker );
     },
     handleModifiers: () => {
@@ -118,12 +119,12 @@ const Time = {
             dateElement.innerHTML = moment( Time.model.date ).format( Settings.DATEFORMAT );
         }
         if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.RENTDUE === 0 ) {
-            Utils.eventEmitter.emit( 'rentDue' );
+            Utils.eventEmitter.emit( 'protagonist.rent' );
         }
-        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % 7 === 0 ) {
-            Utils.eventEmitter.emit( 'chartsUpdate' );
+        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.UPDATECHARTS === 0 ) {
+            Utils.eventEmitter.emit( 'charts.update' );
         } else {
-            Utils.eventEmitter.emit( 'newsGet' );
+            Utils.eventEmitter.emit( 'new.get' );
         }
     }
 }

@@ -20,10 +20,10 @@ const Events = {
         Events.bindings();
     },
     bindings: () => {
-        Utils.eventEmitter.on( 'rentDue', () => {
+        Utils.eventEmitter.on( 'protagonist.rent', () => {
             Events.rentDue();
         } );
-        Utils.eventEmitter.on( 'chartsUpdate', () => {
+        Utils.eventEmitter.on( 'charts.update', () => {
             Events.chartsUpdate();
         } );
     },
@@ -95,11 +95,18 @@ const Events = {
                 }
             } );
             modalContainer.innerHTML = TPL_EVENT_MODAL( scheduledEventObject );
+            Utils.eventEmitter.emit( 'modal.show', () => {
+                let firstQuestion = modalContainer.querySelector( '[data-step="0"]' );
+                firstQuestion.classList.add( 'active' );
+                Modal.bindEvents();
+            } );
+            /*
             Modal.show( () => {
                 let firstQuestion = modalContainer.querySelector( '[data-step="0"]' );
                 firstQuestion.classList.add( 'active' );
                 Modal.bindEvents();
             } );
+            */
         }
     }
 }

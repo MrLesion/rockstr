@@ -2,6 +2,7 @@ import * as Data from './Data.js';
 
 import Store from './Store.js';
 import Songs from './Songs.js';
+import Bands from './Bands.js';
 
 const Utils = {
     objectIsEmpty: ( obj ) => {
@@ -84,11 +85,13 @@ const Utils = {
                         savedJobs.push( newNpc );
                         Store.set( 'jobs', savedJobs );
                     }
-                } else{
-
-                    if(placeholdeData === 'songtitle'){
+                } else {
+                    if ( placeholdeData === 'songtitle' ) {
                         let newSongTitle = Songs.generate();
-                        msg = msg.replace( placeholdeTag, newSongTitle.song);
+                        msg = msg.replace( placeholdeTag, newSongTitle.song );
+                    } else if ( placeholdeData === 'bandname' ) {
+                        let bandname = Bands.getBand();
+                        msg = msg.replace( placeholdeTag, bandname.name );
                     }
                 }
             } );

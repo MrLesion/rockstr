@@ -46,7 +46,6 @@ const Bands = {
     getBand: () => {
         let allBands = Bands.getAllBands();
         let bands = Utils.shuffleArr( allBands );
-
         return bands[ Utils.randIndex( bands.length - 1 ) ];
     },
     getAllBands: () => {

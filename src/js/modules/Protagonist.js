@@ -81,9 +81,9 @@ const Protagonist = {
             Time.run( 0, type );
         } );
 
-        Utils.eventEmitter.on( 'timeend', ( type ) => {
+        Utils.eventEmitter.on( 'time.end', ( type ) => {
             if ( type === 'record' ) {
-                console.log( 'emitted timeend_record' );
+                console.log( 'TODO: Handle tem end recording' );
             }
         } );
     },

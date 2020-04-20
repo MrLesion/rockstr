@@ -19,7 +19,6 @@ const Initialize = {
     construct: () => {
         let savedGamePlayer = Store.get( 'protagonist' );
         if ( Utils.isNullOrUndefined( savedGamePlayer ) === true ) {
-            Bands.construct();
             Initialize.bindings();
             Initialize.build();
             Initialize.showIntro();
@@ -60,6 +59,7 @@ const Initialize = {
     },
     run: ( name = '', genre = '' ) => {
         Protagonist.construct( name, genre );
+        Bands.construct();
         Speech.construct();
         Navigation.construct();
         Events.construct();

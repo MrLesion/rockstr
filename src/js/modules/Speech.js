@@ -6,7 +6,7 @@ const Speech = {
         Speech.synth = speechSynthesis;
     },
     speak: ( txt ) => {
-        if ( Settings.ACTIVE_MODULES.Speech === true ) {
+        if ( Settings.ACTIVE_MODULES_SPEECH === true ) {
             Speech.synth.cancel();
             let speaking = new SpeechSynthesisUtterance( txt );
             speaking.lang = 'en-GB';

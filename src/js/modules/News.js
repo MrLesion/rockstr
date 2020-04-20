@@ -19,7 +19,7 @@ const News = {
         News.bindings();
     },
     bindings: () => {
-        Utils.eventEmitter.on( 'newsGet', () => {
+        Utils.eventEmitter.on( 'news.get', () => {
             News.get();
         } );
     },
@@ -39,7 +39,7 @@ const News = {
         News.store.nyt = Utils.sortByInt( daysNews, 'print_page' );
         News.store.nyt.length = 15;
         News.store.date = Time.get().date;
-        if ( Settings.ACTIVE_MODULES.News === true ) {
+        if ( Settings.ACTIVE_MODULES_NEWS === true ) {
             News.build();
         }
     },
@@ -49,7 +49,7 @@ const News = {
             if ( News.xhr !== null ) {
                 console.log( News.xhr.readyState, News.xhr.status );
             }
-            if ( Settings.ACTIVE_MODULES.News === true ) {
+            if ( Settings.ACTIVE_MODULES_NEWS === true ) {
                 News.xhr = new XMLHttpRequest();
                 News.xhr.open( 'GET', Settings.NYTURL.replace( '{year}', date.year() ).replace( '{month}', ( date.month() + 1 ) ).replace( '{key}', Settings.NYTAPIKEY ) );
                 News.xhr.onload = function () {
