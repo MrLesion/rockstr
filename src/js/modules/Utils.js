@@ -3,6 +3,7 @@ import * as Data from './Data.js';
 import Store from './Store.js';
 import Songs from './Songs.js';
 import Bands from './Bands.js';
+import Temp from './Temp.js';
 
 const Utils = {
     objectIsEmpty: ( obj ) => {
@@ -88,6 +89,7 @@ const Utils = {
                 } else {
                     if ( placeholdeData === 'songtitle' ) {
                         let newSongTitle = Songs.generate();
+                        Temp.recording.suggestion = newSongTitle;
                         msg = msg.replace( placeholdeTag, newSongTitle.song );
                     } else if ( placeholdeData === 'bandname' ) {
                         let bandname = Bands.getBand();

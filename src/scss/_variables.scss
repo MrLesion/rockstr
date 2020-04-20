@@ -5,21 +5,56 @@ $primary: #66212b;
 $secondary: #faf2d8;
 $tertiary: #cb7259;
 
-$blue: 	#000F55;
+$blue: #000F55;
 
 $danger: #bb2124;
 
-$main: 'Anonymous Pro', monospace;
-$news: 'Playfair Display', serif;
-$hand: 'Nanum Brush Script', cursive;
+$main: 'Anonymous Pro',
+monospace;
+$news: 'Playfair Display',
+serif;
+$hand: 'Nanum Brush Script',
+cursive;
 
 
-// the :export directive is the magic sauce for webpack
+$space-values : (0, 1,
+2,
+3,
+4,
+5,
+6,
+7) !default;
+
+
+$space-prefixes : (p : padding,
+pt : padding-top,
+pr : padding-right,
+pb : padding-bottom,
+pl : padding-left,
+m : margin,
+mt : margin-top,
+mr : margin-right,
+mb : margin-bottom,
+ml : margin-left,
+) !default;
+
+@mixin make-space($values, $prefixes) {
+
+	@each $attr-short,
+	$attr-long in $prefixes {
+		@each $value in $values {
+			.#{$attr-short}-#{$value} {
+				#{$attr-long}: #{$value}#{'em!important'};
+			}
+		}
+	}
+}
+
 :export {
-  black: $black;
-  dark: $dark;
-  light: $light;
-  primary: $primary;
-  secondary: $secondary;
-  tertiary: $tertiary;
+	black: $black;
+	dark: $dark;
+	light: $light;
+	primary: $primary;
+	secondary: $secondary;
+	tertiary: $tertiary;
 }

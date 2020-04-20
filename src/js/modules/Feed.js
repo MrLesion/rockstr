@@ -3,6 +3,7 @@ import {TPL_FEED_PANEL} from '../Templates.js';
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
 import Time from './Time.js';
+import Temp from './Temp.js';
 import Protagonist from './Protagonist.js';
 import Speech from './Speech.js';
 
@@ -25,13 +26,17 @@ const Feed = {
                 let consequence = eventObj.consequence;
                 if ( consequence === 'drug' ) {
                     Protagonist.doDrugs( eventObj );
-                    action.parentNode.removeChild( action );
                 } else if ( consequence === 'promotion' ) {
                     Protagonist.doPromotion( eventObj );
-                    action.parentNode.removeChild( action );
+                }  else if ( consequence === 'changeTitle' ) {
+                    Temp.recording.song = Temp.recording.suggestion;
+                    Temp.recording.suggestion = {};
+                    
                 }
+                action.parentNode.removeChild( action );
             } );
             cancelAction.addEventListener( 'click', () => {
+                Temp.recording.suggestion = {};
                 action.parentNode.removeChild( action );
             } );
         }

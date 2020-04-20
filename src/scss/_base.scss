@@ -29,6 +29,16 @@ small,
     padding: 2em;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
 section {
     margin: 1em;
     padding: 1em;

@@ -1,4 +1,4 @@
-import {TPL_TOP_BAR, TPL_END_MODAL} from '../Templates.js';
+import {TPL_TOP_BAR, TPL_END_MODAL, TPL_SONG_CREATE} from '../Templates.js';
 
 import * as Data from './Data.js';
 
@@ -6,6 +6,7 @@ import Utils from './Utils.js';
 import Settings from '../Settings.js';
 import Store from './Store.js';
 import Time from './Time.js';
+import Modal from './Modal.js';
 import Feed from './Feed.js';
 import Schedule from './Schedule.js';
 
@@ -69,11 +70,11 @@ const Protagonist = {
         } );
 
         Utils.delegate( 'click', '.protagonist-action-record', () => {
-            let days = Utils.randInt( 10 );
-            //Songs.record();
-            Time.run( days, 'record' );
-
-            //Songs.add();
+            let modalContainer = document.querySelector( '.modal-backdrop' );
+            modalContainer.innerHTML = TPL_SONG_CREATE();
+            Utils.eventEmitter.emit( 'modal.show', () => {
+                Modal.bindEvents('studio');
+            } );
         } );
 
         Utils.delegate( 'click', '.protagonist-action-continue', (event) => {
@@ -84,6 +85,7 @@ const Protagonist = {
         Utils.eventEmitter.on( 'time.end', ( type ) => {
             if ( type === 'record' ) {
                 console.log( 'TODO: Handle tem end recording' );
+                console.log('Recorded song', Temp.recording.song);
             }
         } );
     },

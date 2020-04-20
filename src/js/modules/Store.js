@@ -4,7 +4,6 @@ const Store = {
     data: {},
     hiddenInstances: [],
     construct: () => {
-
         Store.data = {
             protagonist: Store.load( 'protagonist' ),
             time: Store.load( 'time' ),

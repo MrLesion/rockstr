@@ -98,7 +98,7 @@ const Events = {
             Utils.eventEmitter.emit( 'modal.show', () => {
                 let firstQuestion = modalContainer.querySelector( '[data-step="0"]' );
                 firstQuestion.classList.add( 'active' );
-                Modal.bindEvents();
+                Modal.bindEvents( 'step' );
             } );
             /*
             Modal.show( () => {

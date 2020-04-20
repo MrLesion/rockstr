@@ -53,7 +53,7 @@ const Time = {
         Protagonist.set( 'activity', 'activity_' + type );
 
         Time.ticker = setInterval( () => {
-            console.log( 'Time.run', Time.ticks );
+            console.log( 'Time.run', Time.ticks, type );
             const eventTick = Utils.randInt( 20 );
             Time.set( 1 );
             let checkDateForEvent = Schedule.updateDate();

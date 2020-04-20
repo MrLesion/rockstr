@@ -24,10 +24,6 @@
     display: none !important;
 }
 
-.p-0 {
-    padding: 0 !important;
-}
-
 .d-block{
     display: block;
 }
@@ -42,6 +38,10 @@
     text-align: right;
 }
 
+.text-capitalize{
+    text-transform: capitalize;
+}
+
 .w-100 {
     width: 100%;
 }
@@ -50,3 +50,9 @@
 .danger-color {
     color: $danger;
 }
+
+.flex-end {
+    justify-content: flex-end;
+}
+
+@include make-space($space-values, $space-prefixes);

@@ -1,5 +1,6 @@
 {
-    "charts": {
+    "charts":
+    {
         "updateRate": 5
     },
     "costs":
@@ -7,7 +8,8 @@
         "daily": 2,
         "doctor": 20,
         "shrink": 50,
-        "rehab":{
+        "rehab":
+        {
             "daily": 5,
             "total": 75
         },
@@ -33,24 +35,83 @@
         "medium": "Risky usages",
         "high": "Addict"
     },
-    "record":{
+    "record":
+    {
         "cost": 0,
-        "studios":{
-            "Headless Garage":{
+        "studios":
+        {
+            "Headless Garage":
+            {
                 "quality": 1,
                 "cost": 15
             },
-            "MiCity":{
+            "MiCity":
+            {
                 "quality": 2,
                 "cost": 30
             },
-            "Moon Records":{
+            "Moon Records":
+            {
                 "quality": 3,
                 "cost": 45
             },
-            "Crappy Road Studios":{
+            "Crappy Road Studios":
+            {
                 "quality": 4,
                 "cost": 65
+            }
+        },
+        "producers":
+        {
+            "Do it ourselves":
+            {
+                "quality": 0,
+                "cost": 0
+            },
+            "Dan Phillips":
+            {
+                "quality": 1,
+                "cost": 30
+            },
+            "Harry Wexler":
+            {
+                "quality": 2,
+                "cost": 45
+            },
+            "Joe Mook":
+            {
+                "quality": 3,
+                "cost": 65
+            },
+            "Babyhair":
+            {
+                "quality": 4,
+                "cost": 85
+            },
+            "Brian Emo":
+            {
+                "quality": 5,
+                "cost": 100
+            },
+            "Rick Rabin":
+            {
+                "quality": 6,
+                "cost": 115
+            },
+            "Jeff Linne":
+            {
+                "quality": 7,
+                "cost": 135
+            },
+            "Jonas Quincy":
+            {
+                "quality": 8,
+                "cost": 160
+            },
+            "Niles Rogers":
+            {
+                "quality": 9,
+                "cost": 200
             }
         }
     },

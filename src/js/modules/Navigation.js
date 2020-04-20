@@ -11,14 +11,14 @@ const Navigation = {
         Navigation.shortcuts();
     },
     bindings: () => {
-        Utils.eventEmitter.on( 'timeend', ( type, prevType ) => {
+        Utils.eventEmitter.on( 'time.end', ( type, prevType ) => {
             Feed.add('timeend_'+prevType, {type: prevType});
             Navigation.buildBottomBar( type , false);
         } );
-        Utils.eventEmitter.on( 'timepause', ( type ) => {
+        Utils.eventEmitter.on( 'time.pause', ( type ) => {
             Navigation.buildBottomBar( type, false );
         } );
-        Utils.eventEmitter.on( 'timestart', ( type ) => {
+        Utils.eventEmitter.on( 'time.start', ( type ) => {
             Navigation.buildBottomBar( type, true );
         } );
     },
