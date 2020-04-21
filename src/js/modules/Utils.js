@@ -1,9 +1,8 @@
 import * as Data from './Data.js';
 
 import Store from './Store.js';
-import Songs from './Songs.js';
 import Bands from './Bands.js';
-import Temp from './Temp.js';
+import Events from './Events.js';
 
 const Utils = {
     objectIsEmpty: ( obj ) => {
@@ -88,9 +87,8 @@ const Utils = {
                     }
                 } else {
                     if ( placeholdeData === 'songtitle' ) {
-                        let newSongTitle = Songs.generate();
-                        Temp.recording.suggestion = newSongTitle;
-                        msg = msg.replace( placeholdeTag, newSongTitle.song );
+                        let newSongTitle = Events.studio.getNewTitle();
+                        msg = msg.replace( placeholdeTag, newSongTitle );
                     } else if ( placeholdeData === 'bandname' ) {
                         let bandname = Bands.getBand();
                         msg = msg.replace( placeholdeTag, bandname.name );
@@ -109,6 +107,17 @@ const Utils = {
                 job: job
             };
         return npc;
+    },
+    getNpc: (job) => {
+        let savedJobs = Store.get( 'jobs' );
+        let npc = {};
+
+        if(savedJobs !== null){
+            npc = savedJobs.filter((npc) => {
+                return npc.job === job;
+            })[0];
+        }
+        return npc.name;
     },
     delegate: ( event, selector, callback ) => {
         document.addEventListener( event, function ( e ) {

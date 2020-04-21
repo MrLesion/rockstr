@@ -25,10 +25,10 @@ const Songs = {
     },
     construct: () => {
         let stored = Store.get( 'songs' );
-        if(Utils.isNullOrUndefined(stored) === true){
+        if ( Utils.isNullOrUndefined( stored ) === true ) {
             Store.set( 'songs', [] );
         }
-        
+
     },
     get: ( song ) => {
         let stored = Store.get( 'songs' );
@@ -54,16 +54,18 @@ const Songs = {
         let song = Songs.model();
         song.name = Protagonist.get( 'name' );
         song.genre = Protagonist.get( 'genre' );
-        song.song = title || Bands.generateSong( Utils.randIndex( 5 ) );
+        song.song = title || Songs.generateTitle();
         song.quality = Songs.getQuality();
         song.myEntry = true;
         return song;
-
+    },
+    generateTitle: () => {
+        return Bands.generateSong( Utils.randIndex( 5 ) );
     },
     getQuality: () => {
         let creativity = Protagonist.get( 'creativity' );
         let mentality = Protagonist.get( 'mentality' );
-        return Utils.randRanking( ( creativity + mentality ) / 2 );
+        return Utils.randRanking( ( creativity + mentality ) / 1.5 ) + Protagonist.get( 'fame' );
     }
 };
 

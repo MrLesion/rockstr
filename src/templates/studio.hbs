@@ -1,21 +1,28 @@
 <div class="modal">
 	<div class="modal-inner">
 		<h2 class="modal-header">Recording studio</h2>
+		{{getNpc 'manager'}} reckons that the recording time for this song is {{days}} days
+		<p></p>
 		<div class="modal-content">
-
 			 	<div class="row flex-end mb-2">
-			 		<strong>Cost £100</strong>
+			 		<strong>Cost £<span class="studio-cost"></span>0</strong>
 			 	</div>
 			 	<div class="row mb-2">
 			 		<label for="SongTitle">Which studio should we book: </label>
 			 		<select id="rockstrStudioSelect">
 						<option value="">Select studio</option>
+						{{#each studios}}
+							<option value="{{quality}}">{{@key}} - £{{cost}}/day</option>
+						{{/each}}
 					</select>
 			 	</div>
 			 	<div class="row mb-2">
 			 		<label for="SongTitle">Which producer should we book: </label>
 			 		<select id="rockstrProducerSelect">
 						<option value="">Select producer</option>
+						{{#each producers}}
+							<option value="{{quality}}">{{@key}}  - £{{cost}}</option>
+						{{/each}}
 					</select>
 			 	</div>
 			    <div class="row mb-2">

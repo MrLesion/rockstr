@@ -40,6 +40,11 @@
         "cost": 0,
         "studios":
         {
+            "Your bedroom":
+            {
+                "quality": 0,
+                "cost": 0
+            },
             "Headless Garage":
             {
                 "quality": 1,
@@ -76,42 +81,42 @@
             "Harry Wexler":
             {
                 "quality": 2,
-                "cost": 45
+                "cost": 50
             },
             "Joe Mook":
             {
                 "quality": 3,
-                "cost": 65
+                "cost": 75
             },
             "Babyhair":
             {
                 "quality": 4,
-                "cost": 85
+                "cost": 100
             },
             "Brian Emo":
             {
                 "quality": 5,
-                "cost": 100
+                "cost": 150
             },
             "Rick Rabin":
             {
                 "quality": 6,
-                "cost": 115
+                "cost": 175
             },
             "Jeff Linne":
             {
                 "quality": 7,
-                "cost": 135
+                "cost": 220
             },
             "Jonas Quincy":
             {
                 "quality": 8,
-                "cost": 160
+                "cost": 300
             },
             "Niles Rogers":
             {
                 "quality": 9,
-                "cost": 200
+                "cost": 500
             }
         }
     },

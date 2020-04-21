@@ -23,7 +23,7 @@ const Dictionary = {
 
         timeend_laze: 'You stop doing nothing and get back to real life',
         timeend_busk: 'You made a little money and got some pratice, what\'s next then',
-        timeend_record: 'You are done recording the song \'<-songtitle->\' and <-manager-> sends it out to the media',
+        timeend_record: 'You are done recording',
 
         eventRentDue: 'You pay £<-rent-> in rent',
         eventChartsUpdated: 'The charts has been updated',
@@ -45,7 +45,8 @@ const Dictionary = {
         newsChartsEntryUpdateUp: '<-entryName-> moved up the charts this week',
         newsChartsEntryUpdateNumberOne: '<-entryName-> is still number one',
         newsChartsEntryEnters: '<-entryName-> enters the charts as no.<-entryPosition_>',
-        newsBandGoesOnTour: '<-band-> goes on tour'
+        newsBandGoesOnTour: '<-band-> goes on tour',
+        studioDay: 'Another day in the studio'
     }
 
 };

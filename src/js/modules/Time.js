@@ -5,6 +5,7 @@ import Store from './Store.js';
 import Events from './Events.js';
 import Protagonist from './Protagonist.js';
 import Schedule from './Schedule.js';
+import Feed from './Feed.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -53,36 +54,41 @@ const Time = {
         Protagonist.set( 'activity', 'activity_' + type );
 
         Time.ticker = setInterval( () => {
-            console.log( 'Time.run', Time.ticks, type );
-            const eventTick = Utils.randInt( 20 );
-            Time.set( 1 );
-            let checkDateForEvent = Schedule.updateDate();
-            Time.handleModifiers();
-            Bands.getBand();
-
-            if ( Utils.objectIsEmpty( checkDateForEvent ) === false ) {
-                Time.end( type );
-                Events.schedule.run( checkDateForEvent );
-            } else if ( Utils.isNullOrUndefined( timeObj ) === true && eventTick < 5 ) {
-                Time.pause( eventTick, type );
-                Events.run();
-
-            } else if ( Time.ticks < 1 ) {
-                Time.end( type );
-                if ( Utils.isNullOrUndefined( timeObj ) === false && timeObj.update ) {
-                    Object.keys( timeObj.update ).forEach( ( key ) => {
-                        let oldValue = Protagonist.get( key );
-                        Protagonist.set( key, oldValue + timeObj.update[ key ].value );
-                    } );
-                    if ( timeObj.callback && typeof timeObj.callback === 'function' ) {
-                        timeObj.callback( type );
-                    }
-                }
-            }
+            Time.day( type, timeObj );
             Time.ticks--;
         }, Settings.TICK );
     },
+    day: ( type = 'laze', timeObj = null ) => {
+        console.log( 'Time.run', Time.ticks, type );
+        const eventTick = Utils.randInt( 20 );
+        Time.set( 1 );
+        let checkDateForEvent = Schedule.updateDate();
+        Time.handleModifiers();
+        Bands.getBand();
 
+        if(type === 'studio'){
+            Feed.add( 'studioDay');
+        }
+
+        if ( Utils.objectIsEmpty( checkDateForEvent ) === false ) {
+            Time.end( type );
+            Events.schedule.run( checkDateForEvent );
+        } else if ( Utils.isNullOrUndefined( timeObj ) === true && eventTick < 5 ) {
+            Time.pause( eventTick, type );
+            Events.run();
+        } else if ( Time.ticks < 1 ) {
+            Time.end( type );
+            if ( Utils.isNullOrUndefined( timeObj ) === false && timeObj.update ) {
+                Object.keys( timeObj.update ).forEach( ( key ) => {
+                    let oldValue = Protagonist.get( key );
+                    Protagonist.set( key, oldValue + timeObj.update[ key ].value );
+                } );
+                if ( timeObj.callback && typeof timeObj.callback === 'function' ) {
+                    timeObj.callback( type );
+                }
+            }
+        }
+    },
     end: ( type = 'idle' ) => {
         Utils.eventEmitter.emit( 'time.end', 'idle', type );
         const wrapper = document.querySelector( '.wrapper' );
