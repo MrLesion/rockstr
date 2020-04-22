@@ -67,15 +67,12 @@ const Events = {
     promotions: ( value ) => {
         Feed.event( value );
         Schedule.register( value );
-        console.log( 'event - promotions', value );
     },
     drugs: ( value ) => {
         Feed.event( value );
-        console.log( 'event - drugs', value );
     },
     life: ( value ) => {
         Feed.event( value );
-        console.log( 'event - life', value );
     },
     schedule: {
         model: {},
@@ -135,6 +132,8 @@ const Events = {
         model: {},
         run: () => {
             Events.studio.model.days = Utils.randInt( 14 );
+            Events.studio.model.cost = 0;
+            Events.studio.model.quality = 0;
 
             let studios = Object.assign( {}, Data.core.record.studios );
             let producers = Object.assign( {}, Data.core.record.producers );
@@ -169,6 +168,17 @@ const Events = {
             let generateSongTitle = modalContainer.querySelector( '.generate-song-title' );
             let saveSongTitle = modalContainer.querySelector( '.save-song-title' );
             let songTitleInput = modalContainer.querySelector( '#SongTitle' );
+            let selects = modalContainer.querySelectorAll( '.recording-select' );
+
+
+
+            for ( var i = 0; i < selects.length; i++ ) {
+                ( ( x ) => {
+                    selects[ x ].addEventListener( 'change', () => {
+                        Events.studio.validate();
+                    }, false );
+                } )( i );
+            }
 
             generateSongTitle.addEventListener( 'click', () => {
                 Events.studio.model.song = Songs.generateTitle();
@@ -182,7 +192,25 @@ const Events = {
             } );
         },
         validate: () => {
-            //let cost = document.querySelector('.studio-cost');
+            let costElement = document.querySelector( '.studio-cost' );
+            let studio = document.getElementById( 'studioSelect' ).value;
+            let producer = document.getElementById( 'producerSelect' ).value;
+
+            if ( studio !== '' ) {
+                Events.studio.model.cost += parseInt( Data.core.record.studios[ studio ].cost * Events.studio.model.days );
+                Events.studio.model.quality += parseInt( Data.core.record.studios[ studio ].quality );
+            }
+            if ( producer !== '' ) {
+                Events.studio.model.cost += Data.core.record.producers[ producer ].cost;
+                Events.studio.model.quality += Data.core.record.producers[ producer ].quality;
+            }
+
+
+
+
+            costElement.innerText = Events.studio.model.cost;
+
+
         },
         getNewTitle: () => {
             let newSongTitle = Songs.generateTitle();
@@ -195,10 +223,15 @@ const Events = {
         },
         releaseSong: () => {
             let song = Songs.generate( Events.studio.model.song );
+            Events.studio.reset();
+            console.log( song );
+        },
+        reset: () => {
             Events.studio.model.song = '';
             Events.studio.model.temp = '';
             Events.studio.model.days = 0;
-            console.log( song );
+            Events.studio.model.cost = 0;
+            Events.studio.model.quality = 0;
         }
     }
 }

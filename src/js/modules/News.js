@@ -1,4 +1,4 @@
-import {TPL_NEWS_PANEL} from '../Templates.js';
+import { TPL_NEWS_PANEL } from '../Templates.js';
 
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
@@ -16,6 +16,7 @@ const News = {
         nyt: []
     },
     construct: () => {
+        News.get();
         News.bindings();
     },
     bindings: () => {
@@ -44,6 +45,7 @@ const News = {
         }
     },
     get: () => {
+        console.log(Settings.ACTIVE_MODULES_NEWS);
         let date = moment( Time.get().date );
         if ( News.fetchedMonth !== ( date.month() + 1 ) ) {
             if ( News.xhr !== null ) {

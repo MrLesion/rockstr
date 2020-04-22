@@ -5,23 +5,23 @@
 		<p></p>
 		<div class="modal-content">
 			 	<div class="row flex-end mb-2">
-			 		<strong>Cost £<span class="studio-cost"></span>0</strong>
+			 		<strong>Cost £<span class="studio-cost">0</span></strong>
 			 	</div>
 			 	<div class="row mb-2">
 			 		<label for="SongTitle">Which studio should we book: </label>
-			 		<select id="rockstrStudioSelect">
+			 		<select id="studioSelect" class="recording-select">
 						<option value="">Select studio</option>
 						{{#each studios}}
-							<option value="{{quality}}">{{@key}} - £{{cost}}/day</option>
+							<option value="{{@key}}">{{@key}} - £{{cost}}/day</option>
 						{{/each}}
 					</select>
 			 	</div>
 			 	<div class="row mb-2">
 			 		<label for="SongTitle">Which producer should we book: </label>
-			 		<select id="rockstrProducerSelect">
+			 		<select id="producerSelect" class="recording-select">
 						<option value="">Select producer</option>
 						{{#each producers}}
-							<option value="{{quality}}">{{@key}}  - £{{cost}}</option>
+							<option value="{{@key}}">{{@key}}  - £{{cost}}</option>
 						{{/each}}
 					</select>
 			 	</div>

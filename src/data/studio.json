@@ -1,8 +1,22 @@
 [
-    {
-        "msg": "Your drummer <-drummer->, thinks that changing the title of the song could do wonders for it. The new title suggested is '<-songtitle->'",
-        "event": "studio",
-        "action": "Change it?",
-        "consequence": "changeTitle"
-    }
-]
+{
+	"msg": "Your drummer <-drummer->, thinks that changing the title of the song could do wonders for it. The new title suggested is '<-songtitle->'",
+	"event": "studio",
+	"action": "Change it?",
+	"consequence": "changeTitle"
+},
+{
+	"msg": "<-bassplayer->, your bass-player is making a massive fuss about the song hurts your feelings",
+	"event": "studio",
+	"update":
+	{
+		"mentality":
+		{
+			"value": -5
+		},
+		"happiness":
+		{
+			"value": -10
+		}
+	}
+}]
