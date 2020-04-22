@@ -77,6 +77,9 @@ const Protagonist = {
             let type = event.target.dataset.type;
             Time.run( 0, type );
         } );
+        Utils.delegate( 'click', '.restart-game', () => {
+            Store.reset();
+        } );
     },
     doDrugs: ( eventObj ) => {
         let addictions = Store.get( 'addictions' ) || {};
@@ -161,9 +164,12 @@ const Protagonist = {
     endGame: ( key ) => {
         const container = document.querySelector( '.hbs-container-last' );
         let timeLived = Store.get( 'time' ) !== null ? Store.get( 'time' ).daysAlive : 0;
+        let deathYear = Store.get( 'time' ) !== null ? Store.get( 'time' ).date : 0;
         let endObj = {
+            protagonist: Protagonist.model,
             msg: '',
-            time: 'You lived the life of a cool musician for ' + timeLived + ' days'
+            year: moment(deathYear).format('YYYY'),
+            time: timeLived
         };
         if ( key === 'money' ) {
             endObj.msg = 'You ran out of money';
@@ -177,6 +183,9 @@ const Protagonist = {
             endObj.msg = 'Your interest in the creative arts have withered. You give up music and become a banker';
         }
         container.innerHTML = TPL_END_MODAL( endObj );
+    },
+    restart: () => {
+
     }
 };
 

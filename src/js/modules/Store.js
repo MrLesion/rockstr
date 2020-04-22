@@ -36,6 +36,12 @@ const Store = {
     save: ( key, obj ) => {
         let saveString = typeof obj === 'string' ? obj : JSON.stringify( obj );
         localStorage.setItem( 'rockstr.' + key, saveString );
+    },
+    reset: () => {
+        Object.keys(Store.data).forEach((storeKey) => {
+            localStorage.removeItem( 'rockstr.' + storeKey );
+        });
+        location.reload();
     }
 }
 

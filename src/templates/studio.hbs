@@ -12,7 +12,7 @@
 			 		<select id="studioSelect" class="recording-select">
 						<option value="">Select studio</option>
 						{{#each studios}}
-							<option value="{{@key}}">{{@key}} - £{{cost}}/day</option>
+							<option value="{{@key}}" data-cost="{{cost}}" data-quality="{{quality}}">{{@key}} - £{{cost}}/day</option>
 						{{/each}}
 					</select>
 			 	</div>
@@ -21,7 +21,7 @@
 			 		<select id="producerSelect" class="recording-select">
 						<option value="">Select producer</option>
 						{{#each producers}}
-							<option value="{{@key}}">{{@key}}  - £{{cost}}</option>
+							<option value="{{@key}}" data-cost="{{cost}}" data-quality="{{quality}}">{{@key}}  - £{{cost}}</option>
 						{{/each}}
 					</select>
 			 	</div>

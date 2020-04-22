@@ -1,8 +1,11 @@
 <div class="full-container">
-	<div>
-		<h1>GAME OVER</h1>
-		<h2>{{msg}}</h2>
-		<h3>{{time}}</h3>
-		<h3>{{released}}</h3>
+	<div class="tombstone">
+		<h1>Game Over</h1>
+		<h3>"{{protagonist.name}}"<br />1989 - {{year}}</h3>
+		<h5 class="tombstone-text-first">{{msg}}</h5>
+		<h5 class="tombstone-text-last">
+			You lived the life of a cool {{protagonist.genre}} musician for {{time}} days
+		</h5>
+		<p><span class="restart-game btn mt-2">Try again?</span></p>
 	</div>
 </div>

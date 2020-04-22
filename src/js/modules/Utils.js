@@ -117,6 +117,11 @@ const Utils = {
                 return npc.job === job;
             })[0];
         }
+        if(Utils.objectIsEmpty(npc) === true){
+            npc = Utils.generateNpc(job);
+            savedJobs.push( npc );
+            Store.set( 'jobs', savedJobs );
+        }
         return npc.name;
     },
     delegate: ( event, selector, callback ) => {

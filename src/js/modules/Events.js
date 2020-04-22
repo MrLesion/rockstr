@@ -129,7 +129,13 @@ const Events = {
         }
     },
     studio: {
-        model: {},
+        model: {
+            days: 0,
+            song: '',
+            temp: '',
+            cost: 0,
+            quality: 0
+        },
         run: () => {
             Events.studio.model.days = Utils.randInt( 14 );
             Events.studio.model.cost = 0;
@@ -137,18 +143,6 @@ const Events = {
 
             let studios = Object.assign( {}, Data.core.record.studios );
             let producers = Object.assign( {}, Data.core.record.producers );
-
-            Object.keys( Data.core.record.studios ).filter( ( studio ) => {
-                if ( ( Data.core.record.studios[ studio ].cost * Events.studio.model.days ) > Protagonist.get( 'money' ) ) {
-                    delete studios[ studio ];
-                }
-            } );
-
-            Object.keys( Data.core.record.producers ).filter( ( producer ) => {
-                if ( Data.core.record.producers[ producer ].cost > Protagonist.get( 'money' ) ) {
-                    delete producers[ producer ];
-                }
-            } );
 
             let dataObj = {
                 studios: studios,
@@ -162,6 +156,7 @@ const Events = {
             modalContainer.innerHTML = TPL_STUDIO( dataObj );
             Utils.eventEmitter.emit( 'modal.show', () => {
                 Events.studio.bindings( modalContainer );
+                Events.studio.update();
             } );
         },
         bindings: ( modalContainer ) => {
@@ -170,12 +165,10 @@ const Events = {
             let songTitleInput = modalContainer.querySelector( '#SongTitle' );
             let selects = modalContainer.querySelectorAll( '.recording-select' );
 
-
-
             for ( var i = 0; i < selects.length; i++ ) {
                 ( ( x ) => {
                     selects[ x ].addEventListener( 'change', () => {
-                        Events.studio.validate();
+                        Events.studio.update();
                     }, false );
                 } )( i );
             }
@@ -191,26 +184,56 @@ const Events = {
                 Time.run( Events.studio.model.days, 'record' );
             } );
         },
-        validate: () => {
+        update: () => {
             let costElement = document.querySelector( '.studio-cost' );
-            let studio = document.getElementById( 'studioSelect' ).value;
-            let producer = document.getElementById( 'producerSelect' ).value;
+            let studio = document.getElementById( 'studioSelect' );
+            let producer = document.getElementById( 'producerSelect' );
+            Events.studio.model.cost = 0;
+            Events.studio.model.quality = 0;
 
-            if ( studio !== '' ) {
-                Events.studio.model.cost += parseInt( Data.core.record.studios[ studio ].cost * Events.studio.model.days );
-                Events.studio.model.quality += parseInt( Data.core.record.studios[ studio ].quality );
+            if ( studio.value !== '' ) {
+                Events.studio.model.cost += parseInt( Data.core.record.studios[ studio.value ].cost * Events.studio.model.days );
+                Events.studio.model.quality += parseInt( Data.core.record.studios[ studio.value ].quality );
             }
-            if ( producer !== '' ) {
-                Events.studio.model.cost += Data.core.record.producers[ producer ].cost;
-                Events.studio.model.quality += Data.core.record.producers[ producer ].quality;
+            if ( producer.value !== '' ) {
+                Events.studio.model.cost += Data.core.record.producers[ producer.value ].cost;
+                Events.studio.model.quality += Data.core.record.producers[ producer.value ].quality;
             }
-
-
-
-
             costElement.innerText = Events.studio.model.cost;
+            Events.studio.setSelectableOptions();
 
+        },
+        setSelectableOptions: () => {
+            let studio = document.getElementById( 'studioSelect' );
+            let producer = document.getElementById( 'producerSelect' );
+            let studioOptions = studio.getElementsByTagName( 'option' );
+            let producerOptions = producer.getElementsByTagName( 'option' );
+            let rentFactor = Math.ceil( Settings.RENT * ( Settings.RENTDUE % Events.studio.model.days ) );
 
+            //console.log(rentFactor);
+
+            for ( let i = 0; i < studioOptions.length; i++ ) {
+                if ( studioOptions[ i ].value !== '' ) {
+                    let values = studioOptions[ i ].dataset;
+                    if ( ( ( parseInt( values.cost ) * Events.studio.model.days ) + Events.studio.model.cost ) > ( Protagonist.get( 'money' ) - rentFactor ) ) {
+                        studioOptions[ i ].disabled = true;
+                    } else {
+                        studioOptions[ i ].disabled = false;
+                    }
+                }
+
+            }
+            for ( let i = 0; i < producerOptions.length; i++ ) {
+                if ( producerOptions[ i ].value !== '' ) {
+                    let values = producerOptions[ i ].dataset;
+                    if ( ( parseInt( values.cost ) + Events.studio.model.cost ) > ( Protagonist.get( 'money' ) - rentFactor ) ) {
+                        producerOptions[ i ].disabled = true;
+                    } else {
+                        producerOptions[ i ].disabled = false;
+                    }
+                }
+
+            }
         },
         getNewTitle: () => {
             let newSongTitle = Songs.generateTitle();
@@ -223,8 +246,12 @@ const Events = {
         },
         releaseSong: () => {
             let song = Songs.generate( Events.studio.model.song );
+            let cost = Events.studio.model.cost;
             Events.studio.reset();
-            console.log( song );
+            Feed.add( 'event_studio_release', { song: song.song, cost: cost } );
+            let songs = Songs.get();
+            songs.push(song);
+            Songs.set(songs);
         },
         reset: () => {
             Events.studio.model.song = '';

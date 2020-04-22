@@ -27,6 +27,7 @@ const Dictionary = {
 
         eventRentDue: 'You pay £<-rent-> in rent',
         eventChartsUpdated: 'The charts has been updated',
+        event_studio_release: 'The song \'<-song->\' is done and recorded! <-manager-> takes £<-cost-> from your wallet and pays the studio and producer and releases the song.',
 
         doPromotion_battle: '<-manager-> books a slot for you in Battle of the Bands <-days-> days from now',
         doPromotion_interview: '<-manager-> calls the station an sets it up <-days-> days from now',
@@ -40,6 +41,9 @@ const Dictionary = {
         doDrugs_heroin: 'Oh no..',
         doDrugs_marijuana: 'Marijuana makes everything a bit distorted',
         doDrugs_cocaine: 'The cocaine fills your head with crazy ideas!',
+
+
+        charts_user_entry: 'Your song \'<-song->\' is number <-position-> on the charts this week',
 
         newsChartsEntryUpdateDown: '<-entryName-> moved down the charts this week',
         newsChartsEntryUpdateUp: '<-entryName-> moved up the charts this week',

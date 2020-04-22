@@ -5,6 +5,7 @@ import Settings from '../Settings.js';
 import Bands from './Bands.js';
 import Songs from './Songs.js';
 import Store from './Store.js';
+import Feed from './Feed.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -51,6 +52,9 @@ const Charts = {
     sortCharts: ( list ) => {
         let sortedList = Utils.sortByInt( list, 'quality' );
         sortedList.forEach( ( entry, i ) => {
+            if(entry.myEntry === true){
+                Feed.add('charts_user_entry', entry);
+            }
             if ( entry.quality > 0 ) {
                 entry.position = ( i + 1 );
                 if ( entry.position > entry.prevPostion ) {
@@ -129,7 +133,6 @@ const Charts = {
             entry = Charts.updateEntry( entry, i );
         } );
         list = Charts.generateCharts( list );
-        console.log( 'chartsUpdate', list );
         Charts.set( list );
     }
 }
