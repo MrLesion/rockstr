@@ -1,5 +1,6 @@
 import * as Data from './Data.js';
 
+import Settings from '../Settings.js';
 import Store from './Store.js';
 import Bands from './Bands.js';
 import Events from './Events.js';
@@ -18,7 +19,31 @@ const Utils = {
         return Math.floor( ( Math.floor( Math.random() * int ) + 1 ) * factor );
     },
     randRanking: ( int ) => {
-        return Math.pow( Math.floor( Math.random() * int ), 2 );
+        let result = Math.random() * int;
+        result = result * result;
+        result *= Settings.MAX_SONG_FACTOR;
+        result = Math.floor( result / Settings.MAX_SONG_FACTOR );
+        return result;
+    },
+    adjustRanking: ( entry ) => {
+        let result = 0;
+
+        if ( entry.weeks < 5 ) {
+            if ( Utils.randInt( 10 ) >= 5 ) {
+                result = entry.prevQuality - Utils.randInt( Settings.MAX_SONG_FACTOR * 5 );
+            } else {
+                result = ( entry.prevQuality / 10 ) + Utils.randInt( Settings.MAX_SONG_FACTOR * 5 );
+            }
+        } else {
+            entry = ( entry.prevQuality / 10 ) - Utils.randInt( Settings.MAX_SONG_FACTOR * 10 );
+        }
+
+        return result;
+    },
+    adjustSales: ( entry ) => {
+        let result = entry.sales;
+        result = Math.round( result + ( entry.quality / 100 + entry.quality / 100 ) * 2 );
+        return result;
     },
     intNegPos: ( int ) => {
         int *= Math.floor( Math.random() * 2 ) === 1 ? 1 : -1;
@@ -108,17 +133,17 @@ const Utils = {
             };
         return npc;
     },
-    getNpc: (job) => {
-        let savedJobs = Store.get( 'jobs' );
+    getNpc: ( job ) => {
+        let savedJobs = Store.get( 'jobs' ) || [];
         let npc = {};
 
-        if(savedJobs !== null){
-            npc = savedJobs.filter((npc) => {
+        if ( Utils.isNullOrUndefined( savedJobs ) === false ) {
+            npc = savedJobs.filter( ( npc ) => {
                 return npc.job === job;
-            })[0];
+            } )[ 0 ];
         }
-        if(Utils.objectIsEmpty(npc) === true){
-            npc = Utils.generateNpc(job);
+        if ( Utils.objectIsEmpty( npc ) === true ) {
+            npc = Utils.generateNpc( job );
             savedJobs.push( npc );
             Store.set( 'jobs', savedJobs );
         }
@@ -135,25 +160,25 @@ const Utils = {
         }, false );
     },
     eventEmitter: {
-        events: {},
+        _events: {},
         on( event, listener ) {
-            if ( typeof Utils.eventEmitter.events[ event ] !== 'object' ) {
-                Utils.eventEmitter.events[ event ] = [];
+            if ( typeof Utils.eventEmitter._events[ event ] !== 'object' ) {
+                Utils.eventEmitter._events[ event ] = [];
             }
-            Utils.eventEmitter.events[ event ].push( listener );
+            Utils.eventEmitter._events[ event ].push( listener );
             return () => Utils.eventEmitter.removeListener( event, listener );
         },
         removeListener( event, listener ) {
-            if ( typeof Utils.eventEmitter.events[ event ] === 'object' ) {
-                const idx = Utils.eventEmitter.events[ event ].indexOf( listener );
+            if ( typeof Utils.eventEmitter._events[ event ] === 'object' ) {
+                const idx = Utils.eventEmitter._events[ event ].indexOf( listener );
                 if ( idx > -1 ) {
-                    Utils.eventEmitter.events[ event ].splice( idx, 1 );
+                    Utils.eventEmitter._events[ event ].splice( idx, 1 );
                 }
             }
         },
         emit( event, ...args ) {
-            if ( typeof Utils.eventEmitter.events[ event ] === 'object' ) {
-                Utils.eventEmitter.events[ event ].forEach( listener => listener.apply( Utils.eventEmitter, args ) );
+            if ( typeof Utils.eventEmitter._events[ event ] === 'object' ) {
+                Utils.eventEmitter._events[ event ].forEach( listener => listener.apply( Utils.eventEmitter, args ) );
             }
         },
         once( event, listener ) {

@@ -1,4 +1,4 @@
-import {TPL_TOP_BAR, TPL_END_MODAL} from '../Templates.js';
+import { TPL_TOP_BAR, TPL_END_MODAL } from '../Templates.js';
 
 import * as Data from './Data.js';
 
@@ -73,7 +73,11 @@ const Protagonist = {
             Events.studio.run();
         } );
 
-        Utils.delegate( 'click', '.protagonist-action-continue', (event) => {
+        Utils.delegate( 'click', '.protagonist-action-gig', () => {
+        
+        } );
+
+        Utils.delegate( 'click', '.protagonist-action-continue', ( event ) => {
             let type = event.target.dataset.type;
             Time.run( 0, type );
         } );
@@ -168,7 +172,7 @@ const Protagonist = {
         let endObj = {
             protagonist: Protagonist.model,
             msg: '',
-            year: moment(deathYear).format('YYYY'),
+            year: moment( deathYear ).format( 'YYYY' ),
             time: timeLived
         };
         if ( key === 'money' ) {

@@ -25,6 +25,7 @@ const Time = {
         Time.model.date = moment( Store.get( 'time' ).date ).add( add, 'days' );
         Time.model.daysAlive += add;
         Store.set( 'time', Time.model );
+        console.log( 'TIME set' );
         Time.update();
         if ( typeof callback === 'function' ) {
             return callback();
@@ -54,40 +55,37 @@ const Time = {
         Protagonist.set( 'activity', 'activity_' + type );
 
         Time.ticker = setInterval( () => {
-            Time.day( type, timeObj );
-            Time.ticks--;
-        }, Settings.TICK );
-    },
-    day: ( type = 'laze', timeObj = null ) => {
-        console.log( 'Time.run', Time.ticks, type );
-        const eventTick = Utils.randInt( 20 );
-        Time.set( 1 );
-        let checkDateForEvent = Schedule.updateDate();
-        Time.handleModifiers();
-        Bands.getBand();
+            console.log( 'Time.run', Time.ticks, type );
+            const eventTick = Utils.randInt( 20 );
+            Time.set( 1 );
+            let checkDateForEvent = Schedule.updateDate();
+            Time.handleModifiers();
+            Bands.getBand();
 
-        if(type === 'studio'){
-            Feed.add( 'studioDay');
-        }
+            if ( type === 'studio' ) {
+                Feed.add( 'studioDay' );
+            }
 
-        if ( Utils.objectIsEmpty( checkDateForEvent ) === false ) {
-            Time.end( type );
-            Events.schedule.run( checkDateForEvent );
-        } else if ( Utils.isNullOrUndefined( timeObj ) === true && eventTick < 5 ) {
-            Time.pause( eventTick, type );
-            Events.run();
-        } else if ( Time.ticks < 1 ) {
-            Time.end( type );
-            if ( Utils.isNullOrUndefined( timeObj ) === false && timeObj.update ) {
-                Object.keys( timeObj.update ).forEach( ( key ) => {
-                    let oldValue = Protagonist.get( key );
-                    Protagonist.set( key, oldValue + timeObj.update[ key ].value );
-                } );
-                if ( timeObj.callback && typeof timeObj.callback === 'function' ) {
-                    timeObj.callback( type );
+            if ( Utils.objectIsEmpty( checkDateForEvent ) === false ) {
+                Time.end( type );
+                Events.schedule.run( checkDateForEvent );
+            } else if ( Utils.isNullOrUndefined( timeObj ) === true && eventTick < 5 ) {
+                Time.pause( eventTick, type );
+                Events.run();
+            } else if ( Time.ticks < 1 ) {
+                Time.end( type );
+                if ( Utils.isNullOrUndefined( timeObj ) === false && timeObj.update ) {
+                    Object.keys( timeObj.update ).forEach( ( key ) => {
+                        let oldValue = Protagonist.get( key );
+                        Protagonist.set( key, oldValue + timeObj.update[ key ].value );
+                    } );
+                    if ( timeObj.callback && typeof timeObj.callback === 'function' ) {
+                        timeObj.callback( type );
+                    }
                 }
             }
-        }
+            Time.ticks--;
+        }, Settings.TICK );
     },
     end: ( type = 'idle' ) => {
         Utils.eventEmitter.emit( 'time.end', 'idle', type );
@@ -120,7 +118,9 @@ const Time = {
         Store.set( 'addictions', addictions );
     },
     update: () => {
+        console.log( 'TIME update' );
         let dateElement = document.querySelector( '[data-prop="date"]' );
+        Utils.eventEmitter.emit( 'new.get' );
         if ( Utils.isNullOrUndefined( dateElement ) === false ) {
             dateElement.innerHTML = moment( Time.model.date ).format( Settings.DATEFORMAT );
         }
@@ -129,9 +129,8 @@ const Time = {
         }
         if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.UPDATECHARTS === 0 ) {
             Utils.eventEmitter.emit( 'charts.update' );
-        } else {
-            Utils.eventEmitter.emit( 'new.get' );
         }
+
     }
 }
 

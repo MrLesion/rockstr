@@ -245,13 +245,16 @@ const Events = {
             Events.studio.model.temp = '';
         },
         releaseSong: () => {
-            let song = Songs.generate( Events.studio.model.song );
+            //let factors = Events.studio.model;
+            let song = Songs.generate( Events.studio.model.song, Events.studio.model.quality, true );
             let cost = Events.studio.model.cost;
             Events.studio.reset();
-            Feed.add( 'event_studio_release', { song: song.song, cost: cost } );
+            Protagonist.set( 'money', ( Protagonist.get( 'money' ) - cost ) );
             let songs = Songs.get();
-            songs.push(song);
-            Songs.set(songs);
+            songs.push( song );
+            Songs.set( songs );
+
+            Feed.add( 'event_studio_release', { song: song.song, cost: cost } );
         },
         reset: () => {
             Events.studio.model.song = '';

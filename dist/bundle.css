@@ -1789,14 +1789,16 @@ section#feed::after {
 #charts table tr td:first-child {
   text-align: center;
 }
-#charts table tr td:first-child.down::before {
+#charts table tr td:first-child.chart-entry-status.down::before {
+  color: red;
   content: "⇣";
 }
-#charts table tr td:first-child.up::before {
+#charts table tr td:first-child.chart-entry-status.up::before {
+  color: green;
   content: "⇡";
 }
-#charts table tr td:first-child.stay::before {
-  content: "⇢";
+#charts table tr td:first-child.chart-entry-status.new::before {
+  content: "new!";
 }
 #charts table tr td:last-child {
   font-weight: normal;

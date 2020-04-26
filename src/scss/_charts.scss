@@ -21,23 +21,29 @@
             &:first-child {
                 text-align: center;
 
-                &.down {
-                    &::before {
-                        content: '\21E3'
+                &.chart-entry-status {
+                    &.down {
+
+                        &::before {
+                            color: red;
+                            content: '\21E3'
+                        }
+                    }
+
+                    &.up {
+                        &::before {
+                            color: green;
+                            content: '\21E1'
+                        }
+                    }
+
+                    &.new {
+                        &::before {
+                            content: 'new!';
+                        }
                     }
                 }
 
-                &.up {
-                    &::before {
-                        content: '\21E1'
-                    }
-                }
-
-                &.stay {
-                    &::before {
-                        content: '\21E2';
-                    }
-                }
             }
 
             &:last-child {

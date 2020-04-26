@@ -21,10 +21,12 @@ const News = {
     },
     bindings: () => {
         Utils.eventEmitter.on( 'news.get', () => {
+            console.log('News GET');
             News.get();
         } );
     },
     set: () => {
+        console.log('News SET');
         let daysNews = [];
         let date = moment( Time.get().date );
         News.fetchedJSON.forEach( ( element ) => {
@@ -45,7 +47,6 @@ const News = {
         }
     },
     get: () => {
-        console.log(Settings.ACTIVE_MODULES_NEWS);
         let date = moment( Time.get().date );
         if ( News.fetchedMonth !== ( date.month() + 1 ) ) {
             if ( News.xhr !== null ) {

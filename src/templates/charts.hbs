@@ -3,6 +3,7 @@
 	<h3>Weekly singles charts</h3>
 	<table >
 		<tr>
+			<th></th>
 			<th>#</th>
 			<th>Song/Artist</th>
 			<th>Genre</th>
@@ -10,8 +11,10 @@
 			<th></th>
 		</tr>
 		{{#each this}}
+			{{#compare @index '<' 10}}
 			<tr>
-				<td class="{{chartEvent}}">{{position}}</td>
+				<td class="chart-entry-status {{getChartPosition this}}"></td>
+				<td>{{position}}</td>
 				<td>
 					<strong>
 						{{song}}
@@ -29,5 +32,6 @@
 					{{/each}}
 				</td>
 			</tr>
+			{{/compare}}
 		{{/each}}
 	</table>

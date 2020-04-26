@@ -1,4 +1,4 @@
-import {TPL_CHARTS_PANEL} from '../Templates.js';
+import { TPL_CHARTS_PANEL } from '../Templates.js';
 
 import Utils from './Utils.js';
 import Settings from '../Settings.js';
@@ -6,9 +6,6 @@ import Bands from './Bands.js';
 import Songs from './Songs.js';
 import Store from './Store.js';
 import Feed from './Feed.js';
-
-/* Vendor */
-import * as moment from 'moment';
 
 
 const Charts = {
@@ -39,33 +36,24 @@ const Charts = {
         let newList = [];
         let userSongs = Songs.get();
 
-        for ( let i = 0; i < 20; i++ ) {
+        for ( let i = 0; i < Settings.CHARTS_LENGTH; i++ ) {
             const entry = Charts.addEntry();
             newList.push( entry );
         }
         let newConcatList = chartList.concat( newList, userSongs );
-        newConcatList = Charts.sortCharts( newConcatList );
-        newConcatList.length = 10;
+        newConcatList = Charts.handleCharts( newConcatList );
+        //newConcatList.length = Settings.CHARTS_LENGTH;
         return newConcatList;
 
     },
-    sortCharts: ( list ) => {
+    handleCharts: ( list ) => {
         let sortedList = Utils.sortByInt( list, 'quality' );
+        sortedList.length = Settings.CHARTS_LENGTH;
         sortedList.forEach( ( entry, i ) => {
-            if(entry.myEntry === true){
-                Feed.add('charts_user_entry', entry);
-            }
             if ( entry.quality > 0 ) {
                 entry.position = ( i + 1 );
-                if ( entry.position > entry.prevPostion ) {
-                    entry.chartEvent = 'down';
-                } else if ( entry.position < entry.prevPostion ) {
-                    entry.chartEvent = 'up';
-                } else {
-                    entry.chartEvent = 'stay';
-                    if ( entry.position === 1 && entry.prevPostion === 1 ) {
-                        entry.weeksAsOne = entry.weeksAsOne + 1;
-                    }
+                if ( entry.position === 1 && entry.prevPostion <= 1 ) {
+                    entry.weeksAsOne = entry.weeksAsOne + 1;
                 }
             } else {
                 entry.removed = true;
@@ -82,8 +70,9 @@ const Charts = {
         chartEntry.prevPostion = ( index + 1 );
         chartEntry.new = false;
         chartEntry.weeks = chartEntry.weeks + 1;
-        chartEntry.quality = chartEntry.weeks < 10 ? Utils.randInt( 10 ) >= 5 ? ( chartEntry.prevQuality - Utils.randInt( 500 ) ) : ( ( chartEntry.prevQuality / 10 ) + Utils.randInt( 500 ) ) : ( ( chartEntry.prevQuality / 10 ) - Utils.randInt( 500 ) );
-        chartEntry.sales = parseInt( chartEntry.sales + ( ( chartEntry.quality / 10 ) * 7 ) + ( ( chartEntry.quality / 10 ) * 2 ) );
+        chartEntry.quality = Utils.adjustRanking( chartEntry );
+        chartEntry.presales = chartEntry.sales;
+        chartEntry.sales = Utils.adjustSales( chartEntry );
         chartEntry.icons = Charts.addIcons( chartEntry );
         return chartEntry;
     },
@@ -110,27 +99,30 @@ const Charts = {
         return icons;
     },
     addEntry: () => {
-        let chartEntry = {};
-        let band = Bands.getBand();
-        let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.STARTDATE;
-        Object.assign( chartEntry, band )
-        chartEntry.song = Bands.generateSong( Utils.randIndex( 5 ) );
-        chartEntry.quality = Utils.randRanking( 100 );
-        chartEntry.myEntry = false;
-        chartEntry.new = true;
-        chartEntry.sales = 0;
-        chartEntry.weeks = 1;
-        chartEntry.weeksAsOne = 0;
-        chartEntry.released = moment( time ).format( 'YYYY-MM-DD' );
-        chartEntry.chartEvent = '';
-        chartEntry.icons = Charts.addIcons( chartEntry );
+        let chartEntry = Songs.generate();
         return chartEntry;
+    },
+    handleUserEntry: ( entry, index ) => {
+        entry = Charts.updateEntry( entry, index )
+        Feed.add( 'charts_user_entry', entry );
+        //let money = Protagonist.get( 'money' );
+        //let fame = Protagonist.get( 'fame' );
+        //let earnedMoney = ( entry.sales - entry.presales ) * Settings.SALESCOST;
+        //let earnedFame = ( entry.sales - entry.presales ) / 2;
+        //Protagonist.set( 'money', earnedMoney );
+        //Protagonist.set( 'fame', earnedFame );
+        Songs.update( entry );
+        return entry;
     },
     update: () => {
         let list = Charts.get();
         Bands.createBand();
         list.forEach( ( entry, i ) => {
-            entry = Charts.updateEntry( entry, i );
+            if ( entry.myEntry === true ) {
+                entry = Charts.handleUserEntry( entry, i );
+            } else {
+                entry = Charts.updateEntry( entry, i );
+            }
         } );
         list = Charts.generateCharts( list );
         Charts.set( list );

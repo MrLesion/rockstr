@@ -1,7 +1,11 @@
+import Settings from '../Settings.js';
 import Utils from './Utils.js';
 import Store from './Store.js';
 import Protagonist from './Protagonist.js';
 import Bands from './Bands.js';
+
+/* Vendor */
+import * as moment from 'moment';
 
 const Songs = {
     model: () => {
@@ -39,7 +43,6 @@ const Songs = {
         } else {
             return stored;
         }
-
     },
     set: ( songs ) => {
         Store.set( 'songs', songs );
@@ -50,22 +53,45 @@ const Songs = {
         songs.push( song );
         Songs.set( songs );
     },
-    generate: ( title = '' ) => {
+    update: ( entry ) => {
+        let songs = Store.get( 'songs' );
+        let oldEntryIndex = songs.findIndex( o => o.song === entry.song );
+        songs[ oldEntryIndex ] = entry;
+        Songs.set( songs );
+    },
+    generate: ( title = '', factor = 1, isUser = false ) => {
         let song = Songs.model();
-        song.name = Protagonist.get( 'name' );
-        song.genre = Protagonist.get( 'genre' );
-        song.song = title || Songs.generateTitle();
-        song.quality = Songs.getQuality();
-        song.myEntry = true;
+        let songValues = {};
+        let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.STARTDATE;
+        if ( isUser === true ) {
+            songValues.name = Protagonist.get( 'name' );
+            songValues.genre = Protagonist.get( 'genre' );
+        } else {
+            let band = Bands.getBand();
+            Object.assign( songValues, band );
+        }
+
+        songValues.song = title || Songs.generateTitle();
+        songValues.quality = Songs.getQuality( isUser, factor );
+        songValues.released = moment( time ).format( 'YYYY-MM-DD' );
+        songValues.myEntry = isUser;
+        Object.assign( song, songValues );
+
         return song;
     },
     generateTitle: () => {
         return Bands.generateSong( Utils.randIndex( 5 ) );
     },
-    getQuality: () => {
-        let creativity = Protagonist.get( 'creativity' );
-        let mentality = Protagonist.get( 'mentality' );
-        return Utils.randRanking( ( creativity + mentality ) / 1.5 ) + Protagonist.get( 'fame' );
+    getQuality: ( isUser, factor ) => {
+        let result = 0;
+        factor = isUser ? factor : Utils.randInt( 9 );
+        let fame = ( isUser ? Protagonist.get( 'fame' ) / Settings.FAME_PROGRESS_FACTOR : Utils.randInt( Settings.MAX_SONG_FACTOR ) ) / 2;
+        let creativity = ( isUser ? Protagonist.get( 'creativity' ) : Utils.randInt( Settings.MAX_SONG_FACTOR ) ) / 2;
+        let mentality = ( isUser ? Protagonist.get( 'mentality' ) : Utils.randInt( Settings.MAX_SONG_FACTOR ) ) / 2;
+        let radRanking = Utils.randRanking( Settings.MAX_SONG_FACTOR );
+        let hitModifier = Utils.randInt( 50 ) === 25 ? 5 : 0;
+        result = Math.round( radRanking + ( ( fame + creativity + mentality ) * ( factor + hitModifier ) ) );
+        return result;
     }
 };
 
