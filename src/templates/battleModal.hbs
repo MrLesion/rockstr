@@ -1,0 +1,37 @@
+<div class="modal event-battle">
+	<div class="modal-inner">
+		<h2 class="modal-header">Battle of the bands</h2>
+		<div class="modal-content">
+			<div class="event-battle-row">
+				<div class="event-battle-column {{#compare turn '===' 'player'}}active{{/compare}}">
+					<div class="event-battle-content">
+						<h2>{{player.name}}</h2>
+						<h4>{{player.genre}}</h4>
+						<div>Health: {{player.health}}</div>
+						<div class="event-battle-actions">
+							<h4>Attack using:</h4>
+							<ul>
+								<li class="event-battle-action" data-action="lyrics">Lyrics</li>
+								<li class="event-battle-action" data-action="skills">Skills</li>
+								<li class="event-battle-action" data-action="arrogance">Arrogance</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="event-battle-column feed text-center">
+					<h1>VS.</h1>
+					{{#each feed}}
+						<p>{{{this}}}</p>
+					{{/each}}
+				</div>
+				<div class="event-battle-column {{#compare turn '===' 'opponent'}}active{{/compare}}">
+					<div class="event-battle-content">
+						<h2>{{opponent.name}}</h2>
+						<h4>{{opponent.genre}}</h4>
+						<div>Health: {{opponent.health}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

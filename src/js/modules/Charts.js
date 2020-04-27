@@ -79,22 +79,22 @@ const Charts = {
     addIcons: ( chartEntry ) => {
         let icons = [];
         if ( chartEntry.new === true ) {
-            icons.push( Settings.CHARTICON_NEW );
+            icons.push( Settings.CHARTS_ICON_NEW );
         }
         if ( chartEntry.myEntry === true ) {
-            icons.push( Settings.CHARTICON_MYENTRY );
+            icons.push( Settings.CHARTS_ICON_MYENTRY );
         }
         if ( chartEntry.weeksAsOne > 0 ) {
-            icons.push( Settings.CHARTICON_WEEKSASONE + chartEntry.weeksAsOne );
+            icons.push( Settings.CHARTS_ICON_WEEKSASONE + chartEntry.weeksAsOne );
         }
-        if ( chartEntry.sales >= 100000 && chartEntry.sales < 180000 ) {
-            icons.push( Settings.CHARTICON_GOLD );
+        if ( chartEntry.sales >= Settings.CHARTS_SALES_GOLD_LIMIT && chartEntry.sales < Settings.CHARTS_SALES_PLATINIUM_LIMIT ) {
+            icons.push( Settings.CHARTS_ICON_GOLD );
         }
-        if ( chartEntry.sales >= 180000 && chartEntry.sales < 225000 ) {
-            icons.push( Settings.CHARTICON_PLATINIUM );
+        if ( chartEntry.sales >= Settings.CHARTS_SALES_PLATINIUM_LIMIT && chartEntry.sales < Settings.CHARTS_SALES_DOUBLE_PLATINIUM_LIMIT ) {
+            icons.push( Settings.CHARTS_ICON_PLATINIUM );
         }
-        if ( chartEntry.sales >= 225000 ) {
-            icons.push( Settings.CHARTICON_DOUBLEPLATINIUM );
+        if ( chartEntry.sales >= Settings.CHARTS_SALES_DOUBLE_PLATINIUM_LIMIT ) {
+            icons.push( Settings.CHARTS_ICON_DOUBLEPLATINIUM );
         }
         return icons;
     },
@@ -107,7 +107,7 @@ const Charts = {
         Feed.add( 'charts_user_entry', entry );
         //let money = Protagonist.get( 'money' );
         //let fame = Protagonist.get( 'fame' );
-        //let earnedMoney = ( entry.sales - entry.presales ) * Settings.SALESCOST;
+        //let earnedMoney = ( entry.sales - entry.presales ) * Settings.AMOUNT_PER_SALE;
         //let earnedFame = ( entry.sales - entry.presales ) / 2;
         //Protagonist.set( 'money', earnedMoney );
         //Protagonist.set( 'fame', earnedFame );

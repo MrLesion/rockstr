@@ -21,12 +21,12 @@ const Protagonist = {
         let name = Utils.isNullOrUndefined( savedGamePlayer ) ? stdName : savedGamePlayer.name;
         let genre = Utils.isNullOrUndefined( savedGamePlayer ) ? stdGenre : savedGamePlayer.genre;
         let isPlayer = Utils.isNullOrUndefined( savedGamePlayer ) ? true : savedGamePlayer.isPlayer;
-        let fame = Utils.isNullOrUndefined( savedGamePlayer ) ? 0 : savedGamePlayer.fame;
-        let money = Utils.isNullOrUndefined( savedGamePlayer ) ? 100 : savedGamePlayer.money;
-        let health = Utils.isNullOrUndefined( savedGamePlayer ) ? 50 : savedGamePlayer.health;
-        let mentality = Utils.isNullOrUndefined( savedGamePlayer ) ? 50 : savedGamePlayer.mentality;
-        let creativity = Utils.isNullOrUndefined( savedGamePlayer ) ? 50 : savedGamePlayer.creativity;
-        let happiness = Utils.isNullOrUndefined( savedGamePlayer ) ? 50 : savedGamePlayer.happiness;
+        let fame = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_FAME : savedGamePlayer.fame;
+        let money = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_MONEY : savedGamePlayer.money;
+        let health = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_HEALTH : savedGamePlayer.health;
+        let mentality = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_MENTALITY : savedGamePlayer.mentality;
+        let creativity = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_CREATIVITY : savedGamePlayer.creativity;
+        let happiness = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_HAPPINESS : savedGamePlayer.happiness;
         let activity = Utils.isNullOrUndefined( savedGamePlayer ) ? 'activity_idle' : savedGamePlayer.activity;
 
         Protagonist.model.name = name;
@@ -74,7 +74,7 @@ const Protagonist = {
         } );
 
         Utils.delegate( 'click', '.protagonist-action-gig', () => {
-        
+            Events.battle.run();
         } );
 
         Utils.delegate( 'click', '.protagonist-action-continue', ( event ) => {
@@ -125,7 +125,7 @@ const Protagonist = {
         Protagonist.update();
     },
     doPromotion: ( eventObj ) => {
-        let time = Store.get( 'time' ) !== null ? Store.get( 'time' ).date : Settings.STARTDATE;
+        let time = Store.get( 'time' ) !== null ? Store.get( 'time' ).date : Settings.START_DATE;
         let randEventDays = Utils.randInt( 10 );
         let eventDate = moment( time ).add( randEventDays, 'days' );
         let jobs = Store.get( 'jobs' );

@@ -5,6 +5,8 @@ export default function ( strText ) {
 		strText = strText.replace( /New York Times/g, 'Daily Rockstr Gazette' );
 		strText = strText.replace( /New York/g, 'Rockstr City' );
 		strText = strText.replace( /N\.Y/g, 'R.C' );
+		strText = strText.replace( /LEAD:/g, '' );
+		strText = strText.trim();
 	}
 
 	return strText;

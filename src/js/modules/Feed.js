@@ -14,7 +14,7 @@ const Feed = {
     store: [],
     add: ( key, replaceObj ) => {
         let time = Time.get().date;
-        Feed.store.unshift( { key: key, replaceObj: replaceObj, date: moment( time ).format( Settings.DATEFORMAT ) } );
+        Feed.store.unshift( { key: key, replaceObj: replaceObj, date: moment( time ).format( Settings.DATE_FORMAT ) } );
         Feed.build();
     },
     bindAction: ( container, eventObj ) => {
@@ -41,7 +41,7 @@ const Feed = {
     },
     event: ( eventObj ) => {
         let time = Time.get().date;
-        Feed.store.unshift( { event: eventObj, date: moment( time ).format( Settings.DATEFORMAT ) } );
+        Feed.store.unshift( { event: eventObj, date: moment( time ).format( Settings.DATE_FORMAT ) } );
         Feed.build( eventObj );
     },
     build: ( eventObj ) => {

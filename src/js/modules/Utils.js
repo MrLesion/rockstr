@@ -4,6 +4,7 @@ import Settings from '../Settings.js';
 import Store from './Store.js';
 import Bands from './Bands.js';
 import Events from './Events.js';
+import Protagonist from './Protagonist.js';
 
 const Utils = {
     objectIsEmpty: ( obj ) => {
@@ -37,13 +38,23 @@ const Utils = {
         } else {
             entry = ( entry.prevQuality / 10 ) - Utils.randInt( Settings.MAX_SONG_FACTOR * 10 );
         }
-
         return result;
     },
     adjustSales: ( entry ) => {
         let result = entry.sales;
         result = Math.round( result + ( entry.quality / 100 + entry.quality / 100 ) * 2 );
         return result;
+    },
+    rpgAttack: (isUser, type) => {
+        let damage = 0;
+        if ( type === 'lyrics' ) {
+            damage = isUser ? Protagonist.get( 'creativity' ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
+        } else if ( type === 'skill' ) {
+            damage = isUser ? Protagonist.get( 'mentality' ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
+        } else if ( type === 'arrogance' ) {
+            damage = isUser ? ( Protagonist.get( 'fame' ) / Settings.FAME_PROGRESS_FACTOR ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
+        }
+        return damage;
     },
     intNegPos: ( int ) => {
         int *= Math.floor( Math.random() * 2 ) === 1 ? 1 : -1;

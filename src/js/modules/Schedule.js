@@ -14,7 +14,7 @@ const Schedule = {
     store: {},
     construct: () => {
         let calendarElement = document.getElementById( 'calendar-container' );
-        let time = Store.get( 'time' ) !== null ? Store.get( 'time' ).date : Settings.STARTDATE;
+        let time = Store.get( 'time' ) !== null ? Store.get( 'time' ).date : Settings.START_DATE;
 
         let events = Store.get( 'schedule' );
 
@@ -25,8 +25,8 @@ const Schedule = {
                 center: '',
                 right: ''
             },
-            defaultDate: moment( time ).format( 'YYYY-MM-DD' ),
-            now: moment( time ).format( 'YYYY-MM-DD' ),
+            defaultDate: moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ),
+            now: moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ),
             events: []
         } );
         Schedule.month = moment( time ).month();
@@ -35,7 +35,7 @@ const Schedule = {
             Object.keys( events ).forEach( ( eventKey ) => {
                 let event = {
                     title: events[ eventKey ].schedule.title,
-                    start: moment( eventKey ).format( 'YYYY-MM-DD' ),
+                    start: moment( eventKey ).format( Settings.SCHEDULE_DATE_FORMAT ),
                     extendedProps: events[ eventKey ]
                 };
                 Schedule.calendar.addEvent( event );
@@ -48,11 +48,11 @@ const Schedule = {
         if ( eventObj && eventDate ) {
             let event = {
                 title: eventObj.schedule.title,
-                start: eventDate.format( 'YYYY-MM-DD' ),
+                start: eventDate.format( Settings.SCHEDULE_DATE_FORMAT ),
                 extendedProps: eventObj
             };
             Schedule.calendar.addEvent( event );
-            Schedule.store[ eventDate.format( 'YYYY-MM-DD' ) ] = eventObj;
+            Schedule.store[ eventDate.format( Settings.SCHEDULE_DATE_FORMAT ) ] = eventObj;
             Store.set( 'schedule', Schedule.store );
         }
 
@@ -64,11 +64,11 @@ const Schedule = {
 
     },
     hasEvent: () => {
-        let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.STARTDATE;
+        let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.START_DATE;
         let returnEvent = {};
 
-        if ( Schedule.store[ moment( time ).format( 'YYYY-MM-DD' ) ] ) {
-            returnEvent = Schedule.store[ moment( time ).format( 'YYYY-MM-DD' ) ];
+        if ( Schedule.store[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ] ) {
+            returnEvent = Schedule.store[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ];
         }
 
         return returnEvent;
@@ -76,8 +76,8 @@ const Schedule = {
     updateDate: () => {
         let scheduledEvent = {};
         if ( Utils.isNullOrUndefined( Schedule.calendar ) === false ) {
-            let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.STARTDATE;
-            Schedule.calendar.setOption( 'now', moment( time ).format( 'YYYY-MM-DD' ) );
+            let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.START_DATE;
+            Schedule.calendar.setOption( 'now', moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) );
 
             scheduledEvent = Schedule.hasEvent();
 

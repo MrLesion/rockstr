@@ -21,17 +21,15 @@ const News = {
     },
     bindings: () => {
         Utils.eventEmitter.on( 'news.get', () => {
-            console.log('News GET');
             News.get();
         } );
     },
     set: () => {
-        console.log('News SET');
         let daysNews = [];
         let date = moment( Time.get().date );
         News.fetchedJSON.forEach( ( element ) => {
             var elementDate = moment( element.pub_date );
-            if ( elementDate.date() === date.date() && element.document_type === Settings.NYTTYPE ) {
+            if ( elementDate.date() === date.date() && element.document_type === Settings.NYT_TYPE ) {
                 if ( element.lead_paragraph !== null && element.lead_paragraph.length > 40 ) {
                     daysNews.push( element );
                 }
@@ -54,7 +52,7 @@ const News = {
             }
             if ( Settings.ACTIVE_MODULES_NEWS === true ) {
                 News.xhr = new XMLHttpRequest();
-                News.xhr.open( 'GET', Settings.NYTURL.replace( '{year}', date.year() ).replace( '{month}', ( date.month() + 1 ) ).replace( '{key}', Settings.NYTAPIKEY ) );
+                News.xhr.open( 'GET', Settings.NYT_ENDPOINT.replace( '{year}', date.year() ).replace( '{month}', ( date.month() + 1 ) ).replace( '{key}', Settings.NYT_APIKEY ) );
                 News.xhr.onload = function () {
                     if ( News.xhr.status === 200 ) {
                         let json = JSON.parse( News.xhr.responseText );

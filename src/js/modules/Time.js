@@ -25,7 +25,6 @@ const Time = {
         Time.model.date = moment( Store.get( 'time' ).date ).add( add, 'days' );
         Time.model.daysAlive += add;
         Store.set( 'time', Time.model );
-        console.log( 'TIME set' );
         Time.update();
         if ( typeof callback === 'function' ) {
             return callback();
@@ -35,7 +34,7 @@ const Time = {
         let stored = Store.get( 'time' );
         if ( Utils.isNullOrUndefined( stored ) === true ) {
             return {
-                date: Settings.STARTDATE,
+                date: Settings.START_DATE,
                 daysAlive: 1
             };
         } else {
@@ -51,10 +50,11 @@ const Time = {
         } else {
             Time.ticks += days;
         }
-
         Protagonist.set( 'activity', 'activity_' + type );
-
-        Time.ticker = setInterval( () => {
+        Time.ticker = setInterval( Time.handelDay( type, timeObj ), Settings.TIME_TICK );
+    },
+    handelDay: ( type, timeObj ) => {
+        return ( () => {
             console.log( 'Time.run', Time.ticks, type );
             const eventTick = Utils.randInt( 20 );
             Time.set( 1 );
@@ -85,7 +85,7 @@ const Time = {
                 }
             }
             Time.ticks--;
-        }, Settings.TICK );
+        } );
     },
     end: ( type = 'idle' ) => {
         Utils.eventEmitter.emit( 'time.end', 'idle', type );
@@ -118,16 +118,15 @@ const Time = {
         Store.set( 'addictions', addictions );
     },
     update: () => {
-        console.log( 'TIME update' );
         let dateElement = document.querySelector( '[data-prop="date"]' );
-        Utils.eventEmitter.emit( 'new.get' );
+        Utils.eventEmitter.emit( 'news.get' );
         if ( Utils.isNullOrUndefined( dateElement ) === false ) {
-            dateElement.innerHTML = moment( Time.model.date ).format( Settings.DATEFORMAT );
+            dateElement.innerHTML = moment( Time.model.date ).format( Settings.DATE_FORMAT );
         }
-        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.RENTDUE === 0 ) {
+        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.RENT_DUE_INTERVAL === 0 ) {
             Utils.eventEmitter.emit( 'protagonist.rent' );
         }
-        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.UPDATECHARTS === 0 ) {
+        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.CHARTS_UPDATE_INTERVAL === 0 ) {
             Utils.eventEmitter.emit( 'charts.update' );
         }
 

@@ -62,7 +62,7 @@ const Songs = {
     generate: ( title = '', factor = 1, isUser = false ) => {
         let song = Songs.model();
         let songValues = {};
-        let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.STARTDATE;
+        let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.START_DATE;
         if ( isUser === true ) {
             songValues.name = Protagonist.get( 'name' );
             songValues.genre = Protagonist.get( 'genre' );
