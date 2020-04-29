@@ -31,7 +31,7 @@
     },
     "addictLevels":
     {
-        "low": "Experimentation",
+        "low": "Experimental",
         "medium": "Risky usages",
         "high": "Addict"
     },

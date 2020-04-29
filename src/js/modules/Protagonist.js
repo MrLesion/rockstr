@@ -52,9 +52,13 @@ const Protagonist = {
         }
     },
     set: ( prop, value, callback = Protagonist.status ) => {
-        Protagonist.model[ prop ] = value;
+        Protagonist.model[ prop ] = Utils.validateProtagonistValue( prop, value );
         Store.set( 'protagonist', Protagonist.model );
         Protagonist.update( callback );
+    },
+    updateValue: ( prop, addValue ) => {
+        let newValue = Protagonist.get( prop ) + addValue;
+        Protagonist.set( prop, newValue );
     },
     bindings: () => {
         Utils.delegate( 'click', '.protagonist-action-laze', () => {
@@ -84,6 +88,17 @@ const Protagonist = {
         Utils.delegate( 'click', '.restart-game', () => {
             Store.reset();
         } );
+        Utils.eventEmitter.on( 'protagonist.timeupdate', () => {
+            Protagonist.handleAddiction();
+        } );
+    },
+    handleAddiction: () => {
+        let addictions = Store.get( 'addictions' ) || {};
+        if ( Utils.objectIsEmpty( addictions ) === false ) {
+            Object.keys( addictions ).forEach( ( drugKey ) => {
+                Utils.doDrugEffect( drugKey, addictions[ drugKey ] );
+            } );
+        }
     },
     doDrugs: ( eventObj ) => {
         let addictions = Store.get( 'addictions' ) || {};
@@ -105,11 +120,12 @@ const Protagonist = {
 
         //let addictionsLevels = Data.core.addictLevels;
 
-        if ( addictions[ drug ].addictionLevel > 0 && addictions[ drug ].addictionLevel < 5 ) {
+        if ( addictions[ drug ].addictionLevel > Settings.ADDICTION_LEVEL_LOW[ 0 ] && addictions[ drug ].addictionLevel < Settings.ADDICTION_LEVEL_LOW[ 1 ] ) {
             addictions[ drug ].addictionText = Data.core.addictLevels.low;
-        } else if ( addictions[ drug ].addictionLevel >= 5 && addictions[ drug ].addictionLevel < 10 ) {
+        } else if ( addictions[ drug ].addictionLevel >= Settings.ADDICTION_LEVEL_MEDIUM[ 0 ] && addictions[ drug ].addictionLevel < Settings.ADDICTION_LEVEL_MEDIUM[ 1 ] ) {
             addictions[ drug ].addictionText = Data.core.addictLevels.medium;
-        } else if ( addictions[ drug ].addictionLevel >= 10 ) {
+
+        } else if ( addictions[ drug ].addictionLevel >= Settings.ADDICTION_LEVEL_HIGH[ 0 ] ) {
             addictions[ drug ].addictionText = Data.core.addictLevels.high;
         }
 

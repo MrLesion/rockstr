@@ -25,7 +25,7 @@ const Charts = {
         }
     },
     set: ( list ) => {
-        if ( list ) {
+        if ( Utils.isNullOrUndefined(list) === false ) {
             Charts.model.list = list;
         }
         Store.set( 'charts', Charts.model );
@@ -42,7 +42,6 @@ const Charts = {
         }
         let newConcatList = chartList.concat( newList, userSongs );
         newConcatList = Charts.handleCharts( newConcatList );
-        //newConcatList.length = Settings.CHARTS_LENGTH;
         return newConcatList;
 
     },

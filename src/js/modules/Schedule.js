@@ -57,12 +57,6 @@ const Schedule = {
         }
 
     },
-    get: () => {
-
-    },
-    set: () => {
-
-    },
     hasEvent: () => {
         let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.START_DATE;
         let returnEvent = {};

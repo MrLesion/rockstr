@@ -3,6 +3,7 @@ import { TPL_EVENT_INTERVIEW_MODAL, TPL_EVENT_BATTLE_MODAL, TPL_STUDIO } from '.
 import * as Data from './Data.js';
 
 import Settings from '../Settings.js';
+import Models from '../Models.js';
 import Utils from './Utils.js';
 import Feed from './Feed.js';
 import Protagonist from './Protagonist.js';
@@ -31,6 +32,7 @@ const Events = {
                 Events.studio.releaseSong();
             }
         } );
+        Events.battle.bindings();
     },
     run: () => {
         let currentActivity = Protagonist.get( 'activity' );
@@ -79,7 +81,6 @@ const Events = {
         run: ( scheduledEventObject ) => {
             console.log( 'scheduledEventObject', scheduledEventObject );
             if ( scheduledEventObject.promotion === 'battle' ) {
-                Events.schedule.createBattle( 'battle' );
                 Events.battle.run();
             } else if ( scheduledEventObject.promotion === 'interview' ) {
                 Events.schedule.createInterview( 'interview', scheduledEventObject );
@@ -107,56 +108,47 @@ const Events = {
                     }
                 }
             } );
-            Events.schedule.build( type, scheduledEventObject );
+            Events.schedule.build( scheduledEventObject );
         },
-        build: ( type, eventObj ) => {
+        build: ( eventObj ) => {
             let modalContainer = document.querySelector( '.modal-backdrop' );
-            if ( type === 'battle' ) {
-                modalContainer.innerHTML = TPL_EVENT_BATTLE_MODAL( eventObj );
-            } else if ( type === 'interview' ) {
-                modalContainer.innerHTML = TPL_EVENT_INTERVIEW_MODAL( eventObj );
-            }
+            modalContainer.innerHTML = TPL_EVENT_INTERVIEW_MODAL( eventObj );
 
             Utils.eventEmitter.emit( 'modal.show', () => {
-                Events.schedule.bindings( type, modalContainer );
+                Events.schedule.bindings( modalContainer );
             } );
         },
-        bindings: ( type, modalContainer ) => {
-            if ( type === 'battle' ) {
-                console.log( type );
-            } else if ( type === 'interview' ) {
-                let firstQuestion = modalContainer.querySelector( '[data-step="0"]' );
-                firstQuestion.classList.add( 'active' );
+        bindings: ( modalContainer ) => {
+            let firstQuestion = modalContainer.querySelector( '[data-step="0"]' );
+            firstQuestion.classList.add( 'active' );
 
-                let selects = modalContainer.querySelectorAll( 'select' );
+            let selects = modalContainer.querySelectorAll( 'select' );
 
-                for ( var i = 0; i < selects.length; i++ ) {
-                    selects[ i ].addEventListener( 'change', ( event ) => {
-                        let curStep = event.target.closest( '[data-step]' );
-                        let curStepIndex = parseInt( curStep.dataset.step );
-                        let nextStep = modalContainer.querySelector( '[data-step="' + ( curStepIndex + 1 ) + '"]' );
-                        if ( Utils.isNullOrUndefined( nextStep ) === false ) {
-                            curStep.classList.remove( 'active' );
-                            nextStep.classList.add( 'active' );
-                        } else {
-                            Utils.eventEmitter.emit( 'modal.hide' );
-                        }
-                    } );
-                }
+            for ( var i = 0; i < selects.length; i++ ) {
+                selects[ i ].addEventListener( 'change', ( event ) => {
+                    let curStep = event.target.closest( '[data-step]' );
+                    let curStepIndex = parseInt( curStep.dataset.step );
+                    let nextStep = modalContainer.querySelector( '[data-step="' + ( curStepIndex + 1 ) + '"]' );
+                    if ( Utils.isNullOrUndefined( nextStep ) === false ) {
+                        curStep.classList.remove( 'active' );
+                        nextStep.classList.add( 'active' );
+                    } else {
+                        Utils.eventEmitter.emit( 'modal.hide' );
+                    }
+                } );
             }
         }
     },
     battle: {
-        _temp: {
-            weapons: [ 'lyrics', 'skills', 'arrogance' ],
-            feed: []
-        },
+        model: {},
         create: () => {
+            Object.assign( Events.battle.model, Models.battle() );
+
             let battleObject = {
                 turn: Utils.randInt( 6 ) > 3 ? 'player' : 'opponent'
             };
             let band = Bands.getBand();
-            let player = {
+            battleObject.player = {
                 name: Protagonist.get( 'name' ),
                 genre: Protagonist.get( 'genre' ),
                 health: Protagonist.get( 'health' ),
@@ -164,7 +156,7 @@ const Events = {
                 mentality: Protagonist.get( 'mentality' ),
                 fame: Protagonist.get( 'fame' ) / Settings.FAME_PROGRESS_FACTOR * 100
             };
-            let opponent = {
+            battleObject.opponent = {
                 name: band.name,
                 genre: band.genre,
                 health: Math.floor( Utils.randInt( Settings.BATTLE_MAX_POWER ) ),
@@ -172,27 +164,24 @@ const Events = {
                 mentality: Math.floor( Utils.randInt( Settings.BATTLE_MAX_POWER ) ),
                 fame: Math.floor( Utils.randInt( Settings.BATTLE_MAX_POWER ) )
             };
-            Object.assign( battleObject, { player: player } );
-            Object.assign( battleObject, { opponent: opponent } );
-            return battleObject;
+            Object.assign( Events.battle.model, battleObject );
         },
         run: () => {
-            let battleObject = Events.battle.create();
-            Object.assign( Events.battle._temp, battleObject );
+            Events.battle.create();
             Events.battle.build();
             Utils.eventEmitter.emit( 'modal.show', () => {
-                Events.battle.bindings();
+                Utils.eventEmitter.emit( 'event.battle.ready' );
             } );
         },
         build: () => {
             let modalContainer = document.querySelector( '.modal-backdrop' );
-            let data = Object.assign( {}, Events.battle._temp );
-            data.feed = data.feed.reverse();
+            let data = Object.assign( {}, Events.battle.model );
+            //data.feed = data.feed.reverse();
             modalContainer.innerHTML = TPL_EVENT_BATTLE_MODAL( data );
         },
         bindings: () => {
             Utils.eventEmitter.on( 'event.battle.ready', () => {
-                if ( Events.battle._temp.turn === 'opponent' ) {
+                if ( Events.battle.model.turn === 'opponent' ) {
                     Events.battle.attack( false );
                 }
             } );
@@ -206,11 +195,10 @@ const Events = {
                 let action = event.target.dataset.action;
                 Events.battle.attack( true, action );
             } );
-            Utils.eventEmitter.emit( 'event.battle.ready' );
         },
         attack: ( isUser, type = '' ) => {
             if ( type === '' ) {
-                type = Events.battle._temp.weapons[ Utils.randIndex( Events.battle._temp.weapons.length ) ];
+                type = Events.battle.model.attacks[ Utils.randIndex( Events.battle.model.attacks.length ) ];
             }
             let power = Utils.rpgAttack( isUser, type );
             if ( isUser === false ) {
@@ -224,31 +212,38 @@ const Events = {
         },
         fight: ( isUser, power, type ) => {
             let defense = Utils.randInt( Settings.BATTLE_MAX_POWER );
-            let outcome = '';
-            let attacker = isUser ? Events.battle._temp.player : Events.battle._temp.opponent;
-            let defender = isUser ? Events.battle._temp.opponent : Events.battle._temp.player;
+            let outcome = Object.assign( {}, Models.fight() );
+            let attacker = isUser ? Events.battle.model.player : Events.battle.model.opponent;
+            let defender = isUser ? Events.battle.model.opponent : Events.battle.model.player;
+
+            outcome.attacker = attacker;
+            outcome.type = type;
+            outcome.power = power;
+            outcome.defender = defender;
+            outcome.defense = defense;
+
             if ( power > defense ) {
-                outcome = '<strong> ' + attacker.name + '</strong> HITS with a ' + type + ' attack of ' + power + ' against <strong>' + defender.name + '</strong> defense of ' + defense;
+                outcome.hit = true;
                 if ( isUser ) {
-                    Events.battle._temp.opponent.health -= Math.floor( power - defense );
+                    Events.battle.model.opponent.health -= Math.floor( power - defense );
                 } else {
-                    Events.battle._temp.player.health -= Math.floor( power - defense );
+                    Events.battle.model.player.health -= Math.floor( power - defense );
                 }
             } else {
-                outcome = '<strong>' + attacker.name + '</strong> MISSES with a ' + type + ' attack of ' + power + ' against <strong>' + defender.name + '</strong>  defense of ' + defense;
+                outcome.hit = false;
             }
-            Events.battle._temp.feed.push( outcome );
-            if ( Events.battle._temp.opponent.health <= 0 ) {
+            Events.battle.model.feed.unshift( outcome );
+            if ( Events.battle.model.opponent.health <= 0 ) {
                 Utils.eventEmitter.emit( 'event.battle.end', 'player' );
-            } else if ( Events.battle._temp.player.health <= 0 ) {
+            } else if ( Events.battle.model.player.health <= 0 ) {
                 Utils.eventEmitter.emit( 'event.battle.end', 'opponent' );
             } else {
-                Utils.eventEmitter.emit( 'event.battle.turn', Events.battle._temp.turn );
+                Utils.eventEmitter.emit( 'event.battle.turn', Events.battle.model.turn );
             }
 
         },
         changeTurn: ( currentTurn ) => {
-            Events.battle._temp.turn = currentTurn === 'player' ? 'opponent' : 'player';
+            Events.battle.model.turn = currentTurn === 'player' ? 'opponent' : 'player';
             Events.battle.build();
             Utils.eventEmitter.emit( 'event.battle.ready' );
         },
@@ -257,38 +252,32 @@ const Events = {
                 money: Utils.randInt( Settings.BATTLE_PRIZE_MONEY ),
                 fame: Utils.randInt( Settings.BATTLE_PRIZE_FAME )
             };
-            Events.battle._temp.feed.push( 'The Winner is: ' + Events.battle._temp[ winner ].name + '<br />' + Events.battle._temp[ winner ].name + ' wins the prize money (£' + prize.money + ')' );
+            let outcome = Object.assign( {}, Models.fight() );
+
+            outcome.winner = Events.battle.model[ winner ].name;
+            outcome.prize = prize.money;
+            outcome.isAttack = false;
+
+            Events.battle.model.feed.unshift( outcome );
             Events.battle.build();
             if ( winner === 'player' ) {
-                Protagonist.set( 'money', ( Protagonist.get( 'money' ) + prize.money ) );
-                Protagonist.set( 'fame', ( Protagonist.get( 'fame' ) + prize.money ) );
+                Protagonist.updateValue('money', prize.money );
+                Protagonist.updateValue('fame', prize.fame );
             }
             Events.battle.reset();
             setTimeout( () => {
-                Utils.eventEmitter.emit( 'modal.hide');
+                Utils.eventEmitter.emit( 'modal.hide' );
             }, Settings.BATTLE_END_TIMEOUT );
         },
         reset: () => {
-            console.log('reset');
-            Events.battle._temp.feed = [];
-            Utils.eventEmitter.removeListener( 'event.battle.ready' );
-            Utils.eventEmitter.removeListener( 'event.battle.turn' );
-            Utils.eventEmitter.removeListener( 'event.battle.end' );
+            Events.battle.model.feed = [];
         }
     },
     studio: {
-        model: {
-            days: 0,
-            song: '',
-            temp: '',
-            cost: 0,
-            quality: 0
-        },
+        model: {},
         run: () => {
+            Object.assign( Events.studio.model, Models.studio() );
             Events.studio.model.days = Utils.randInt( Settings.EVENTS_STUDIO_DAYS_INTERVAL );
-            Events.studio.model.cost = 0;
-            Events.studio.model.quality = 0;
-
             let studios = Object.assign( {}, Data.core.record.studios );
             let producers = Object.assign( {}, Data.core.record.producers );
 
@@ -358,8 +347,6 @@ const Events = {
             let producerOptions = producer.getElementsByTagName( 'option' );
             let rentFactor = Math.ceil( Settings.RENT_AMOUNT * ( Settings.RENT_DUE_INTERVAL % Events.studio.model.days ) );
 
-            //console.log(rentFactor);
-
             for ( let i = 0; i < studioOptions.length; i++ ) {
                 if ( studioOptions[ i ].value !== '' ) {
                     let values = studioOptions[ i ].dataset;
@@ -393,7 +380,6 @@ const Events = {
             Events.studio.model.temp = '';
         },
         releaseSong: () => {
-            //let factors = Events.studio.model;
             let song = Songs.generate( Events.studio.model.song, Events.studio.model.quality, true );
             let cost = Events.studio.model.cost;
             Events.studio.reset();

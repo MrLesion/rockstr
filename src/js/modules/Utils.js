@@ -45,16 +45,29 @@ const Utils = {
         result = Math.round( result + ( entry.quality / 100 + entry.quality / 100 ) * 2 );
         return result;
     },
-    rpgAttack: (isUser, type) => {
+    rpgAttack: ( isUser, type ) => {
         let damage = 0;
-        if ( type === 'lyrics' ) {
+        if ( type === Settings.BATTLE_ATTACK_0 ) {
             damage = isUser ? Protagonist.get( 'creativity' ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
-        } else if ( type === 'skill' ) {
+        } else if ( type === Settings.BATTLE_ATTACK_1 ) {
             damage = isUser ? Protagonist.get( 'mentality' ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
-        } else if ( type === 'arrogance' ) {
-            damage = isUser ? ( Protagonist.get( 'fame' ) / Settings.FAME_PROGRESS_FACTOR ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
+        } else if ( type === Settings.BATTLE_ATTACK_2 ) {
+            damage = isUser ? ( Protagonist.get( 'creativity' ) + Protagonist.get( 'health' ) ) : Utils.randInt( Settings.BATTLE_MAX_POWER * 2 );
         }
         return damage;
+    },
+    doDrugEffect: ( drug, addiction ) => {
+        let drugFactor = Data.core.addictions[ drug ];
+        let health = -( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) );
+        let creativity = Utils.intNegPos( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) );
+        let mentality = Utils.intNegPos( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) );
+        let happiness = Utils.intNegPos( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) );
+
+        console.log( 'drug effect', { health: health, creativity: creativity, mentality: mentality, happiness: happiness } );
+        Protagonist.updateValue( 'health', health );
+        Protagonist.updateValue( 'creativity', creativity );
+        Protagonist.updateValue( 'mentality', mentality );
+        Protagonist.updateValue( 'happiness', happiness );
     },
     intNegPos: ( int ) => {
         int *= Math.floor( Math.random() * 2 ) === 1 ? 1 : -1;
@@ -75,6 +88,15 @@ const Utils = {
         return array.sort( ( a, b ) => {
             return parseInt( b[ intKey ] ) - parseInt( a[ intKey ] );
         } );
+    },
+    validateProtagonistValue: ( prop, value ) => {
+        let statsProps = [ 'health', 'mentality', 'creativity', 'happiness' ];
+        if ( statsProps.indexOf( prop ) > -1 ) {
+            if ( value > 100 ) {
+                return 100;
+            }
+        }
+        return value;
     },
     capitalizer: ( str ) => {
         var pieces = str.split( ' ' );
@@ -149,9 +171,16 @@ const Utils = {
         let npc = {};
 
         if ( Utils.isNullOrUndefined( savedJobs ) === false ) {
+            /*
             npc = savedJobs.filter( ( npc ) => {
                 return npc.job === job;
             } )[ 0 ];
+            */
+
+            npc = savedJobs.filter( npc => npc.job === job );
+            if ( npc.length ) {
+                npc = npc[ 0 ];
+            }
         }
         if ( Utils.objectIsEmpty( npc ) === true ) {
             npc = Utils.generateNpc( job );
@@ -181,9 +210,9 @@ const Utils = {
         },
         removeListener( event, listener ) {
             if ( typeof Utils.eventEmitter._events[ event ] === 'object' ) {
-                const idx = Utils.eventEmitter._events[ event ].indexOf( listener );
-                if ( idx > -1 ) {
-                    Utils.eventEmitter._events[ event ].splice( idx, 1 );
+                const index = Utils.eventEmitter._events[ event ].indexOf( listener );
+                if ( index > -1 ) {
+                    Utils.eventEmitter._events[ event ].splice( index, 1 );
                 }
             }
         },

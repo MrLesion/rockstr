@@ -1,4 +1,5 @@
 import Settings from '../Settings.js';
+import Models from '../Models.js';
 import Utils from './Utils.js';
 import Bands from './Bands.js';
 import Store from './Store.js';
@@ -16,6 +17,7 @@ const Time = {
     ticks: 0,
     ticker: null,
     construct: () => {
+        Object.assign( Time.model, Models.time() );
         Time.model.date = Time.get().date;
         Time.model.daysAlive = Time.get().daysAlive;
         Store.set( 'time', Time.model );
@@ -120,6 +122,7 @@ const Time = {
     update: () => {
         let dateElement = document.querySelector( '[data-prop="date"]' );
         Utils.eventEmitter.emit( 'news.get' );
+        Utils.eventEmitter.emit( 'protagonist.timeupdate' );
         if ( Utils.isNullOrUndefined( dateElement ) === false ) {
             dateElement.innerHTML = moment( Time.model.date ).format( Settings.DATE_FORMAT );
         }
