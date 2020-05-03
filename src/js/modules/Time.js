@@ -43,6 +43,18 @@ const Time = {
             return stored;
         }
     },
+    today: ( format = false ) => {
+        let returnTime = null;
+        if ( Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ) {
+            returnTime = Store.get( 'time' ).date;
+        } else {
+            returnTime = Settings.START_DATE;
+        }
+        if ( format === true ) {
+            returnTime = returnTime.format( Settings.DATE_FORMAT );
+        }
+        return returnTime;
+    },
     run: ( days = 0, type = 'laze', timeObj = null ) => {
         Utils.eventEmitter.emit( 'time.start', type );
         document.querySelector( '.wrapper' ).classList.add( 'time-ticking' );
@@ -70,7 +82,7 @@ const Time = {
 
             if ( Utils.objectIsEmpty( checkDateForEvent ) === false ) {
                 Time.end( type );
-                Events.schedule.run( checkDateForEvent );
+                Schedule.run( checkDateForEvent );
             } else if ( Utils.isNullOrUndefined( timeObj ) === true && eventTick < 5 ) {
                 Time.pause( eventTick, type );
                 Events.run();
@@ -124,7 +136,7 @@ const Time = {
         Utils.eventEmitter.emit( 'news.get' );
         Utils.eventEmitter.emit( 'protagonist.timeupdate' );
         if ( Utils.isNullOrUndefined( dateElement ) === false ) {
-            dateElement.innerHTML = moment( Time.model.date ).format( Settings.DATE_FORMAT );
+            dateElement.innerHTML = Time.today( true );
         }
         if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.RENT_DUE_INTERVAL === 0 ) {
             Utils.eventEmitter.emit( 'protagonist.rent' );

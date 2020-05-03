@@ -4,7 +4,8 @@
   "description": "Rock Star Simulator",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --config webpack.config.js --watch",
+    "dev": "webpack-dev-server",
+    "test": "webpack -w --progress --colors --config webpack-test.config.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
   },
   "author": "",
@@ -15,6 +16,8 @@
     "autoprefixer": "^9.7.4",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
+    "babel-polyfill": "^6.26.0",
+    "chai": "^4.2.0",
     "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
@@ -23,12 +26,15 @@
     "file-loader": "^5.1.0",
     "html-webpack-plugin": "^4.2.0",
     "mini-css-extract-plugin": "^0.9.0",
+    "mocha": "^7.1.2",
     "postcss-loader": "^3.0.0",
     "sass": "^1.26.2",
     "sass-loader": "^8.0.2",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.10.3",
+    "webpack-node-externals": "^1.7.2",
+    "webpack-shell-plugin": "^0.5.0"
   },
   "dependencies": {
     "@fullcalendar/core": "^4.4.0",

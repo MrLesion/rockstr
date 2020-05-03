@@ -21,6 +21,7 @@ const Navigation = {
         Utils.eventEmitter.on( 'time.start', ( type ) => {
             Navigation.buildBottomBar( type, true );
         } );
+
     },
     shortcuts: () => {
         let hiddenIcons = document.getElementsByClassName( 'hidden-action-icon' );

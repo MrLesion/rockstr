@@ -1,6 +1,6 @@
 const Settings = {
     ACTIVE_MODULES_SPEECH: false,
-    ACTIVE_MODULES_NEWS: true,
+    ACTIVE_MODULES_NEWS: false,
 
     START_DATE: '1989-01-01T00:00:00.000Z',
     DATE_FORMAT: 'MMM. Do YYYY',

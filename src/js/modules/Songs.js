@@ -3,6 +3,7 @@ import Utils from './Utils.js';
 import Store from './Store.js';
 import Protagonist from './Protagonist.js';
 import Bands from './Bands.js';
+import Time from './Time.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -37,9 +38,7 @@ const Songs = {
     get: ( song ) => {
         let stored = Store.get( 'songs' );
         if ( Utils.isNullOrUndefined( song ) === false ) {
-            return stored.filter( ( song ) => {
-                return song.song === song;
-            } )[ 0 ];
+            return stored.filter(s => s.song === song)[ 0 ];
         } else {
             return stored;
         }
@@ -62,7 +61,7 @@ const Songs = {
     generate: ( title = '', factor = 1, isUser = false ) => {
         let song = Songs.model();
         let songValues = {};
-        let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.START_DATE;
+        let time = Time.today();
         if ( isUser === true ) {
             songValues.name = Protagonist.get( 'name' );
             songValues.genre = Protagonist.get( 'genre' );
@@ -73,7 +72,7 @@ const Songs = {
 
         songValues.song = title || Songs.generateTitle();
         songValues.quality = Songs.getQuality( isUser, factor );
-        songValues.released = moment( time ).format( 'YYYY-MM-DD' );
+        songValues.released = moment( time ).format( Settings.SCHEDULE_DATE_FORMAT );
         songValues.myEntry = isUser;
         Object.assign( song, songValues );
 

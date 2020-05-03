@@ -34,7 +34,8 @@
 					pointer-events: all;
 				}
 			}
-			&.feed{
+
+			&.feed {
 				flex: 0 0 40%;
 			}
 
@@ -101,5 +102,41 @@
 		border-bottom: 1px solid #D0D2E8;
 		padding-bottom: 1em;
 		margin-top: 5px;
+	}
+}
+
+ul.custom-select {
+	position: relative;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0;
+	border: 1px solid #ccc;
+	background-color: white;
+
+	li {
+		height: 22px;
+		display: none;
+		padding: 5px;
+		background-color: red;
+	}
+
+	&::before {
+		padding: 5px;
+		height: 12px;
+		display: block;
+		content: attr(data-selected);
+	}
+
+	&::after {
+		right: 5px;
+		content: '\FE40';
+		position: absolute;
+		top: 5px;
+	}
+
+	&.active {
+		li {
+			display: block;
+		}
 	}
 }

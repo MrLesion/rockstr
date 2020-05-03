@@ -1,66 +1,85 @@
-[{
+[
+{
     "msg": "Your drummer <-drummer->, offers you some LSD.",
     "action": "Do you take it?",
     "drug": "lsd",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "Your manager <-manager->, tells you to smoke more weed, it will increase your creativity.",
     "action": "Do you smoke it?",
     "drug": "marijuana",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "Your lover wants to share some blue pills.",
     "action": "Do you eat them?",
     "drug": "lsd",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "You find your bassist's stash of joints.",
     "action": "Do you smoke them?",
     "drug": "marijuana",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "Your friend, <-bff-> is going on an all-night pub crawl and wants you to come along.",
     "action": "What do you say?",
     "drug": "alcohol",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "Your manager <-manager->, is very happy about your progress and slips you a small bag of heroin.",
     "action": "Do you shoot up?",
     "drug": "heroin",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "After a long day of doing music-related stuff you settle down on your couch with a bottle of vodka.",
     "action": "Do you drink it?",
     "drug": "alcohol",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "You meet a couple of local fans in the park and they want to share some of their weed with you.",
     "action": "Do you smoke it?",
     "drug": "marijuana",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "Your lover brought back a bag of smack and asks if you want to share it.",
     "action": "Well do you?",
     "drug": "heroin",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "While cleaning, you find a green-looking pill under the rug..",
     "action": "Do you eat it?",
     "drug": "lsd",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "Your bassist <-bassist->, comes by with a bottle of rum.",
     "action": "Do you share it?",
     "drug": "alcohol",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "At a party you are offered some coke",
     "action": "Do you sniff it?",
     "drug": "cocaine",
     "consequence": "drug"
-}, {
+},
+{
     "msg": "<-bff-> comes around with a bag of snow",
     "action": "Do you sniff it?",
     "drug": "cocaine",
+    "consequence": "drug"
+},
+{
+    "msg": "<-ANY-> got you some skunk",
+    "action": "Light up?",
+    "drug": "marijuana",
     "consequence": "drug"
 }]

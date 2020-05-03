@@ -1,20 +1,17 @@
 import { TPL_FEED_PANEL } from '../Templates.js';
 
-import Settings from '../Settings.js';
 import Utils from './Utils.js';
 import Time from './Time.js';
 import Events from './Events.js';
 import Protagonist from './Protagonist.js';
 import Speech from './Speech.js';
 
-/* Vendor */
-import * as moment from 'moment';
 
 const Feed = {
     store: [],
     add: ( key, replaceObj ) => {
-        let time = Time.get().date;
-        Feed.store.unshift( { key: key, replaceObj: replaceObj, date: moment( time ).format( Settings.DATE_FORMAT ) } );
+        let time = Time.today( true );
+        Feed.store.unshift( { key: key, replaceObj: replaceObj, date: time } );
         Feed.build();
     },
     bindAction: ( container, eventObj ) => {
@@ -40,8 +37,8 @@ const Feed = {
 
     },
     event: ( eventObj ) => {
-        let time = Time.get().date;
-        Feed.store.unshift( { event: eventObj, date: moment( time ).format( Settings.DATE_FORMAT ) } );
+        let time = Time.today( true );
+        Feed.store.unshift( { event: eventObj, date: time } );
         Feed.build( eventObj );
     },
     build: ( eventObj ) => {

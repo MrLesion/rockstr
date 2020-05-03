@@ -11,6 +11,9 @@ const Modal = {
         Utils.eventEmitter.on( 'modal.hide', () => {
             Modal.hide();
         } );
+        Utils.delegate( 'click', '.modal-close', () => {
+            Utils.eventEmitter.emit( 'modal.hide' );
+        } );
     },
     show: ( fnCallback ) => {
         let modal = document.querySelector( '.modal-backdrop' );

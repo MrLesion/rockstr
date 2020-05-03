@@ -64,10 +64,10 @@ const Utils = {
         let happiness = Utils.intNegPos( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) );
 
         console.log( 'drug effect', { health: health, creativity: creativity, mentality: mentality, happiness: happiness } );
-        Protagonist.updateValue( 'health', health );
-        Protagonist.updateValue( 'creativity', creativity );
-        Protagonist.updateValue( 'mentality', mentality );
-        Protagonist.updateValue( 'happiness', happiness );
+        Protagonist.set( 'health', health, true );
+        Protagonist.set( 'creativity', creativity, true );
+        Protagonist.set( 'mentality', mentality, true );
+        Protagonist.set( 'happiness', happiness, true );
     },
     intNegPos: ( int ) => {
         int *= Math.floor( Math.random() * 2 ) === 1 ? 1 : -1;
@@ -93,7 +93,7 @@ const Utils = {
         let statsProps = [ 'health', 'mentality', 'creativity', 'happiness' ];
         if ( statsProps.indexOf( prop ) > -1 ) {
             if ( value > 100 ) {
-                return 100;
+                value = 100;
             }
         }
         return value;
@@ -115,6 +115,11 @@ const Utils = {
 
             placeholders.forEach( ( placeholder ) => {
                 let placeholderMap = placeholder.match( /<-(.*)->/ );
+                if ( placeholderMap[ 1 ] === 'ANY' ) {
+                    let anyPlaceholderMap = Data.jobs[ Utils.randIndex( Data.jobs.length ) ];
+                    placeholderMap[ 0 ] = '<-' + anyPlaceholderMap + '->';
+                    placeholderMap[ 1 ] = anyPlaceholderMap;
+                }
                 let placeholdeTag = placeholderMap[ 0 ];
                 let placeholdeData = placeholderMap[ 1 ];
                 let isNPC = Data.jobs.indexOf( placeholdeData ) > -1;
@@ -171,15 +176,9 @@ const Utils = {
         let npc = {};
 
         if ( Utils.isNullOrUndefined( savedJobs ) === false ) {
-            /*
-            npc = savedJobs.filter( ( npc ) => {
-                return npc.job === job;
-            } )[ 0 ];
-            */
-
-            npc = savedJobs.filter( npc => npc.job === job );
-            if ( npc.length ) {
-                npc = npc[ 0 ];
+            let findNpc = savedJobs.filter( npc => npc.job === job );
+            if ( findNpc.length ) {
+                npc = findNpc[ 0 ];
             }
         }
         if ( Utils.objectIsEmpty( npc ) === true ) {
@@ -226,6 +225,35 @@ const Utils = {
                 remove();
                 listener.apply( Utils.eventEmitter, args );
             } );
+        }
+    },
+    customSelect: () => {
+        let genericSelects = document.getElementsByTagName( 'select' );
+        for ( let i = 0; i < genericSelects.length; i++ ) {
+            let customSelectMarkup = document.createElement( 'ul' );
+            customSelectMarkup.className = 'custom-select';
+            customSelectMarkup.setAttribute( 'data-id', genericSelects[ i ].id );
+            customSelectMarkup.setAttribute( 'data-selected', genericSelects[ i ].value );
+
+            let genericOptions = genericSelects[ i ].options;
+            for ( let x = 0; x < genericOptions.length; x++ ) {
+                let customOptionMarkup = document.createElement( 'li' );
+                customOptionMarkup.setAttribute( 'data-value', genericOptions[ x ].value );
+                customOptionMarkup.innerText = genericOptions[ x ].innerText;
+                customSelectMarkup.appendChild( customOptionMarkup );
+
+            }
+            genericSelects[ i ].style.display = 'none';
+            genericSelects[ i ].parentNode.appendChild( customSelectMarkup );
+            Utils.delegate( 'click', '.custom-select', ( event ) => {
+                if(event.target.className.indexOf('active') === -1){
+                    event.target.classList.add('active');
+                } else{
+                    event.target.classList.remove('active');
+                }
+                console.log(  );
+            } );
+
         }
     }
 };

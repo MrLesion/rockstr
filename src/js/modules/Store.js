@@ -12,7 +12,8 @@ const Store = {
             jobs: Store.load( 'jobs' ),
             addictions: Store.load( 'addictions' ),
             schedule: Store.load( 'schedule' ),
-            songs: Store.load( 'songs' )
+            songs: Store.load( 'songs' ),
+            news: Store.load( 'news' )
         }
     },
     set: ( key, dataObj ) => {

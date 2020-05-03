@@ -7,7 +7,8 @@ import Settings from '../Settings.js';
 import Store from './Store.js';
 import Time from './Time.js';
 import Feed from './Feed.js';
-import Events from './Events.js';
+import Studio from './Studio.js';
+import Battle from './Battle.js';
 import Schedule from './Schedule.js';
 
 /* Vendor */
@@ -51,14 +52,17 @@ const Protagonist = {
             return stored[ prop ];
         }
     },
-    set: ( prop, value, callback = Protagonist.status ) => {
+    set: ( prop, value, update = false, callback = Protagonist.status ) => {
+        if ( update === true ) {
+            value = Protagonist.updateValue( prop, value );
+        }
         Protagonist.model[ prop ] = Utils.validateProtagonistValue( prop, value );
         Store.set( 'protagonist', Protagonist.model );
         Protagonist.update( callback );
     },
     updateValue: ( prop, addValue ) => {
         let newValue = Protagonist.get( prop ) + addValue;
-        Protagonist.set( prop, newValue );
+        return newValue;
     },
     bindings: () => {
         Utils.delegate( 'click', '.protagonist-action-laze', () => {
@@ -74,11 +78,11 @@ const Protagonist = {
         } );
 
         Utils.delegate( 'click', '.protagonist-action-record', () => {
-            Events.studio.run();
+            Studio.run();
         } );
 
         Utils.delegate( 'click', '.protagonist-action-gig', () => {
-            Events.battle.run();
+            Battle.run();
         } );
 
         Utils.delegate( 'click', '.protagonist-action-continue', ( event ) => {
@@ -141,18 +145,12 @@ const Protagonist = {
         Protagonist.update();
     },
     doPromotion: ( eventObj ) => {
-        let time = Store.get( 'time' ) !== null ? Store.get( 'time' ).date : Settings.START_DATE;
+        let time = Time.today();
         let randEventDays = Utils.randInt( 10 );
         let eventDate = moment( time ).add( randEventDays, 'days' );
-        let jobs = Store.get( 'jobs' );
-        let manager = jobs.filter( ( npc ) => {
-            return npc.job === 'manager';
-        } )[ 0 ];
+        let manager = Utils.getNpc( 'manager' );
         Schedule.register( eventObj, eventDate );
-
-        Feed.add( 'doPromotion_' + eventObj.promotion, { manager: manager.name, days: randEventDays } );
-
-        //Time.run(0, 'promotion', promotion);
+        Feed.add( 'doPromotion_' + eventObj.promotion, { manager: manager, days: randEventDays } );
     },
     status: () => {
         let protagonistStats = Protagonist.model;

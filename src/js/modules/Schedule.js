@@ -1,6 +1,10 @@
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
 import Store from './Store.js';
+import Time from './Time.js';
+
+import Battle from './Battle.js';
+import Interview from './Interview.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -12,9 +16,10 @@ const Schedule = {
     calendar: null,
     month: 0,
     store: {},
+    model: {},
     construct: () => {
         let calendarElement = document.getElementById( 'calendar-container' );
-        let time = Store.get( 'time' ) !== null ? Store.get( 'time' ).date : Settings.START_DATE;
+        let time = Time.today();
 
         let events = Store.get( 'schedule' );
 
@@ -58,7 +63,7 @@ const Schedule = {
 
     },
     hasEvent: () => {
-        let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.START_DATE;
+        let time = Time.today();
         let returnEvent = {};
 
         if ( Schedule.store[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ] ) {
@@ -70,7 +75,7 @@ const Schedule = {
     updateDate: () => {
         let scheduledEvent = {};
         if ( Utils.isNullOrUndefined( Schedule.calendar ) === false ) {
-            let time = Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ? Store.get( 'time' ).date : Settings.START_DATE;
+            let time = Time.today();
             Schedule.calendar.setOption( 'now', moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) );
 
             scheduledEvent = Schedule.hasEvent();
@@ -85,6 +90,14 @@ const Schedule = {
     },
     render: () => {
         Schedule.calendar.render();
+    },
+    run: ( scheduledEventObject ) => {
+        console.log( 'scheduledEventObject', scheduledEventObject );
+        if ( scheduledEventObject.promotion === 'battle' ) {
+            Battle.run();
+        } else if ( scheduledEventObject.promotion === 'interview' ) {
+            Interview.run( scheduledEventObject );
+        }
     }
 }
 

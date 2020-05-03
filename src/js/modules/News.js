@@ -1,6 +1,7 @@
 import { TPL_NEWS_PANEL } from '../Templates.js';
 
 import Settings from '../Settings.js';
+import Fetch from './Fetch.js';
 import Utils from './Utils.js';
 import Time from './Time.js';
 
@@ -51,20 +52,13 @@ const News = {
                 console.log( News.xhr.readyState, News.xhr.status );
             }
             if ( Settings.ACTIVE_MODULES_NEWS === true ) {
-                News.xhr = new XMLHttpRequest();
-                News.xhr.open( 'GET', Settings.NYT_ENDPOINT.replace( '{year}', date.year() ).replace( '{month}', ( date.month() + 1 ) ).replace( '{key}', Settings.NYT_APIKEY ) );
-                News.xhr.onload = function () {
-                    if ( News.xhr.status === 200 ) {
-                        let json = JSON.parse( News.xhr.responseText );
-                        News.fetchedJSON = json.response.docs;
+                let newsApiUrl = Settings.NYT_ENDPOINT.replace( '{year}', date.year() ).replace( '{month}', ( date.month() + 1 ) ).replace( '{key}', Settings.NYT_APIKEY );
+                Fetch( newsApiUrl )
+                    .then( ( data ) => {
+                        News.fetchedJSON = data.response.docs;
                         News.fetchedMonth = ( date.month() + 1 );
                         News.set();
-
-                    } else {
-                        console.log( 'Request failed.  Returned status of ' + News.xhr.status );
-                    }
-                };
-                News.xhr.send();
+                    } );
             }
         } else {
             News.set();

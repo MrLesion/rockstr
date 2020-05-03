@@ -2134,6 +2134,57 @@ section#feed::after {
   display: block;
 }
 
+.speech-bubble {
+  max-width: 255px;
+  word-wrap: break-word;
+  margin-bottom: 12px;
+  line-height: 24px;
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 25px;
+}
+.speech-bubble:before, .speech-bubble:after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  height: 20px;
+}
+.speech-bubble.answer-bubble {
+  color: white;
+  background: #0B93F6;
+  align-self: flex-end;
+}
+.speech-bubble.answer-bubble:before {
+  right: -7px;
+  border-right: 20px solid #0B93F6;
+  border-bottom-left-radius: 16px 14px;
+  transform: translate(0, -2px);
+}
+.speech-bubble.answer-bubble:after {
+  right: -56px;
+  width: 26px;
+  background: rgba(26, 21, 22, 0.4);
+  border-bottom-left-radius: 10px;
+  transform: translate(-30px, -2px);
+}
+.speech-bubble.question-bubble {
+  background: #E5E5EA;
+  color: black;
+}
+.speech-bubble.question-bubble:before {
+  left: -7px;
+  border-left: 20px solid #E5E5EA;
+  border-bottom-right-radius: 16px 14px;
+  transform: translate(0, -2px);
+}
+.speech-bubble.question-bubble:after {
+  left: 4px;
+  width: 26px;
+  background: rgba(26, 21, 22, 0.4);
+  border-bottom-right-radius: 10px;
+  transform: translate(-30px, -2px);
+}
+
 .fc-unthemed td.fc-other-month {
   opacity: 0.5;
 }
