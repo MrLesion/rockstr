@@ -51,7 +51,7 @@ const Time = {
             returnTime = Settings.START_DATE;
         }
         if ( format === true ) {
-            returnTime = moment(returnTime).format( Settings.DATE_FORMAT );
+            returnTime = moment( returnTime ).format( Settings.DATE_FORMAT );
         }
         return returnTime;
     },
@@ -89,9 +89,8 @@ const Time = {
             } else if ( Time.ticks < 1 ) {
                 Time.end( type );
                 if ( Utils.isNullOrUndefined( timeObj ) === false && timeObj.update ) {
-                    Object.keys( timeObj.update ).forEach( ( key ) => {
-                        let oldValue = Protagonist.get( key );
-                        Protagonist.set( key, oldValue + timeObj.update[ key ].value );
+                    Utils.each( timeObj.update, ( prop, value ) => {
+                        Protagonist.set( prop, value.value, true );
                     } );
                     if ( timeObj.callback && typeof timeObj.callback === 'function' ) {
                         timeObj.callback( type );
@@ -120,14 +119,15 @@ const Time = {
         const wrapper = document.querySelector( '.wrapper' );
         let addictions = Store.get( 'addictions' ) || {};
 
-        Object.keys( addictions ).forEach( ( key ) => {
-            if ( addictions[ key ].trip > 0 ) {
-                wrapper.classList.add( key + '-trip' );
-                addictions[ key ].trip = addictions[ key ].trip - 1;
+        Utils.each( addictions, ( prop, value ) => {
+            if ( value.trip > 0 ) {
+                wrapper.classList.add( prop + '-trip' );
+                value.trip = value.trip - 1;
             } else {
-                wrapper.classList.remove( key + '-trip' );
+                wrapper.classList.remove( prop + '-trip' );
             }
         } );
+
 
         Store.set( 'addictions', addictions );
     },

@@ -16,11 +16,7 @@ const Interview = {
 			score: 0,
 			steps: {
 				current: {
-					index: 0,
-					element: null
-				},
-				next: {
-					element: null
+					index: 0
 				}
 			}
 		};
@@ -97,8 +93,8 @@ const Interview = {
 			updateObj.happiness = Utils.randInt( Interview.model.score / 2 );
 			updateObj.mentality = Utils.randInt( Interview.model.score / 2 );
 		}
-		Object.keys( updateObj ).forEach( ( key ) => {
-			Protagonist.set( key, updateObj[ key ], true );
+		Utils.each( updateObj, ( prop, value ) => {
+			Protagonist.set( prop, value, true );
 		} );
 		Feed.add( 'event_interview_done', { scoretext: scoreText } );
 		Utils.eventEmitter.emit( 'modal.hide' );

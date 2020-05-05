@@ -42,9 +42,8 @@ const Events = {
         }
 
         if ( Utils.isNullOrUndefined( event.update ) === false ) {
-            Object.keys( event.update ).forEach( function ( key ) {
-                let updatedValue = Protagonist.get( key ) + event.update[ key ].value;
-                Protagonist.set( key, updatedValue );
+            Utils.each( event.update, ( prop, value ) => {
+                Protagonist.set( prop, value.value, true );
             } );
         }
 

@@ -145,7 +145,7 @@ const Utils = {
                         let bandname = Bands.getBand();
                         msg = msg.replace( placeholdeTag, bandname.name );
                     } else if ( placeholdeData === 'usergenre' ) {
-                        let genre = Protagonist.get('genre');
+                        let genre = Protagonist.get( 'genre' );
                         msg = msg.replace( placeholdeTag, genre );
                     }
                 }
@@ -189,6 +189,14 @@ const Utils = {
                 }
             }
         }, false );
+    },
+    each: ( obj, fnCallback ) => {
+        if ( Utils.isNullOrUndefined( obj ) === false && typeof obj === 'object' && typeof fnCallback === 'function' ) {
+            Object.keys( obj ).forEach( ( key ) => {
+                fnCallback( key, obj[ key ] );
+            } );
+        }
+
     },
     eventEmitter: {
         _events: {},
@@ -238,10 +246,10 @@ const Utils = {
             genericSelects[ i ].style.display = 'none';
             genericSelects[ i ].parentNode.appendChild( customSelectMarkup );
             Utils.delegate( 'click', '.custom-select', ( event ) => {
-                if(event.target.className.indexOf('active') === -1){
-                    event.target.classList.add('active');
-                } else{
-                    event.target.classList.remove('active');
+                if ( event.target.className.indexOf( 'active' ) === -1 ) {
+                    event.target.classList.add( 'active' );
+                } else {
+                    event.target.classList.remove( 'active' );
                 }
             } );
 

@@ -104,8 +104,8 @@ const Protagonist = {
     handleAddiction: () => {
         let addictions = Store.get( 'addictions' ) || {};
         if ( Utils.objectIsEmpty( addictions ) === false ) {
-            Object.keys( addictions ).forEach( ( drugKey ) => {
-                Utils.doDrugEffect( drugKey, addictions[ drugKey ] );
+            Utils.each( addictions, ( prop, value ) => {
+                Utils.doDrugEffect( prop, value );
             } );
         }
     },
@@ -142,10 +142,10 @@ const Protagonist = {
         wrapper.classList.add( drug + '-trip' );
         Store.set( 'addictions', addictions );
 
-        Object.keys( addictionsMods.update ).forEach( ( key ) => {
-            let oldValue = Protagonist.get( key );
-            Protagonist.set( key, oldValue + addictionsMods.update[ key ].value );
+        Utils.each( addictionsMods.update, ( prop, value ) => {
+            Protagonist.set( prop, value.value, true );
         } );
+
         Feed.add( 'doDrugs_' + drug );
         Protagonist.update();
     },
@@ -160,22 +160,21 @@ const Protagonist = {
     status: () => {
         let protagonistStats = Protagonist.model;
         //console.group('Protagonist status:');
-        Object.keys( protagonistStats ).forEach( ( key ) => {
-            //console.log(key, protagonistStats[key]);
-            if ( typeof protagonistStats[ key ] === 'number' ) {
-                if ( protagonistStats[ key ] > 10 && protagonistStats[ key ] <= 30 ) {
-                    console.warn( key + ' is quite low' );
-                } else if ( protagonistStats[ key ] > 0 && protagonistStats[ key ] <= 10 ) {
-                    console.error( key + ' is VERY low' );
-                } else if ( protagonistStats[ key ] <= 0 ) {
-                    if ( key !== 'fame' ) {
-                        Protagonist.endGame( key );
+
+        Utils.each( protagonistStats, ( prop, value ) => {
+            if ( typeof value === 'number' ) {
+                if ( value > 10 && value <= 30 ) {
+                    console.warn( prop + ' is quite low' );
+                } else if ( value > 0 && value <= 10 ) {
+                    console.error( prop + ' is VERY low' );
+                } else if ( value <= 0 ) {
+                    if ( prop !== 'fame' ) {
+                        Protagonist.endGame( prop );
                     }
 
                 }
             }
         } );
-        //console.groupEnd();
     },
     update: ( fnCallback ) => {
         const container = document.querySelector( '.hbs-container-topbar' );

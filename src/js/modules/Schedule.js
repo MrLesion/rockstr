@@ -37,11 +37,11 @@ const Schedule = {
         Schedule.month = moment( time ).month();
 
         if ( Utils.isNullOrUndefined( events ) === false ) {
-            Object.keys( events ).forEach( ( eventKey ) => {
+            Utils.each( events, ( prop, value ) => {
                 let event = {
-                    title: events[ eventKey ].schedule.title,
-                    start: moment( eventKey ).format( Settings.SCHEDULE_DATE_FORMAT ),
-                    extendedProps: events[ eventKey ]
+                    title: value.schedule.title,
+                    start: moment( prop ).format( Settings.SCHEDULE_DATE_FORMAT ),
+                    extendedProps: value
                 };
                 Schedule.calendar.addEvent( event );
             } );

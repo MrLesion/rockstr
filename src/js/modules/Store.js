@@ -39,9 +39,9 @@ const Store = {
         localStorage.setItem( 'rockstr.' + key, saveString );
     },
     reset: () => {
-        Object.keys(Store.data).forEach((storeKey) => {
-            localStorage.removeItem( 'rockstr.' + storeKey );
-        });
+        Utils.each( Store.data, ( prop ) => {
+            localStorage.removeItem( 'rockstr.' + prop );
+        } );
         location.reload();
     }
 }
