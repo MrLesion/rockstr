@@ -46,8 +46,6 @@ const Schedule = {
                 Schedule.calendar.addEvent( event );
             } );
         }
-
-
     },
     register: ( eventObj, eventDate ) => {
         if ( eventObj && eventDate ) {
@@ -60,7 +58,6 @@ const Schedule = {
             Schedule.store[ eventDate.format( Settings.SCHEDULE_DATE_FORMAT ) ] = eventObj;
             Store.set( 'schedule', Schedule.store );
         }
-
     },
     hasEvent: () => {
         let time = Time.today();
@@ -69,7 +66,6 @@ const Schedule = {
         if ( Schedule.store[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ] ) {
             returnEvent = Schedule.store[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ];
         }
-
         return returnEvent;
     },
     updateDate: () => {
@@ -86,7 +82,6 @@ const Schedule = {
             }
         }
         return scheduledEvent;
-
     },
     render: () => {
         Schedule.calendar.render();

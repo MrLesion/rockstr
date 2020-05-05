@@ -11,8 +11,6 @@ const Dictionary = {
                 return Dictionary.texts[ key ][ Utils.randIndex( Dictionary.texts[ key ].length ) ]
             }
         }
-
-
     },
     texts: {
         activity_idle: 'Idle',
@@ -29,6 +27,7 @@ const Dictionary = {
         eventChartsUpdated: 'The charts has been updated',
         event_studio_release: 'The song \'<-song->\' is done and recorded! <-manager-> takes £<-cost-> from your wallet and pays the studio and producer and releases the song.',
 
+        event_interview_done: 'The interview went <-scoretext->',
         doPromotion_battle: '<-manager-> books a slot for you in Battle of the Bands <-days-> days from now',
         doPromotion_interview: '<-manager-> calls the station an sets it up <-days-> days from now',
 

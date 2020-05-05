@@ -1,9 +1,47 @@
 .modal-questions {
+
 	.modal-question {
-		display: none;
+		.interview-dialogue {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			pointer-events: none;
+
+			>* {
+				flex: 0 0 33%;
+			}
+		}
+
+
+		select {
+			display: none;
+		}
+
+		&.prev {}
 
 		&.active {
-			display: block;
+			animation-duration: 1s;
+				animation-name: slideup;
+			opacity: 1;
+			pointer-events: all;
+
+			select {
+				display: inline-block;
+			}
+		}
+
+		&.next {
+			opacity: 0;
+		}
+
+		.interviewer {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.interviewee {
+			display: flex;
+			justify-content: flex-end;
 		}
 	}
 }
@@ -28,7 +66,7 @@
 	&.answer-bubble {
 		color: white;
 		background: #0B93F6;
-		align-self: flex-end;
+		//align-self: flex-end;
 
 		&:before {
 			right: -7px;
@@ -40,7 +78,7 @@
 		&:after {
 			right: -56px;
 			width: 26px;
-			background: rgba($dark, .4);
+			background: $light;
 			border-bottom-left-radius: 10px;
 			transform: translate(-30px, -2px);
 		}
@@ -60,7 +98,7 @@
 		&:after {
 			left: 4px;
 			width: 26px;
-			background: rgba($dark, .4);
+			background: $light;
 			border-bottom-right-radius: 10px;
 			transform: translate(-30px, -2px);
 		}

@@ -20,6 +20,16 @@
   }
 }
 
+@keyframes slideup {
+  from {
+    margin-bottom: 100%;
+  }
+
+  to {
+    margin-bottom: 0%;
+  }
+}
+
 [data-hidden="true"], .d-none {
     display: none !important;
 }

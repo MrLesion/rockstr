@@ -1,16 +1,29 @@
 <div class="modal event-dialogue">
 	<div class="modal-inner">
-		<h2 class="modal-header">{{schedule.title}}</h2>
+		<h2 class="modal-header">Interview</h2>
 		<div class="modal-content">
 			<div class="modal-questions">
 				{{#each questions}}
-					<div class="modal-question" data-step="{{@index}}">
-						<span class="speech-bubble question-bubble">{{text}}</span>
-						<div class="modal-options">
+					<div class="modal-question {{#compare @index '===' @root.steps.current.index}}active{{/compare}} {{#compare @index '>' @root.steps.current.index}}next{{/compare}} {{#compare @index '<' @root.steps.current.index}}prev{{/compare}}" data-step="{{@index}}">
+						<div class="interview-dialogue">
+							<div class="interviewer">
+							<span class="speech-bubble question-bubble">{{replacer question}}</span>
+							{{#if response}}
+								<span class="speech-bubble question-bubble">{{replacer response}}</span>
+							{{/if}}
+							</div>
+							<div class="interviewee">
+								{{#if answer}}
+									<span class="speech-bubble answer-bubble">{{answer}}</span>
+								{{/if}}
+							</div>	
+						</div>
+						<div class="modal-options text-center">
+						
 							<select class="modal-select">
 								<option value="" selected disabled>Please select</option>
 								{{#each options}}
-									<option value="{{this}}">{{this}}</option>
+									<option value="{{value}}">{{replacer text}}</option>
 								{{/each}}
 							</select>
 						</div>

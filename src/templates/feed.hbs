@@ -6,7 +6,7 @@
 		<p>
 			<small class="text-muted">{{date}}</small>
 			<br />
-			<span class="feed-text-to-speech">{{replacePerson event.msg}}</span>
+			<span class="feed-text-to-speech">{{replacer event.msg}}</span>
 			{{#if event.action}}
 			  {{#compare @index '===' 0}}
 					<strong class="feed-event-action">

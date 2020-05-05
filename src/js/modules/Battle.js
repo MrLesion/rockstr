@@ -62,17 +62,28 @@ const Battle = {
 			Battle.attack( true, action );
 		} );
 	},
+	calculateDamage: ( isUser, type ) => {
+		let damage = 0;
+		if ( type === Settings.BATTLE_ATTACK_0 ) {
+			damage = isUser ? Protagonist.get( 'creativity' ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
+		} else if ( type === Settings.BATTLE_ATTACK_1 ) {
+			damage = isUser ? Protagonist.get( 'mentality' ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
+		} else if ( type === Settings.BATTLE_ATTACK_2 ) {
+			damage = isUser ? ( Protagonist.get( 'creativity' ) + Protagonist.get( 'health' ) ) : Utils.randInt( Settings.BATTLE_MAX_POWER * 2 );
+		}
+		return damage;
+	},
 	attack: ( isUser, type = '' ) => {
 		if ( type === '' ) {
 			type = Battle.model.attacks[ Utils.randIndex( Battle.model.attacks.length ) ];
 		}
-		let power = Utils.rpgAttack( isUser, type );
+		let damage = Battle.calculateDamage( isUser, type );
 		if ( isUser === false ) {
 			setTimeout( () => {
-				Battle.fight( isUser, power, type );
+				Battle.fight( isUser, damage, type );
 			}, 1000 );
 		} else {
-			Battle.fight( isUser, power, type );
+			Battle.fight( isUser, damage, type );
 		}
 
 	},

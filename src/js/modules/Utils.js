@@ -45,17 +45,6 @@ const Utils = {
         result = Math.round( result + ( entry.quality / 100 + entry.quality / 100 ) * 2 );
         return result;
     },
-    rpgAttack: ( isUser, type ) => {
-        let damage = 0;
-        if ( type === Settings.BATTLE_ATTACK_0 ) {
-            damage = isUser ? Protagonist.get( 'creativity' ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
-        } else if ( type === Settings.BATTLE_ATTACK_1 ) {
-            damage = isUser ? Protagonist.get( 'mentality' ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
-        } else if ( type === Settings.BATTLE_ATTACK_2 ) {
-            damage = isUser ? ( Protagonist.get( 'creativity' ) + Protagonist.get( 'health' ) ) : Utils.randInt( Settings.BATTLE_MAX_POWER * 2 );
-        }
-        return damage;
-    },
     doDrugEffect: ( drug, addiction ) => {
         let drugFactor = Data.core.addictions[ drug ];
         let health = -( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) );
@@ -155,6 +144,9 @@ const Utils = {
                     } else if ( placeholdeData === 'bandname' ) {
                         let bandname = Bands.getBand();
                         msg = msg.replace( placeholdeTag, bandname.name );
+                    } else if ( placeholdeData === 'usergenre' ) {
+                        let genre = Protagonist.get('genre');
+                        msg = msg.replace( placeholdeTag, genre );
                     }
                 }
             } );
@@ -251,7 +243,6 @@ const Utils = {
                 } else{
                     event.target.classList.remove('active');
                 }
-                console.log(  );
             } );
 
         }

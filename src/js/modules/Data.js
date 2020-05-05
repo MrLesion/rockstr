@@ -9,5 +9,6 @@ import * as names from '../../data/names.json';
 import * as promotions from '../../data/promotions.json';
 import * as studio from '../../data/studio.json';
 import * as words from '../../data/words.json';
+import * as interview from '../../data/interview.json';
 
-export { core, bands, drugs, events, genres, jobs, life, names, promotions, studio, words };
+export { core, bands, drugs, events, genres, jobs, life, names, promotions, studio, words, interview };

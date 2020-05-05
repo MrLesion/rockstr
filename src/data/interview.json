@@ -1,0 +1,61 @@
+[
+{
+	"question": "What does your band name mean?",
+	"options": [
+		"That's a secret!",
+		"Nothing really, just sounded funny",
+		"It means the essence of life, the universe adn everything for me and my mates",
+		"Society man... I mean you pick some name for a group and all of a sudden you have to be catagirized and put in little boxes and...."
+	]
+},
+{
+	"question": "Are you in this business for fame, money or something else?",
+	"options": [
+		"Money",
+		"Fame",
+		"Love",
+		"Something else entirely..."
+	]
+},
+{
+	"question": "Does the genre <-usergenre-> you play reflect your inner feelings?",
+	"options": [
+		"No the opposite",
+		"Yeah - i'm bad ass <-usergenre-> machine"
+	]
+},
+{
+	"question": "How does it feel to be on stage?",
+	"options": [
+		"Just dandy",
+		"Weird",
+		"Like i'm on the top of the world",
+		"Stage? What on earth do you mean?!"
+	]
+},
+{
+	"question": "Will you be releasing any new songs soon?",
+	"options": [
+		"No - not soon",
+		"Well - we're almost done writing are magnum opus.. might even put it on vinyl",
+		"Oh yeah - tons",
+		"Ask my manager"
+	]
+},
+{
+	"question": "Could you name 3 things that makes you happy?",
+	"options": [
+		"Sex, drugs and <-usergenre->",
+		"Ehh how about a Kinder Surprise.. that's 3 things in one - right?",
+		"Beer is one, hmm and crisps and..... beer?"
+	]
+},
+{
+	"question": "Are you single?",
+	"options": [
+		"Well as a matter of fact no.. <wink> <wink>",
+		"Yes - i've been in a long relationship for about 6 years now.. So back off!",
+		"No - I'm so loney..",
+		"Yeah - but i'm game if you are?"
+	]
+}]

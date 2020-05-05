@@ -10,6 +10,7 @@ import Feed from './Feed.js';
 import Studio from './Studio.js';
 import Battle from './Battle.js';
 import Schedule from './Schedule.js';
+import Interview from './Interview.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -83,6 +84,10 @@ const Protagonist = {
 
         Utils.delegate( 'click', '.protagonist-action-gig', () => {
             Battle.run();
+        } );
+
+        Utils.delegate( 'click', '.protagonist-action-holiday', () => {
+            Interview.run();
         } );
 
         Utils.delegate( 'click', '.protagonist-action-continue', ( event ) => {

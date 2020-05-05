@@ -51,7 +51,7 @@ const Time = {
             returnTime = Settings.START_DATE;
         }
         if ( format === true ) {
-            returnTime = returnTime.format( Settings.DATE_FORMAT );
+            returnTime = moment(returnTime).format( Settings.DATE_FORMAT );
         }
         return returnTime;
     },
