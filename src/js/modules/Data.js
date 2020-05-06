@@ -10,5 +10,6 @@ import * as promotions from '../../data/promotions.json';
 import * as studio from '../../data/studio.json';
 import * as words from '../../data/words.json';
 import * as interview from '../../data/interview.json';
+import * as news from '../../data/news.json';
 
-export { core, bands, drugs, events, genres, jobs, life, names, promotions, studio, words, interview };
+export { core, bands, drugs, events, genres, jobs, life, names, promotions, studio, words, interview, news };

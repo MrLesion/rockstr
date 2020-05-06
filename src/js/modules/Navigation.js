@@ -1,5 +1,6 @@
 import {TPL_BOTTOM_BAR} from '../Templates.js';
 
+import Store from './Store.js';
 import Utils from './Utils.js';
 import Schedule from './Schedule.js';
 import Feed from './Feed.js';
@@ -20,6 +21,9 @@ const Navigation = {
         } );
         Utils.eventEmitter.on( 'time.start', ( type ) => {
             Navigation.buildBottomBar( type, true );
+        } );
+        Utils.delegate( 'click', '.restart-game', () => {
+            Store.reset();
         } );
 
     },
@@ -52,7 +56,6 @@ const Navigation = {
         }
     },
     buildBottomBar: ( type, running ) => {
-        console.log('Building bottombar, ', type);
         let dataObj = {
             activity: type,
             translationKey: 'activity_'+type,

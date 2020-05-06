@@ -48,7 +48,7 @@ const Feed = {
             Feed.bindAction( container, eventObj );
         }
         let lastEntry = container.querySelector( '.feed-text-to-speech' ).innerText;
-        Speech.speak( lastEntry )
+        Speech.speak( lastEntry );
 
     }
 }

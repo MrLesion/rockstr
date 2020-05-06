@@ -94,9 +94,6 @@ const Protagonist = {
             let type = event.target.dataset.type;
             Time.run( 0, type );
         } );
-        Utils.delegate( 'click', '.restart-game', () => {
-            Store.reset();
-        } );
         Utils.eventEmitter.on( 'protagonist.timeupdate', () => {
             Protagonist.handleAddiction();
         } );

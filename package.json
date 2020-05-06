@@ -4,7 +4,7 @@
   "description": "Rock Star Simulator",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server",
+    "dev": "webpack-dev-server --open",
     "test": "webpack -w --progress --colors --config webpack-test.config.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
   },
@@ -18,6 +18,7 @@
     "babel-loader": "^8.0.6",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
+    "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",

@@ -1,6 +1,6 @@
 const Settings = {
     ACTIVE_MODULES_SPEECH: false,
-    ACTIVE_MODULES_NEWS: false,
+    ACTIVE_MODULES_NEWS: true,
 
     START_DATE: '1989-01-01T00:00:00.000Z',
     DATE_FORMAT: 'MMM. Do YYYY',
@@ -21,6 +21,7 @@ const Settings = {
     NYT_APIKEY: 'fzaabG4vh7uH8fXZJmr8LponOO2eiyWI',
     NYT_ENDPOINT: 'https://api.nytimes.com/svc/archive/v1/{year}/{month}.json?api-key={key}',
     NYT_TYPE: 'article',
+    NYT_LOCAL_ENDPOINT: 'https://rockstr.lesion.dk/api/news/index.php?file={file}',
 
     RENT_AMOUNT: 6,
     RENT_DUE_INTERVAL: 10,

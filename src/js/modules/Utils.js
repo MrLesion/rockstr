@@ -3,7 +3,7 @@ import * as Data from './Data.js';
 import Settings from '../Settings.js';
 import Store from './Store.js';
 import Bands from './Bands.js';
-import Events from './Events.js';
+import Studio from './Events.js';
 import Protagonist from './Protagonist.js';
 
 const Utils = {
@@ -149,7 +149,7 @@ const Utils = {
         let returnMsg = msg;
         let replaceText = '';
         if ( key === 'songtitle' ) {
-            replaceText = Events.studio.getNewTitle();
+            replaceText = Studio.getNewTitle();
         } else if ( key === 'bandname' ) {
             replaceText = Bands.getBand().name;
         } else if ( key === 'usergenre' ) {

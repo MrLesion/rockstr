@@ -1,6 +1,7 @@
 const path = require( 'path' );
 const MiniCssExtractPlugin = require( "mini-css-extract-plugin" );
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
+const CopyPlugin = require( 'copy-webpack-plugin' );
 
 module.exports = {
     entry: [ 'babel-polyfill', './src/js/index.js' ],
@@ -11,7 +12,7 @@ module.exports = {
     devServer: {
         contentBase: path.join( __dirname, 'dist' ),
         compress: true,
-        port: 9001
+        port: 9005
     },
     module: {
         rules: [ {
