@@ -2,7 +2,6 @@ import Utils from './Utils.js';
 
 const Store = {
     data: {},
-    hiddenInstances: [],
     construct: () => {
         Store.data = {
             protagonist: Store.load( 'protagonist' ),

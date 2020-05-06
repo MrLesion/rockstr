@@ -4,8 +4,8 @@ import Dictionary from '../../js/Dictionary.js';
 export default function ( textKey, replaceObj ) {
 	let strText = Dictionary.get( textKey );
 	if ( Utils.isNullOrUndefined( replaceObj ) === false ) {
-		Object.keys( replaceObj ).forEach( ( key ) => {
-			strText = strText.replace( '<-' + key + '->', replaceObj[ key ] );
+		Utils.each( replaceObj, ( prop, value ) => {
+			strText = strText.replace( '<-' + prop + '->', value );
 		} );
 	}
 	strText = Utils.replacePlaceholder( strText );

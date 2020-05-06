@@ -97,7 +97,7 @@ const Interview = {
 			Protagonist.set( prop, value, true );
 		} );
 		Feed.add( 'event_interview_done', { scoretext: scoreText } );
-		Utils.eventEmitter.emit( 'modal.hide' );
+		Utils.eventEmitter.emit( 'modal.hide');
 	},
 	build: ( eventObj ) => {
 		let modalContainer = document.querySelector( '.modal-backdrop' );

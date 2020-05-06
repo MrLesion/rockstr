@@ -8,8 +8,8 @@ const Modal = {
         Utils.eventEmitter.on( 'modal.show', ( fnCallback ) => {
             Modal.show( fnCallback );
         } );
-        Utils.eventEmitter.on( 'modal.hide', () => {
-            Modal.hide();
+        Utils.eventEmitter.on( 'modal.hide', ( fnCallback ) => {
+            Modal.hide( fnCallback );
         } );
         Utils.delegate( 'click', '.modal-close', () => {
             Utils.eventEmitter.emit( 'modal.hide' );

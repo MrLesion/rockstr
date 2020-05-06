@@ -53,8 +53,6 @@ const Settings = {
     CHARTS_ICON_DOUBLEPLATINIUM: 'chart-icon-sales-double-platinum',
 
     EVENTS_STUDIO_DAYS_INTERVAL: 14
-
-
 };
 
 export default Settings;

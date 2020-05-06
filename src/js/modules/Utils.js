@@ -47,16 +47,15 @@ const Utils = {
     },
     doDrugEffect: ( drug, addiction ) => {
         let drugFactor = Data.core.addictions[ drug ];
-        let health = -( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) );
-        let creativity = Utils.intNegPos( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) );
-        let mentality = Utils.intNegPos( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) );
-        let happiness = Utils.intNegPos( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) );
-
-        console.log( 'drug effect', { health: health, creativity: creativity, mentality: mentality, happiness: happiness } );
-        Protagonist.set( 'health', health, true );
-        Protagonist.set( 'creativity', creativity, true );
-        Protagonist.set( 'mentality', mentality, true );
-        Protagonist.set( 'happiness', happiness, true );
+        let updateObj = {
+            health: -( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) ),
+            creativity: Utils.intNegPos( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) ),
+            mentality: Utils.intNegPos( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) ),
+            happiness: Utils.intNegPos( Utils.randInt( drugFactor.modifier + addiction.addictionLevel ) )
+        };
+        Utils.each( updateObj, ( prop, value ) => {
+            Protagonist.set( prop, value, true );
+        } );
     },
     intNegPos: ( int ) => {
         int *= Math.floor( Math.random() * 2 ) === 1 ? 1 : -1;
@@ -96,12 +95,9 @@ const Utils = {
         return pieces.join( " " );
     },
     replacePlaceholder: ( msg ) => {
-        let returnMsg = '';
-        let newNpc = {};
-        let savedJobs = Store.get( 'jobs' ) || [];
-        if ( msg.indexOf( '<-' ) > -1 && msg.indexOf( '->' ) > -1 ) {
-            let placeholders = msg.match( /<-\w+->/g ).map( s => s );
-
+        let returnMsg = msg;
+        if ( returnMsg.indexOf( '<-' ) > -1 && returnMsg.indexOf( '->' ) > -1 ) {
+            let placeholders = returnMsg.match( /<-\w+->/g ).map( s => s );
             placeholders.forEach( ( placeholder ) => {
                 let placeholderMap = placeholder.match( /<-(.*)->/ );
                 if ( placeholderMap[ 1 ] === 'ANY' ) {
@@ -112,46 +108,54 @@ const Utils = {
                 let placeholdeTag = placeholderMap[ 0 ];
                 let placeholdeData = placeholderMap[ 1 ];
                 let isNPC = Data.jobs.indexOf( placeholdeData ) > -1;
-
                 if ( isNPC === true ) {
-                    let hasNpc = false;
-                    let oldNpc = {};
-
-                    if ( Utils.isNullOrUndefined( savedJobs ) === false ) {
-                        savedJobs.forEach( function ( savedJob ) {
-                            if ( savedJob.job === placeholdeData ) {
-                                hasNpc = true
-                                oldNpc.job = savedJob.job;
-                                oldNpc.name = savedJob.name;
-                            }
-                        } );
-                    }
-
-                    if ( hasNpc === true ) {
-                        msg = msg.replace( placeholdeTag, oldNpc.name );
-                    } else {
-                        newNpc = Utils.generateNpc( placeholdeData );
-                        if ( newNpc.name ) {
-                            msg = msg.replace( placeholdeTag, newNpc.name );
-                        }
-                        savedJobs.push( newNpc );
-                        Store.set( 'jobs', savedJobs );
-                    }
+                    returnMsg = Utils.replaceNpc( returnMsg, placeholdeData, placeholdeTag );
                 } else {
-                    if ( placeholdeData === 'songtitle' ) {
-                        let newSongTitle = Events.studio.getNewTitle();
-                        msg = msg.replace( placeholdeTag, newSongTitle );
-                    } else if ( placeholdeData === 'bandname' ) {
-                        let bandname = Bands.getBand();
-                        msg = msg.replace( placeholdeTag, bandname.name );
-                    } else if ( placeholdeData === 'usergenre' ) {
-                        let genre = Protagonist.get( 'genre' );
-                        msg = msg.replace( placeholdeTag, genre );
-                    }
+                    returnMsg = Utils.replaceMisc( returnMsg, placeholdeData, placeholdeTag );
                 }
             } );
         }
-        returnMsg = msg;
+        return returnMsg;
+    },
+    replaceNpc: ( msg, key, value ) => {
+        let returnMsg = msg;
+        let savedJobs = Store.get( 'jobs' ) || [];
+        let hasNpc = false;
+        let oldNpc = {};
+        let newNpc = {};
+
+        if ( Utils.isNullOrUndefined( savedJobs ) === false ) {
+            savedJobs.forEach( function ( savedJob ) {
+                if ( savedJob.job === key ) {
+                    hasNpc = true
+                    oldNpc.job = savedJob.job;
+                    oldNpc.name = savedJob.name;
+                }
+            } );
+        }
+        if ( hasNpc === true ) {
+            returnMsg = returnMsg.replace( value, oldNpc.name );
+        } else {
+            newNpc = Utils.generateNpc( key );
+            if ( newNpc.name ) {
+                returnMsg = returnMsg.replace( value, newNpc.name );
+            }
+            savedJobs.push( newNpc );
+            Store.set( 'jobs', savedJobs );
+        }
+        return returnMsg;
+    },
+    replaceMisc: ( msg, key, value ) => {
+        let returnMsg = msg;
+        let replaceText = '';
+        if ( key === 'songtitle' ) {
+            replaceText = Events.studio.getNewTitle();
+        } else if ( key === 'bandname' ) {
+            replaceText = Bands.getBand().name;
+        } else if ( key === 'usergenre' ) {
+            replaceText = Protagonist.get( 'genre' );
+        }
+        returnMsg = returnMsg.replace( value, replaceText );
         return returnMsg;
     },
     generateNpc: ( myJob ) => {
