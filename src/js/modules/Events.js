@@ -5,7 +5,6 @@ import Utils from './Utils.js';
 import Feed from './Feed.js';
 import Protagonist from './Protagonist.js';
 import Charts from './Charts.js';
-import Schedule from './Schedule.js';
 import Battle from './Battle.js';
 import Studio from './Studio.js';
 
@@ -62,7 +61,8 @@ const Events = {
     },
     promotions: ( value ) => {
         Feed.event( value );
-        Schedule.register( value );
+        //console.log('FIX THIS VALUE', value);
+        //Schedule.register( value );
     },
     drugs: ( value ) => {
         Feed.event( value );

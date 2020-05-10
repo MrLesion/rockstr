@@ -1,0 +1,61 @@
+{{#if isGig}}
+<div class="modal">
+		<div class="modal-inner">
+			<h2 class="modal-header">{{title}}</h2>
+			<h4>Playing {{scale}} at {{venue}}</h4>
+			<div class="modal-content">
+				<div class="row mt-2">
+			    	<button type="button" class="btn end-gig">Off stage</button>
+			    </div>
+			</div>
+		</div>
+	</div>
+{{else}}
+	<div class="modal">
+		<div class="modal-inner">
+			<h2 class="modal-header">Prepare tour</h2>
+			<div class="modal-content">
+				<div class="row flex-end mb-2">
+			 		<strong>Cost £<span class="tour-cost">0</span></strong>
+			 		<strong class="ml-2"><span class="tour-time">0</span> days</strong>
+			 	</div>
+			 	<div class="row mb-2">
+			 		<label for="timeSelect">How long should we book: </label>
+			 		<select id="timeSelect" class="tour-select">
+						<option value="">Select time</option>
+						{{#each time}}
+							<option value="{{value}}">{{label}}</option>
+						{{/each}}
+					</select>
+			 	</div>
+			 	<div class="row mb-2">
+			 		<label for="venueSelect">Which venue should we book: </label>
+			 		<select id="venueSelect" class="tour-select">
+						<option value="">Select venue</option>
+						{{#each venues}}
+							<option value="{{value}}" data-cost="{{cost}}">{{label}} - £{{cost}}/day</option>
+						{{/each}}
+					</select>
+			 	</div>
+			 	<div class="row mb-2">
+			 		<label for="scaleSelect">Which scale should we book: </label>
+			 		<select id="scaleSelect" class="tour-select">
+						<option value="">Select scale</option>
+						{{#each scales}}
+							<option value="{{value}}" data-cost="{{cost}}">{{label}}  - £{{cost}}</option>
+						{{/each}}
+					</select>
+			 	</div>
+			 	
+			    <div class="row mb-2">
+			        <label for="TourName">Name the tour</label>
+			        <input type="text" class="text-capitalize" id="TourName">
+			        <button type="button" class="btn generate-tour-name">Generate a name</button>
+			    </div>
+			    <div class="row mt-2">
+			    	<button type="button" class="btn save-tour">Book it!</button>
+			    </div>
+			</div>
+		</div>
+	</div>
+{{/if}}

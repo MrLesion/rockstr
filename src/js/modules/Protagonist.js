@@ -2,15 +2,16 @@ import { TPL_TOP_BAR, TPL_END_MODAL } from '../Templates.js';
 
 import * as Data from './Data.js';
 
+import Models from '../Models.js';
 import Utils from './Utils.js';
 import Settings from '../Settings.js';
 import Store from './Store.js';
 import Time from './Time.js';
 import Feed from './Feed.js';
 import Studio from './Studio.js';
-import Battle from './Battle.js';
 import Schedule from './Schedule.js';
 import Interview from './Interview.js';
+import Tour from './Tour.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -82,8 +83,8 @@ const Protagonist = {
             Studio.run();
         } );
 
-        Utils.delegate( 'click', '.protagonist-action-gig', () => {
-            Battle.run();
+        Utils.delegate( 'click', '.protagonist-action-tour', () => {
+            Tour.run();
         } );
 
         Utils.delegate( 'click', '.protagonist-action-holiday', () => {
@@ -151,7 +152,15 @@ const Protagonist = {
         let randEventDays = Utils.randInt( 10 );
         let eventDate = moment( time ).add( randEventDays, 'days' );
         let manager = Utils.getNpc( 'manager' );
-        Schedule.register( eventObj, eventDate );
+
+        let scheduleEventObj = Object.assign( {}, Models.event );
+        scheduleEventObj.title = eventObj.schedule.title;
+        scheduleEventObj.start = eventDate;
+        scheduleEventObj.extendedProps = {
+            type: eventObj.promotion
+        };
+
+        Schedule.register( scheduleEventObj );
         Feed.add( 'doPromotion_' + eventObj.promotion, { manager: manager, days: randEventDays } );
     },
     status: () => {

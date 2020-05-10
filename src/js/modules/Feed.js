@@ -2,7 +2,7 @@ import { TPL_FEED_PANEL } from '../Templates.js';
 
 import Utils from './Utils.js';
 import Time from './Time.js';
-import Events from './Events.js';
+import Studio from './Studio.js';
 import Protagonist from './Protagonist.js';
 import Speech from './Speech.js';
 
@@ -26,7 +26,7 @@ const Feed = {
                 } else if ( consequence === 'promotion' ) {
                     Protagonist.doPromotion( eventObj );
                 } else if ( consequence === 'changeTitle' ) {
-                    Events.studio.acceptNewTitle();
+                    Studio.acceptNewTitle();
                 }
                 action.parentNode.removeChild( action );
             } );

@@ -18,14 +18,13 @@ const Settings = {
     INITIAL_VALUE_CREATIVITY: 50,
     INITIAL_VALUE_HAPPINESS: 50,
 
-    NYT_APIKEY: 'fzaabG4vh7uH8fXZJmr8LponOO2eiyWI',
-    NYT_ENDPOINT: 'https://api.nytimes.com/svc/archive/v1/{year}/{month}.json?api-key={key}',
     NYT_TYPE: 'article',
-    NYT_LOCAL_ENDPOINT: 'https://rockstr.lesion.dk/api/news/index.php?file={file}',
+    NYT_LOCAL_ENDPOINT: 'https://rockstr.lesion.dk/api/news.php?file={file}&year={year}&month={month}',
 
     RENT_AMOUNT: 6,
     RENT_DUE_INTERVAL: 10,
     AMOUNT_PER_SALE: 2,
+    TAX: 0.40,
 
     FAME_PROGRESS_FACTOR: 20,
     MAX_SONG_FACTOR: 100,

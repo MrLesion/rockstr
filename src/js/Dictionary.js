@@ -18,6 +18,7 @@ const Dictionary = {
         activity_laze: 'Lazing around',
         activity_busk: 'Busking for money',
         activity_record: 'Recording song',
+        activity_tour: 'On tour',
 
         timeend_laze: 'You stop doing nothing and get back to real life',
         timeend_busk: 'You made a little money and got some pratice, what\'s next then',
@@ -30,6 +31,8 @@ const Dictionary = {
         event_interview_done: 'The interview went <-scoretext->',
         doPromotion_battle: '<-manager-> books a slot for you in Battle of the Bands <-days-> days from now',
         doPromotion_interview: '<-manager-> calls the station an sets it up <-days-> days from now',
+
+        tour_register: '<-manager-> books <-tourname-> to begin <-time-> days from now',
 
         doDrugs_alcohol: [
             'The booze makes you woozy',

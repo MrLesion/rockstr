@@ -3,7 +3,7 @@ import * as Data from './Data.js';
 import Settings from '../Settings.js';
 import Store from './Store.js';
 import Bands from './Bands.js';
-import Studio from './Events.js';
+import Studio from './Studio.js';
 import Protagonist from './Protagonist.js';
 
 const Utils = {
@@ -43,7 +43,12 @@ const Utils = {
     adjustSales: ( entry ) => {
         let result = entry.sales;
         result = Math.round( result + ( entry.quality / 100 + entry.quality / 100 ) * 2 );
-        return result;
+        return Utils.calculateWithTax( result );
+    },
+    calculateWithTax: ( int ) => {
+        let intWithTaxes = 0;
+        intWithTaxes = int - ( int * Settings.TAX );
+        return Math.round( intWithTaxes );
     },
     doDrugEffect: ( drug, addiction ) => {
         let drugFactor = Data.core.addictions[ drug ];
@@ -140,8 +145,7 @@ const Utils = {
             if ( newNpc.name ) {
                 returnMsg = returnMsg.replace( value, newNpc.name );
             }
-            savedJobs.push( newNpc );
-            Store.set( 'jobs', savedJobs );
+            Store.add( 'jobs', newNpc )
         }
         return returnMsg;
     },

@@ -5,6 +5,7 @@ import Time from './Time.js';
 
 import Battle from './Battle.js';
 import Interview from './Interview.js';
+import Tour from './Tour.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -15,7 +16,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 const Schedule = {
     calendar: null,
     month: 0,
-    store: {},
     model: {},
     construct: () => {
         let calendarElement = document.getElementById( 'calendar-container' );
@@ -39,7 +39,7 @@ const Schedule = {
         if ( Utils.isNullOrUndefined( events ) === false ) {
             Utils.each( events, ( prop, value ) => {
                 let event = {
-                    title: value.schedule.title,
+                    title: value.title || value.schedule.title,
                     start: moment( prop ).format( Settings.SCHEDULE_DATE_FORMAT ),
                     extendedProps: value
                 };
@@ -47,24 +47,27 @@ const Schedule = {
             } );
         }
     },
-    register: ( eventObj, eventDate ) => {
-        if ( eventObj && eventDate ) {
+    register: ( eventObj ) => {
+        if ( Utils.isNullOrUndefined( eventObj ) === false ) {
             let event = {
-                title: eventObj.schedule.title,
-                start: eventDate.format( Settings.SCHEDULE_DATE_FORMAT ),
+                title: eventObj.title || eventObj.schedule.title,
+                start: moment( eventObj.start ).format( Settings.SCHEDULE_DATE_FORMAT ),
+                //end: eventObj.end ? eventObj.end.format( Settings.SCHEDULE_DATE_FORMAT ) : '',
                 extendedProps: eventObj
             };
             Schedule.calendar.addEvent( event );
-            Schedule.store[ eventDate.format( Settings.SCHEDULE_DATE_FORMAT ) ] = eventObj;
-            Store.set( 'schedule', Schedule.store );
+            let storedEvents = Object.assign( {}, Store.get( 'schedule' ) );
+            storedEvents[ moment( eventObj.start ).format( Settings.SCHEDULE_DATE_FORMAT ) ] = eventObj;
+            Store.set( 'schedule', storedEvents );
         }
     },
     hasEvent: () => {
         let time = Time.today();
         let returnEvent = {};
+        let storedEvents = Object.assign( {}, Store.get( 'schedule' ) );
 
-        if ( Schedule.store[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ] ) {
-            returnEvent = Schedule.store[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ];
+        if ( storedEvents[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ] ) {
+            returnEvent = storedEvents[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ];
         }
         return returnEvent;
     },
@@ -86,12 +89,15 @@ const Schedule = {
     render: () => {
         Schedule.calendar.render();
     },
-    run: ( scheduledEventObject ) => {
-        console.log( 'scheduledEventObject', scheduledEventObject );
-        if ( scheduledEventObject.promotion === 'battle' ) {
+    run: ( eventObj ) => {
+        console.log( 'Scheduled Event', eventObj.extendedProps.type );
+        if ( eventObj.extendedProps.type === 'battle' ) {
             Battle.run();
-        } else if ( scheduledEventObject.promotion === 'interview' ) {
-            Interview.run( scheduledEventObject );
+        } else if ( eventObj.extendedProps.type === 'interview' ) {
+            Interview.run( eventObj );
+        } else if ( eventObj.extendedProps.type === 'tourDate' ) {
+            console.log(eventObj);
+            Tour.gig.run( eventObj );
         }
     }
 }

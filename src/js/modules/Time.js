@@ -69,7 +69,6 @@ const Time = {
     },
     handelDay: ( type, timeObj ) => {
         return ( () => {
-            console.log( 'Time.run', Time.ticks, type );
             const eventTick = Utils.randInt( 20 );
             Time.set( 1 );
             let checkDateForEvent = Schedule.updateDate();

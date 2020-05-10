@@ -12,7 +12,7 @@ module.exports = {
     devServer: {
         contentBase: path.join( __dirname, 'dist' ),
         compress: true,
-        port: 9005
+        port: 9000
     },
     module: {
         rules: [ {
@@ -75,7 +75,11 @@ module.exports = {
             template: 'index.html',
             minify: true,
             hash: true
-        } )
+        } ),
+        new CopyPlugin( [ {
+            from: './src/api/',
+            to: './dist/api/[name].[ext]'
+        } ] )
 
     ],
     mode: 'development'

@@ -55,6 +55,23 @@ const Models = {
 			cost: 0,
 			quality: 0
 		}
+	},
+	tour: () => {
+		return {
+			time: 0,
+			name: '',
+			cost: 0,
+			venue: '',
+			scale: ''
+		}
+	},
+	event: () => {
+		return {
+			title: '',
+			start: '',
+			end: '',
+			extendedProps: {}
+		}
 	}
 };
 

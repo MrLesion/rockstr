@@ -12,7 +12,8 @@ const Store = {
             addictions: Store.load( 'addictions' ),
             schedule: Store.load( 'schedule' ),
             songs: Store.load( 'songs' ),
-            news: Store.load( 'news' )
+            news: Store.load( 'news' ),
+            tours: Store.load( 'tours' )
         }
     },
     set: ( key, dataObj ) => {
@@ -24,7 +25,11 @@ const Store = {
             return Store.data[ key ];
         }
         return null;
-
+    },
+    add: (key, dataObj) => {
+        let savedObj = Store.get(key) || [];
+        savedObj.push(dataObj);
+        Store.set(key, savedObj);
     },
     load: ( key ) => {
         let dataObj = localStorage.getItem( 'rockstr.' + key );
