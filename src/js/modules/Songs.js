@@ -38,7 +38,7 @@ const Songs = {
     get: ( song ) => {
         let stored = Store.get( 'songs' );
         if ( Utils.isNullOrUndefined( song ) === false ) {
-            return stored.filter(s => s.song === song)[ 0 ];
+            return stored.filter( s => s.song === song )[ 0 ];
         } else {
             return stored;
         }

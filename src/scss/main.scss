@@ -3,6 +3,7 @@
 @import 'utils';
 @import 'base';
 @import 'buttons';
+@import 'images';
 @import 'bars';
 @import 'charts';
 @import 'feed_news';
@@ -139,4 +140,25 @@ ul.custom-select {
 			display: block;
 		}
 	}
+}
+
+
+.gig-game{
+	display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    column-gap: 10px;
+    row-gap: 10px;
+    .gig-game-block{
+    	border: 1px solid $dark;
+    	background-color: $secondary;
+    	&.active{
+    		background-color: $primary;
+    	}
+    }
+}
+.gig-game-ready{
+	width: 100%;
+    background: blue;
+    margin-left: 1em;
 }

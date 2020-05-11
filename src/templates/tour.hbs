@@ -5,6 +5,14 @@
 			<h4>Playing {{scale}} at {{venue}}</h4>
 			<div class="modal-content">
 				<div class="row mt-2">
+					<div class="gig-game">
+				    	{{#for skill}}
+				    		<span class="gig-game-block"></span>
+				    	{{/for}}
+			    	</div>
+			    	<div class="gig-game-ready"></div>
+			    </div>
+				<div class="row mt-2">
 			    	<button type="button" class="btn end-gig">Off stage</button>
 			    </div>
 			</div>

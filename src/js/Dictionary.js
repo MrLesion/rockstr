@@ -20,6 +20,8 @@ const Dictionary = {
         activity_record: 'Recording song',
         activity_tour: 'On tour',
 
+        achievements_firstSong: '★ Damn you just recorded your first song! ★',
+
         timeend_laze: 'You stop doing nothing and get back to real life',
         timeend_busk: 'You made a little money and got some pratice, what\'s next then',
         timeend_record: 'You are done recording',

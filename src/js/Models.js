@@ -1,6 +1,30 @@
 import Settings from './Settings.js';
 
 const Models = {
+	achievements: () => {
+		return {
+			firstSong: {
+				achieved: false,
+				label: 'Your first song'
+			},
+			firstChartEntry: {
+				achieved: false,
+				label: 'Your first time on the charts'
+			},
+			firstTopChartEntry: {
+				achieved: false,
+				label: 'Your first time as number 1 on the charts'
+			},
+			firstTimeDoingDrugs: {
+				achieved: false,
+				label: 'Your first time doing drugs'
+			},
+			firstBattleWon: {
+				achieved: false,
+				label: 'First time winning Battle og the Bands'
+			}
+		}
+	},
 	time: () => {
 		return {
 			date: '',

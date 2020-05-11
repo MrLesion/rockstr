@@ -9,6 +9,7 @@ import Feed from './Feed.js';
 import Protagonist from './Protagonist.js';
 import Songs from './Songs.js';
 import Time from './Time.js';
+import Achievements from './Achievements.js';
 
 const Studio = {
 	model: {},
@@ -125,6 +126,7 @@ const Studio = {
 		Studio.reset();
 		Protagonist.set( 'money', -cost, true );
 		let songs = Songs.get();
+		Achievements.set( 'firstSong' );
 		songs.push( song );
 		Songs.set( songs );
 

@@ -204,7 +204,6 @@ const Utils = {
                 fnCallback( key, obj[ key ] );
             } );
         }
-
     },
     eventEmitter: {
         _events: {},

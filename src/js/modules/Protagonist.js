@@ -10,8 +10,8 @@ import Time from './Time.js';
 import Feed from './Feed.js';
 import Studio from './Studio.js';
 import Schedule from './Schedule.js';
-import Interview from './Interview.js';
 import Tour from './Tour.js';
+import Achievements from './Achievements.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -88,7 +88,8 @@ const Protagonist = {
         } );
 
         Utils.delegate( 'click', '.protagonist-action-holiday', () => {
-            Interview.run();
+            let ach = Achievements.get('firstSong', true);
+            console.log(ach);
         } );
 
         Utils.delegate( 'click', '.protagonist-action-continue', ( event ) => {
@@ -138,6 +139,7 @@ const Protagonist = {
 
         const wrapper = document.querySelector( '.wrapper' );
         wrapper.classList.add( drug + '-trip' );
+        Achievements.set( 'firstTimeDoingDrugs' );
         Store.set( 'addictions', addictions );
 
         Utils.each( addictionsMods.update, ( prop, value ) => {

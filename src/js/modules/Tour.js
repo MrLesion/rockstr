@@ -159,9 +159,17 @@ const Tour = {
 		return 'The ' + Data.words.noun[ Utils.randIndex( Data.words.noun.length ) ] + ' Tour';
 	},
 	gig: {
+		start: 0,
+		timer: 0,
+		result: 0,
+		interval: null,
+		rounds: 0,
+		points: 0,
 		run: ( eventObj ) => {
 			let venues = Object.assign( {}, Data.core.tour.venue );
 			let scales = Object.assign( {}, Data.core.tour.scale );
+
+			let skill = 9;
 
 			let dataObj = {
 				title: eventObj.title,
@@ -169,17 +177,39 @@ const Tour = {
 				scale: scales[ eventObj.extendedProps.scale ].label,
 				day: eventObj.extendedProps.day,
 				isGig: true,
-				feedback: 0
+				feedback: 0,
+				skill: skill
 			};
 			dataObj.feedback = Tour.gig.getFeedback( dataObj )
 			Tour.build( dataObj );
 		},
 		bindings: ( modalContainer ) => {
 			let endGigButton = modalContainer.querySelector( '.end-gig' );
+			let blocks = modalContainer.getElementsByClassName( 'gig-game-block' );
+			let readySpot = modalContainer.querySelector( '.gig-game-ready' );
+
 			endGigButton.addEventListener( 'click', () => {
 				Utils.eventEmitter.emit( 'modal.hide' );
 				Time.run( 1, 'tour' );
 			} );
+			for ( var i = 0; i < blocks.length; i++ ) {
+				( ( x ) => {
+					blocks[ x ].addEventListener( 'click', ( event ) => {
+						console.log( event.target.classList );
+						if ( event.target.classList.value.indexOf( 'active' ) > -1 ) {
+							Tour.gig.stop( event.target );
+						}
+
+					}, false );
+				} )( i );
+			}
+			Tour.gig.points = 0;
+			Tour.gig.rounds = 10;
+			readySpot.addEventListener('mouseenter', () => {
+				Tour.gig.play();
+			});
+			
+			
 		},
 		getFeedback: ( dataObj ) => {
 			let prevFeedback = dataObj.day > 1 ? Tour.results[ ( dataObj.day - 1 ) ] : 0;
@@ -191,6 +221,31 @@ const Tour = {
 				console.log( 'first day' );
 				return 0;
 			}
+		},
+		play: () => {
+			let blocks = document.getElementsByClassName( 'gig-game-block' );
+			let target = Utils.randIndex( blocks.length );
+			blocks[ target ].classList.add( 'active' );
+
+			Tour.gig.start = new Date().getTime();
+			Tour.gig.interval = setInterval( () => {
+				Tour.gig.timer = new Date().getTime();
+			}, 1 );
+		},
+		stop: ( block ) => {
+			clearInterval( Tour.gig.interval );
+			block.classList.remove( 'active' );
+			Tour.gig.result = ( Tour.gig.timer - Tour.gig.start ) + Tour.gig.start;
+			Tour.gig.rounds--;
+			let milliseconds = Math.floor( ( Tour.gig.result % ( 1000 * 60 ) ) / 100 );
+			Tour.gig.points += milliseconds
+			if(Tour.gig.rounds === 0){
+				console.log('points: ', Tour.gig.points);
+			}
+			
+		},
+		end: () => {
+			
 		}
 	}
 };

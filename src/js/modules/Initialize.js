@@ -14,6 +14,7 @@ import Charts from './Charts.js';
 import Schedule from './Schedule.js';
 import Speech from './Speech.js';
 import Modal from './Modal.js';
+import Achievements from './Achievements.js';
 
 const Initialize = {
     construct: () => {
@@ -33,6 +34,7 @@ const Initialize = {
         let container = document.querySelector( '.intro-container' );
         container.parentElement.removeChild( container );
         Initialize.loader.hide();
+        
     },
     bindings: () => {
         document.querySelector( '.intro-generate-band' ).addEventListener( 'click', () => {
@@ -59,6 +61,7 @@ const Initialize = {
     },
     run: ( name = '', genre = '' ) => {
         Protagonist.construct( name, genre );
+        Achievements.construct();
         Bands.construct();
         Speech.construct();
         Navigation.construct();

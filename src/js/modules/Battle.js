@@ -5,6 +5,7 @@ import Models from '../Models.js';
 import Utils from './Utils.js';
 import Protagonist from './Protagonist.js';
 import Bands from './Bands.js';
+import Achievements from './Achievements.js';
 
 const Battle = {
 	model: {},
@@ -140,6 +141,7 @@ const Battle = {
 		if ( winner === 'player' ) {
 			Protagonist.set( 'money', prize.money, true );
 			Protagonist.set( 'fame', prize.fame, true );
+			Achievements.set( 'firstBattleWon' );
 		}
 		Battle.reset();
 		setTimeout( () => {

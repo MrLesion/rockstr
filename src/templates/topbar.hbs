@@ -30,7 +30,7 @@
               <button class="dropbtn">Known associates</button>
               <div class="dropdown-content">
                 {{#each npc}}
-                    <span class="text-capitalize">{{name}} ({{job}})</span>
+                    <span class="text-capitalize">☺ {{name}} ({{job}})</span>
                 {{/each}}
               </div>
             </div>
@@ -42,7 +42,7 @@
               <button class="dropbtn">Drug use</button>
               <div class="dropdown-content">
                 {{#each addictions}}
-                    <span class="text-capitalize">{{@key}} ({{addictionText}})</span>
+                    <span class="text-capitalize">⚇ {{@key}} ({{addictionText}})</span>
                 {{/each}}
               </div>
             </div>
@@ -54,12 +54,24 @@
               <button class="dropbtn">Songs</button>
               <div class="dropdown-content">
                 {{#each songs}}
-                    <span class="text-capitalize">{{song}}</span>
+                    <span class="text-capitalize">♫ {{song}}</span>
                 {{/each}}
               </div>
             </div>
         </div>
         {{/if}}
+        {{#hasAchievements}}
+         <div class="top-bar-item">
+            <div class="dropdown">
+              <button class="dropbtn">Achievements</button>
+              <div class="dropdown-content">
+                {{#eachAchievement}}
+                    <span class="text-capitalize">★ {{label}}</span>
+                {{/eachAchievement}}
+              </div>
+            </div>
+        </div>
+        {{/hasAchievements}}
         <div class="flex-right">
             <div class="top-bar-item stats-bar-item">
                 Health

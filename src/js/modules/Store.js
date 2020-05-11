@@ -13,7 +13,8 @@ const Store = {
             schedule: Store.load( 'schedule' ),
             songs: Store.load( 'songs' ),
             news: Store.load( 'news' ),
-            tours: Store.load( 'tours' )
+            tours: Store.load( 'tours' ),
+            achievements: Store.load( 'achievements' )
         }
     },
     set: ( key, dataObj ) => {
