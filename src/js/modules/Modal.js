@@ -16,7 +16,7 @@ const Modal = {
         } );
     },
     show: ( fnCallback ) => {
-        let modal = document.querySelector( '.modal-backdrop' );
+        let modal = Modal.getSelector();
         modal.setAttribute( 'data-hidden', 'false' );
 
         if ( typeof fnCallback === 'function' && Utils.isNullOrUndefined( fnCallback ) === false ) {
@@ -25,13 +25,16 @@ const Modal = {
 
     },
     hide: ( fnCallback ) => {
-        let modal = document.querySelector( '.modal-backdrop' );
+        let modal = Modal.getSelector();
         modal.setAttribute( 'data-hidden', 'true' );
         modal.innerHTML = '';
 
         if ( typeof fnCallback === 'function' && Utils.isNullOrUndefined( fnCallback ) === false ) {
             fnCallback();
         }
+    },
+    getSelector: () => {
+        return document.querySelector( '.modal-backdrop' );
     }
 }
 

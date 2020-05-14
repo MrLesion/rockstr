@@ -143,22 +143,101 @@ ul.custom-select {
 }
 
 
-.gig-game{
+.gig-game {
 	display: grid;
-    grid-template-columns: 100px 100px 100px;
-    grid-template-rows: 100px 100px 100px;
-    column-gap: 10px;
-    row-gap: 10px;
-    .gig-game-block{
-    	border: 1px solid $dark;
-    	background-color: $secondary;
-    	&.active{
-    		background-color: $primary;
-    	}
-    }
+	grid-template-columns: 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px;
+	grid-template-rows: 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px;
+	column-gap: 10px;
+	row-gap: 10px;
+
+	.gig-game-block {
+		border: 1px solid $dark;
+		background-color: $secondary;
+		border-radius: 50%;
+
+		&.active {
+			background-color: $red;
+			animation: lsd-trip .3s infinite;
+		}
+	}
 }
-.gig-game-ready{
+
+.gig-audience {
+	background: url('../images/audience.svg');
+	background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
 	width: 100%;
-    background: blue;
-    margin-left: 1em;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.gig-game-ready {
+	width: 100%;
+	margin-left: 1em;
+	position: relative;
+	overflow: hidden;
+
+	&::after {
+		content: '';
+		background: url('../images/guitar.svg');
+		width: 500px;
+		height: 500px;
+		transform: rotate(85deg);
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		position: absolute;
+		top: -119px;
+		left: 50px;
+		z-index: -1;
+	}
+
+	.arm {
+		position: absolute;
+		width: 37px;
+		height: 170px;
+		transform-origin: top center;
+		transform: rotate(5deg);
+		transition: all 0.3s ease;
+		left: 173px;
+		top: -60px;
+
+		&.ready {
+			transform: rotate(45deg);
+		}
+
+		&.hit {
+			transform: rotate(-10deg);
+		}
+
+		&::before {
+			content: '';
+			position: absolute;
+			width: 37px;
+			height: 170px;
+			background: $red;
+			transform-origin: top center;
+			transform: rotate(5deg);
+			left: 14px;
+			top: 0;
+			box-shadow: 0px 1px 1px rgba($dark, .5);
+		}
+
+		&::after {
+			content: '';
+			background: url('../images/hand.svg');
+			width: 80px;
+			height: 110px;
+			transform: rotate(147deg);
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+			position: absolute;
+			top: 121px;
+			left: -19px;
+			z-index: -1;
+		}
+	}
 }

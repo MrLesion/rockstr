@@ -4,12 +4,14 @@ import { TPL_TOUR } from '../Templates.js';
 
 import Settings from '../Settings.js';
 import Utils from './Utils.js';
+import Modal from './Modal.js';
 import Store from './Store.js';
 import Models from '../Models.js';
 import Protagonist from './Protagonist.js';
 import Time from './Time.js';
 import Schedule from './Schedule.js';
 import Feed from './Feed.js';
+import Audio from './Audio.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -34,7 +36,7 @@ const Tour = {
 		Tour.build( dataObj );
 	},
 	build: ( dataObj ) => {
-		let modalContainer = document.querySelector( '.modal-backdrop' );
+		let modalContainer = Modal.getSelector();
 		modalContainer.innerHTML = TPL_TOUR( dataObj );
 		Utils.eventEmitter.emit( 'modal.show', () => {
 			if ( dataObj.isGig === true ) {
@@ -153,23 +155,17 @@ const Tour = {
 			end: moment( eventDate ).add( ( Tour.model.time - 1 ), 'days' ),
 			result: 'not started yet'
 		} );
+		Object.assign( Models.gig, Tour.gig.model );
 		Feed.add( 'tour_register', { manager: manager, time: randEventDays, tourname: Tour.model.name } );
 	},
 	generateName: () => {
 		return 'The ' + Data.words.noun[ Utils.randIndex( Data.words.noun.length ) ] + ' Tour';
 	},
 	gig: {
-		start: 0,
-		timer: 0,
-		result: 0,
-		interval: null,
-		rounds: 0,
-		points: 0,
+		model: {},
 		run: ( eventObj ) => {
 			let venues = Object.assign( {}, Data.core.tour.venue );
 			let scales = Object.assign( {}, Data.core.tour.scale );
-
-			let skill = 9;
 
 			let dataObj = {
 				title: eventObj.title,
@@ -178,15 +174,16 @@ const Tour = {
 				day: eventObj.extendedProps.day,
 				isGig: true,
 				feedback: 0,
-				skill: skill
+				skill: Settings.TOUR_GIG_GRID
 			};
-			dataObj.feedback = Tour.gig.getFeedback( dataObj )
+			dataObj.feedback = Tour.gig.getFeedback( dataObj );
 			Tour.build( dataObj );
 		},
 		bindings: ( modalContainer ) => {
 			let endGigButton = modalContainer.querySelector( '.end-gig' );
 			let blocks = modalContainer.getElementsByClassName( 'gig-game-block' );
 			let readySpot = modalContainer.querySelector( '.gig-game-ready' );
+			let audience = document.querySelector( '.gig-audience' );
 
 			endGigButton.addEventListener( 'click', () => {
 				Utils.eventEmitter.emit( 'modal.hide' );
@@ -194,22 +191,23 @@ const Tour = {
 			} );
 			for ( var i = 0; i < blocks.length; i++ ) {
 				( ( x ) => {
-					blocks[ x ].addEventListener( 'click', ( event ) => {
-						console.log( event.target.classList );
-						if ( event.target.classList.value.indexOf( 'active' ) > -1 ) {
-							Tour.gig.stop( event.target );
-						}
-
-					}, false );
+					blocks[ x ].addEventListener( 'click', Tour.gig.blockListener, false );
 				} )( i );
 			}
-			Tour.gig.points = 0;
-			Tour.gig.rounds = 10;
-			readySpot.addEventListener('mouseenter', () => {
-				Tour.gig.play();
-			});
-			
-			
+			Tour.gig.model.points = 0;
+			Tour.gig.model.rounds = 10;
+			audience.style.height = Settings.TOUR_GIG_AUDIENCE + 'px';
+
+			readySpot.addEventListener( 'click', () => {
+				Tour.gig.play( true )
+			}, false );
+
+
+		},
+		blockListener: ( event ) => {
+			if ( event.target.classList.value.indexOf( 'active' ) > -1 ) {
+				Tour.gig.stop( event.target );
+			}
 		},
 		getFeedback: ( dataObj ) => {
 			let prevFeedback = dataObj.day > 1 ? Tour.results[ ( dataObj.day - 1 ) ] : 0;
@@ -222,30 +220,99 @@ const Tour = {
 				return 0;
 			}
 		},
-		play: () => {
-			let blocks = document.getElementsByClassName( 'gig-game-block' );
-			let target = Utils.randIndex( blocks.length );
-			blocks[ target ].classList.add( 'active' );
+		hasActiveChord: () => {
+			let modalContainer = Modal.getSelector();
+			let blocks = modalContainer.getElementsByClassName( 'gig-game-block' );
 
-			Tour.gig.start = new Date().getTime();
-			Tour.gig.interval = setInterval( () => {
-				Tour.gig.timer = new Date().getTime();
-			}, 1 );
+			return Object.values( blocks ).filter( b => b.classList.value.indexOf( 'active' ) > -1 ).length > 0
+		},
+		audience: () => {
+			let audience = document.querySelector( '.gig-audience' );
+			Tour.gig.model.audience = setInterval( () => {
+				audience.style.height = parseInt( audience.clientHeight ) - 1 + 'px';
+			}, Settings.TOUR_GIG_SPEED );
+		},
+		play: ( init ) => {
+			if ( init === true ) {
+				Tour.gig.audience();
+			}
+
+			let arm = document.querySelector( '.arm' );
+			arm.classList.remove( 'hit' );
+			arm.classList.add( 'ready' );
+			if ( Tour.gig.hasActiveChord() === false ) {
+				let blocks = document.getElementsByClassName( 'gig-game-block' );
+				let target = Utils.randIndex( blocks.length );
+				blocks[ target ].classList.add( 'active' );
+
+				Tour.gig.model.start = new Date().getTime();
+				Tour.gig.model.interval = setInterval( () => {
+					Tour.gig.model.timer = new Date().getTime();
+				}, 1 );
+				/*
+				setTimeout( () => {
+					Tour.gig.skip( blocks[ target ] );
+				}, ( 1000 ) );
+				*/
+			}
+
+		},
+		skip: (block) => {
+			block.classList.remove( 'active' );
+			Tour.gig.play( false );
 		},
 		stop: ( block ) => {
-			clearInterval( Tour.gig.interval );
+			let audience = document.querySelector( '.gig-audience' );
+			let arm = document.querySelector( '.arm' );
+			arm.classList.remove( 'ready' );
+			arm.classList.add( 'hit' );
+			clearInterval( Tour.gig.model.interval );
+			Audio.play();
 			block.classList.remove( 'active' );
-			Tour.gig.result = ( Tour.gig.timer - Tour.gig.start ) + Tour.gig.start;
-			Tour.gig.rounds--;
-			let milliseconds = Math.floor( ( Tour.gig.result % ( 1000 * 60 ) ) / 100 );
-			Tour.gig.points += milliseconds
-			if(Tour.gig.rounds === 0){
-				console.log('points: ', Tour.gig.points);
+			Tour.gig.model.result = ( Tour.gig.model.timer - Tour.gig.model.start ) + Tour.gig.model.start;
+			Tour.gig.model.rounds--;
+			let milliseconds = Math.floor( ( Tour.gig.model.result % ( 1000 * 60 ) ) / 100 );
+			Tour.gig.model.points += milliseconds;
+			audience.style.height = Math.ceil( audience.clientHeight + milliseconds / Settings.TOUR_GIG_SKILL ) + 'px';
+			if ( Tour.gig.model.rounds === 0 ) {
+				Tour.gig.end();
+
+			} else {
+				setTimeout( () => {
+					Tour.gig.play( false );
+				}, ( 100 * Utils.randInt( 10 ) ) );
 			}
-			
+
 		},
 		end: () => {
-			
+			clearInterval( Tour.gig.model.audience );
+			let modalContainer = Modal.getSelector();
+			let blocks = modalContainer.getElementsByClassName( 'gig-game-block' );
+			let readySpot = modalContainer.querySelector( '.gig-game-ready' );
+			let audience = document.querySelector( '.gig-audience' );
+			let finalScore = Math.floor( audience.clientHeight * ( 100 / Settings.TOUR_GIG_AUDIENCE ) );
+			readySpot.removeEventListener( 'click', () => {
+				Tour.gig.play( true )
+			}, false );
+			for ( var i = 0; i < blocks.length; i++ ) {
+				( ( x ) => {
+					blocks[ x ].removeEventListener( 'click', Tour.gig.blockListener, false );
+				} )( i );
+			}
+
+			if ( finalScore > 50 ) {
+				if ( finalScore > 70 ) {
+					console.log( 'You did great' );
+				} else {
+					console.log( 'You did good' );
+				}
+			} else {
+				if ( finalScore < 30 ) {
+					console.log( 'You did poorly' );
+				} else {
+					console.log( 'You did okay' );
+				}
+			}
 		}
 	}
 };

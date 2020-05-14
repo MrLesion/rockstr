@@ -5,6 +5,7 @@ import * as Data from './Data.js';
 import Settings from '../Settings.js';
 import Models from '../Models.js';
 import Utils from './Utils.js';
+import Modal from './Modal.js';
 import Feed from './Feed.js';
 import Protagonist from './Protagonist.js';
 import Songs from './Songs.js';
@@ -29,7 +30,7 @@ const Studio = {
 		Studio.build( dataObj );
 	},
 	build: ( dataObj ) => {
-		let modalContainer = document.querySelector( '.modal-backdrop' );
+		let modalContainer = Modal.getSelector();
 		modalContainer.innerHTML = TPL_STUDIO( dataObj );
 		Utils.eventEmitter.emit( 'modal.show', () => {
 			Studio.bindings( modalContainer );

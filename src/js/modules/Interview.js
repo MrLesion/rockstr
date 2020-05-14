@@ -5,6 +5,7 @@ import { TPL_EVENT_INTERVIEW_MODAL } from '../Templates.js';
 import Settings from '../Settings.js';
 import Feed from './Feed.js';
 import Utils from './Utils.js';
+import Modal from './Modal.js';
 import Protagonist from './Protagonist.js';
 
 const Interview = {
@@ -100,7 +101,7 @@ const Interview = {
 		Utils.eventEmitter.emit( 'modal.hide');
 	},
 	build: ( eventObj ) => {
-		let modalContainer = document.querySelector( '.modal-backdrop' );
+		let modalContainer = Modal.getSelector();
 		modalContainer.innerHTML = TPL_EVENT_INTERVIEW_MODAL( eventObj );
 
 		Utils.eventEmitter.emit( 'modal.show', () => {

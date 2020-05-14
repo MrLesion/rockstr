@@ -5,19 +5,19 @@ const Models = {
 		return {
 			firstSong: {
 				achieved: false,
-				label: 'Your first song'
+				label: 'First recorded song'
 			},
 			firstChartEntry: {
 				achieved: false,
-				label: 'Your first time on the charts'
+				label: 'First time on the charts'
 			},
 			firstTopChartEntry: {
 				achieved: false,
-				label: 'Your first time as number 1 on the charts'
+				label: 'First time as number 1 on the charts'
 			},
 			firstTimeDoingDrugs: {
 				achieved: false,
-				label: 'Your first time doing drugs'
+				label: 'First time doing drugs'
 			},
 			firstBattleWon: {
 				achieved: false,
@@ -95,6 +95,18 @@ const Models = {
 			start: '',
 			end: '',
 			extendedProps: {}
+		}
+	},
+	gig: () => {
+		return {
+			isStarted: false,
+			start: 0,
+			timer: 0,
+			result: 0,
+			interval: null,
+			audience: null,
+			rounds: 0,
+			points: 0,
 		}
 	}
 };

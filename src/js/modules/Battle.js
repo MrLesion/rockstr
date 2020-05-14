@@ -2,6 +2,7 @@ import { TPL_EVENT_BATTLE_MODAL } from '../Templates.js';
 
 import Settings from '../Settings.js';
 import Models from '../Models.js';
+import Modal from './Modal.js';
 import Utils from './Utils.js';
 import Protagonist from './Protagonist.js';
 import Bands from './Bands.js';
@@ -42,7 +43,7 @@ const Battle = {
 		} );
 	},
 	build: () => {
-		let modalContainer = document.querySelector( '.modal-backdrop' );
+		let modalContainer = Modal.getSelector();
 		let data = Object.assign( {}, Battle.model );
 		modalContainer.innerHTML = TPL_EVENT_BATTLE_MODAL( data );
 	},
