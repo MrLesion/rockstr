@@ -12,6 +12,7 @@ import Time from './Time.js';
 import Schedule from './Schedule.js';
 import Feed from './Feed.js';
 import Audio from './Audio.js';
+import Animations from './Animations.js';
 
 /* Vendor */
 import * as moment from 'moment';
@@ -198,9 +199,7 @@ const Tour = {
 			Tour.gig.model.rounds = 10;
 			audience.style.height = Settings.TOUR_GIG_AUDIENCE + 'px';
 
-			readySpot.addEventListener( 'click', () => {
-				Tour.gig.play( true )
-			}, false );
+			readySpot.addEventListener( 'click', Tour.gig.onStage, false );
 
 
 		},
@@ -220,6 +219,10 @@ const Tour = {
 				return 0;
 			}
 		},
+		getAudienceHeight: () => {
+			let audience = document.querySelector( '.gig-audience' );
+			return audience.clientHeight;
+		},
 		hasActiveChord: () => {
 			let modalContainer = Modal.getSelector();
 			let blocks = modalContainer.getElementsByClassName( 'gig-game-block' );
@@ -229,17 +232,15 @@ const Tour = {
 		audience: () => {
 			let audience = document.querySelector( '.gig-audience' );
 			Tour.gig.model.audience = setInterval( () => {
-				audience.style.height = parseInt( audience.clientHeight ) - 1 + 'px';
+				audience.style.height = Tour.gig.getAudienceHeight() - 1 + 'px';
 			}, Settings.TOUR_GIG_SPEED );
 		},
-		play: ( init ) => {
-			if ( init === true ) {
-				Tour.gig.audience();
-			}
-
-			let arm = document.querySelector( '.arm' );
-			arm.classList.remove( 'hit' );
-			arm.classList.add( 'ready' );
+		onStage: () => {
+			Tour.gig.audience();
+			Tour.gig.play();
+		},
+		play: () => {
+			Animations.tour.gig.readyState();
 			if ( Tour.gig.hasActiveChord() === false ) {
 				let blocks = document.getElementsByClassName( 'gig-game-block' );
 				let target = Utils.randIndex( blocks.length );
@@ -249,23 +250,22 @@ const Tour = {
 				Tour.gig.model.interval = setInterval( () => {
 					Tour.gig.model.timer = new Date().getTime();
 				}, 1 );
-				/*
-				setTimeout( () => {
+
+				Tour.gig.model.skillTimer = setTimeout( () => {
 					Tour.gig.skip( blocks[ target ] );
-				}, ( 1000 ) );
-				*/
+				}, ( 500 * Utils.randInt( 10 ) ) );
+
 			}
 
 		},
-		skip: (block) => {
+		skip: ( block ) => {
 			block.classList.remove( 'active' );
 			Tour.gig.play( false );
 		},
 		stop: ( block ) => {
 			let audience = document.querySelector( '.gig-audience' );
-			let arm = document.querySelector( '.arm' );
-			arm.classList.remove( 'ready' );
-			arm.classList.add( 'hit' );
+			Animations.tour.gig.hitState();
+			clearTimeout( Tour.gig.model.skillTimer );
 			clearInterval( Tour.gig.model.interval );
 			Audio.play();
 			block.classList.remove( 'active' );
@@ -273,27 +273,24 @@ const Tour = {
 			Tour.gig.model.rounds--;
 			let milliseconds = Math.floor( ( Tour.gig.model.result % ( 1000 * 60 ) ) / 100 );
 			Tour.gig.model.points += milliseconds;
-			audience.style.height = Math.ceil( audience.clientHeight + milliseconds / Settings.TOUR_GIG_SKILL ) + 'px';
+			audience.style.height = Math.ceil( Tour.gig.getAudienceHeight() + milliseconds / Settings.TOUR_GIG_SKILL ) + 'px';
 			if ( Tour.gig.model.rounds === 0 ) {
 				Tour.gig.end();
-
 			} else {
-				setTimeout( () => {
-					Tour.gig.play( false );
+				Tour.gig.timeout = setTimeout( () => {
+					Tour.gig.play();
 				}, ( 100 * Utils.randInt( 10 ) ) );
 			}
 
 		},
 		end: () => {
+			clearTimeout( Tour.gig.timeout );
 			clearInterval( Tour.gig.model.audience );
 			let modalContainer = Modal.getSelector();
 			let blocks = modalContainer.getElementsByClassName( 'gig-game-block' );
 			let readySpot = modalContainer.querySelector( '.gig-game-ready' );
-			let audience = document.querySelector( '.gig-audience' );
-			let finalScore = Math.floor( audience.clientHeight * ( 100 / Settings.TOUR_GIG_AUDIENCE ) );
-			readySpot.removeEventListener( 'click', () => {
-				Tour.gig.play( true )
-			}, false );
+			let finalScore = Math.floor( Tour.gig.getAudienceHeight() * ( 100 / Settings.TOUR_GIG_AUDIENCE ) );
+			readySpot.removeEventListener( 'click', Tour.gig.onStage, false );
 			for ( var i = 0; i < blocks.length; i++ ) {
 				( ( x ) => {
 					blocks[ x ].removeEventListener( 'click', Tour.gig.blockListener, false );

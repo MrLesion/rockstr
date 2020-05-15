@@ -105,6 +105,8 @@ const Models = {
 			result: 0,
 			interval: null,
 			audience: null,
+			timeout: null,
+			skillTimer:null,
 			rounds: 0,
 			points: 0,
 		}
