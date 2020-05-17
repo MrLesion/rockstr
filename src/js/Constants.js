@@ -1,4 +1,4 @@
-const Settings = {
+const Constants = {
     ACTIVE_MODULES_SPEECH: false,
     ACTIVE_MODULES_NEWS: true,
 
@@ -60,4 +60,4 @@ const Settings = {
     EVENTS_STUDIO_DAYS_INTERVAL: 14
 };
 
-export default Settings;
+export default Constants;

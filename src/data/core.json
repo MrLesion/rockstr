@@ -129,25 +129,29 @@
             {
                 "cost": 15,
                 "label": "Local gigs",
-                "value": "local"
+                "value": "local",
+                "level": 1
             },
             "national":
             {
                 "cost": 60,
                 "label": "National tour",
-                "value": "national"
+                "value": "national",
+                "level": 2
             },
             "international":
             {
                 "cost": 180,
                 "label": "International tour",
-                "value": "international"
+                "value": "international",
+                "level": 3
             },
             "world":
             {
                 "cost": 250,
                 "label": "World tour",
-                "value": "world"
+                "value": "world",
+                "level": 4
             }
         },
         "venue":
@@ -156,25 +160,29 @@
             {
                 "cost": 3,
                 "label": "Pubs/clubs",
-                "value": "tiny"
+                "value": "tiny",
+                "level": 100
             },
             "small":
             {
                 "cost": 7,
                 "label": "Small venues",
-                "value": "small"
+                "value": "small",
+                "level": 500
             },
             "large":
             {
                 "cost": 15,
                 "label": "Large venues",
-                "value": "large"
+                "value": "large",
+                "level": 2000
             },
             "stadium":
             {
                 "cost": 30,
                 "label": "Stadiums",
-                "value": "stadium"
+                "value": "stadium",
+                "level": 10000
             }
         },
         "time":

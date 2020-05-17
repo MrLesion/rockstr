@@ -1,5 +1,5 @@
-import Settings from '../../js/Settings.js';
+import Constants from '../../js/Constants.js';
 
 export default function ( progress, type ) {
-	return progress / ( type === 'fame' ? Settings.FAME_PROGRESS_FACTOR : 1 );
+	return progress / ( type === 'fame' ? Constants.FAME_PROGRESS_FACTOR : 1 );
 }

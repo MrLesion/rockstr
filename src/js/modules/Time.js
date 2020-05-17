@@ -1,4 +1,4 @@
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Models from '../Models.js';
 import Utils from './Utils.js';
 import Bands from './Bands.js';
@@ -36,7 +36,7 @@ const Time = {
         let stored = Store.get( 'time' );
         if ( Utils.isNullOrUndefined( stored ) === true ) {
             return {
-                date: Settings.START_DATE,
+                date: Constants.START_DATE,
                 daysAlive: 1
             };
         } else {
@@ -48,10 +48,10 @@ const Time = {
         if ( Utils.isNullOrUndefined( Store.get( 'time' ) ) === false ) {
             returnTime = Store.get( 'time' ).date;
         } else {
-            returnTime = Settings.START_DATE;
+            returnTime = Constants.START_DATE;
         }
         if ( format === true ) {
-            returnTime = moment( returnTime ).format( Settings.DATE_FORMAT );
+            returnTime = moment( returnTime ).format( Constants.DATE_FORMAT );
         }
         return returnTime;
     },
@@ -65,7 +65,7 @@ const Time = {
             Time.ticks += days;
         }
         Protagonist.set( 'activity', 'activity_' + type );
-        Time.ticker = setInterval( Time.handelDay( type, timeObj ), Settings.TIME_TICK );
+        Time.ticker = setInterval( Time.handelDay( type, timeObj ), Constants.TIME_TICK );
     },
     handelDay: ( type, timeObj ) => {
         return ( () => {
@@ -137,10 +137,10 @@ const Time = {
         if ( Utils.isNullOrUndefined( dateElement ) === false ) {
             dateElement.innerHTML = Time.today( true );
         }
-        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.RENT_DUE_INTERVAL === 0 ) {
+        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Constants.RENT_DUE_INTERVAL === 0 ) {
             Utils.eventEmitter.emit( 'protagonist.rent' );
         }
-        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Settings.CHARTS_UPDATE_INTERVAL === 0 ) {
+        if ( Time.model.daysAlive > 1 && Time.model.daysAlive % Constants.CHARTS_UPDATE_INTERVAL === 0 ) {
             Utils.eventEmitter.emit( 'charts.update' );
         }
 

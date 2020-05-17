@@ -1,4 +1,4 @@
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 
 const Speech = {
     synth: null,
@@ -6,7 +6,7 @@ const Speech = {
         Speech.synth = speechSynthesis;
     },
     speak: ( txt ) => {
-        if ( Settings.ACTIVE_MODULES_SPEECH === true ) {
+        if ( Constants.ACTIVE_MODULES_SPEECH === true ) {
             Speech.synth.cancel();
             let speaking = new SpeechSynthesisUtterance( txt );
             speaking.lang = 'en-GB';

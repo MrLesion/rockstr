@@ -1,10 +1,11 @@
 import * as Data from './Data.js';
 
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Store from './Store.js';
 import Bands from './Bands.js';
 import Studio from './Studio.js';
 import Protagonist from './Protagonist.js';
+
 
 const Utils = {
     objectIsEmpty: ( obj ) => {
@@ -22,8 +23,8 @@ const Utils = {
     randRanking: ( int ) => {
         let result = Math.random() * int;
         result = result * result;
-        result *= Settings.MAX_SONG_FACTOR;
-        result = Math.floor( result / Settings.MAX_SONG_FACTOR );
+        result *= Constants.MAX_SONG_FACTOR;
+        result = Math.floor( result / Constants.MAX_SONG_FACTOR );
         return result;
     },
     adjustRanking: ( entry ) => {
@@ -31,12 +32,12 @@ const Utils = {
 
         if ( entry.weeks < 5 ) {
             if ( Utils.randInt( 10 ) >= 5 ) {
-                result = entry.prevQuality - Utils.randInt( Settings.MAX_SONG_FACTOR * 5 );
+                result = entry.prevQuality - Utils.randInt( Constants.MAX_SONG_FACTOR * 5 );
             } else {
-                result = ( entry.prevQuality / 10 ) + Utils.randInt( Settings.MAX_SONG_FACTOR * 5 );
+                result = ( entry.prevQuality / 10 ) + Utils.randInt( Constants.MAX_SONG_FACTOR * 5 );
             }
         } else {
-            entry = ( entry.prevQuality / 10 ) - Utils.randInt( Settings.MAX_SONG_FACTOR * 10 );
+            entry = ( entry.prevQuality / 10 ) - Utils.randInt( Constants.MAX_SONG_FACTOR * 10 );
         }
         return result;
     },
@@ -47,7 +48,7 @@ const Utils = {
     },
     calculateWithTax: ( int ) => {
         let intWithTaxes = 0;
-        intWithTaxes = int - ( int * Settings.TAX );
+        intWithTaxes = int - ( int * Constants.TAX );
         return Math.round( intWithTaxes );
     },
     doDrugEffect: ( drug, addiction ) => {

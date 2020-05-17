@@ -14,7 +14,8 @@ const Store = {
             songs: Store.load( 'songs' ),
             news: Store.load( 'news' ),
             tours: Store.load( 'tours' ),
-            achievements: Store.load( 'achievements' )
+            achievements: Store.load( 'achievements' ),
+            settings: Store.load( 'settings' )
         }
     },
     set: ( key, dataObj ) => {
