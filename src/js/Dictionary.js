@@ -1,14 +1,23 @@
 import Utils from './modules/Utils.js';
 
 const Dictionary = {
-    get: ( key ) => {
-        if ( Utils.isNullOrUndefined( Dictionary.texts[ key ] ) === true ) {
+    get: ( key, staticText = false ) => {
+        let text = '';
+        if ( staticText === true ) {
+            text = Dictionary.static[ key ];
+        }
+        else {
+            text = Dictionary.texts[ key ];
+        }
+        if ( Utils.isNullOrUndefined( text ) === true ) {
             return '!--- Translation key missing: ' + key + ' ---!';
-        } else {
-            if ( typeof Dictionary.texts[ key ] === 'string' ) {
-                return Dictionary.texts[ key ]
-            } else {
-                return Dictionary.texts[ key ][ Utils.randIndex( Dictionary.texts[ key ].length ) ]
+        }
+        else {
+            if ( typeof text === 'string' ) {
+                return text;
+            }
+            else {
+                return text[ Utils.randIndex( text.length ) ]
             }
         }
     },
@@ -55,6 +64,13 @@ const Dictionary = {
         newsChartsEntryEnters: '<-entryName-> enters the charts as no.<-entryPosition_>',
         newsBandGoesOnTour: '<-band-> goes on tour',
         studioDay: 'Another day in the studio'
+    },
+    static: {
+        global_health: 'Health',
+        global_creativity: 'Creativity',
+        global_mentality: 'Mentality',
+        global_happiness: 'Happiness',
+        battle_header: 'Battle of the Bands'
     }
 
 };
