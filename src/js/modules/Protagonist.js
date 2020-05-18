@@ -26,12 +26,7 @@ const Protagonist = {
         Protagonist.update();
     },
     get: ( prop ) => {
-        let stored = Store.get( 'protagonist' );
-        if ( Utils.isNullOrUndefined( stored ) === true ) {
-            return Protagonist.model[ prop ];
-        } else {
-            return stored[ prop ];
-        }
+        return Utils.getter(Protagonist.model, prop);
     },
     set: ( prop, value, update = false, callback = Protagonist.status ) => {
         if ( update === true ) {

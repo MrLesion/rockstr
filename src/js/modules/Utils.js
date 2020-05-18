@@ -14,6 +14,32 @@ const Utils = {
     isNullOrUndefined: ( obj ) => {
         return obj === null || obj === undefined;
     },
+    getter: ( obj, key ) => {
+        let value;
+        Object.keys( obj ).some( function ( k ) {
+            if ( k === key ) {
+                value = obj[ k ];
+                return true;
+            }
+            if ( obj[ k ] && typeof obj[ k ] === 'object' ) {
+                value = Utils.getter( obj[ k ], key );
+                return value !== undefined;
+            }
+        } );
+        return value;
+    },
+    setter: ( obj, key, setValue ) => {
+        Object.keys( obj ).some( function ( k ) {
+            if ( k === key ) {
+                obj[ k ] = setValue;
+                return true;
+            }
+            if ( obj[ k ] && typeof obj[ k ] === 'object' ) {
+                Utils.setter( obj[ k ], key, setValue );
+            }
+        } );
+        return obj;
+    },
     randIndex: ( length ) => {
         return Math.floor( Math.random() * length );
     },
@@ -33,10 +59,12 @@ const Utils = {
         if ( entry.weeks < 5 ) {
             if ( Utils.randInt( 10 ) >= 5 ) {
                 result = entry.prevQuality - Utils.randInt( Constants.MAX_SONG_FACTOR * 5 );
-            } else {
+            }
+            else {
                 result = ( entry.prevQuality / 10 ) + Utils.randInt( Constants.MAX_SONG_FACTOR * 5 );
             }
-        } else {
+        }
+        else {
             entry = ( entry.prevQuality / 10 ) - Utils.randInt( Constants.MAX_SONG_FACTOR * 10 );
         }
         return result;
@@ -84,7 +112,7 @@ const Utils = {
         } );
     },
     validateProtagonistValue: ( prop, value ) => {
-        let statsProps = [ 'health', 'mentality', 'creativity', 'happiness' ];
+        let statsProps = ['health', 'mentality', 'creativity', 'happiness'];
         if ( statsProps.indexOf( prop ) > -1 ) {
             if ( value > 100 ) {
                 value = 100;
@@ -116,7 +144,8 @@ const Utils = {
                 let isNPC = Data.jobs.indexOf( placeholdeData ) > -1;
                 if ( isNPC === true ) {
                     returnMsg = Utils.replaceNpc( returnMsg, placeholdeData, placeholdeTag );
-                } else {
+                }
+                else {
                     returnMsg = Utils.replaceMisc( returnMsg, placeholdeData, placeholdeTag );
                 }
             } );
@@ -141,7 +170,8 @@ const Utils = {
         }
         if ( hasNpc === true ) {
             returnMsg = returnMsg.replace( value, oldNpc.name );
-        } else {
+        }
+        else {
             newNpc = Utils.generateNpc( key );
             if ( newNpc.name ) {
                 returnMsg = returnMsg.replace( value, newNpc.name );
@@ -155,9 +185,11 @@ const Utils = {
         let replaceText = '';
         if ( key === 'songtitle' ) {
             replaceText = Studio.getNewTitle();
-        } else if ( key === 'bandname' ) {
+        }
+        else if ( key === 'bandname' ) {
             replaceText = Bands.getBand().name;
-        } else if ( key === 'usergenre' ) {
+        }
+        else if ( key === 'usergenre' ) {
             replaceText = Protagonist.get( 'genre' );
         }
         returnMsg = returnMsg.replace( value, replaceText );
@@ -208,14 +240,14 @@ const Utils = {
     },
     eventEmitter: {
         _events: {},
-        on( event, listener ) {
+        on ( event, listener ) {
             if ( typeof Utils.eventEmitter._events[ event ] !== 'object' ) {
                 Utils.eventEmitter._events[ event ] = [];
             }
             Utils.eventEmitter._events[ event ].push( listener );
             return () => Utils.eventEmitter.removeListener( event, listener );
         },
-        removeListener( event, listener ) {
+        removeListener ( event, listener ) {
             if ( typeof Utils.eventEmitter._events[ event ] === 'object' ) {
                 const index = Utils.eventEmitter._events[ event ].indexOf( listener );
                 if ( index > -1 ) {
@@ -223,44 +255,16 @@ const Utils = {
                 }
             }
         },
-        emit( event, ...args ) {
+        emit ( event, ...args ) {
             if ( typeof Utils.eventEmitter._events[ event ] === 'object' ) {
                 Utils.eventEmitter._events[ event ].forEach( listener => listener.apply( Utils.eventEmitter, args ) );
             }
         },
-        once( event, listener ) {
+        once ( event, listener ) {
             const remove = Utils.eventEmitter.on( event, ( ...args ) => {
                 remove();
                 listener.apply( Utils.eventEmitter, args );
             } );
-        }
-    },
-    customSelect: () => {
-        let genericSelects = document.getElementsByTagName( 'select' );
-        for ( let i = 0; i < genericSelects.length; i++ ) {
-            let customSelectMarkup = document.createElement( 'ul' );
-            customSelectMarkup.className = 'custom-select';
-            customSelectMarkup.setAttribute( 'data-id', genericSelects[ i ].id );
-            customSelectMarkup.setAttribute( 'data-selected', genericSelects[ i ].value );
-
-            let genericOptions = genericSelects[ i ].options;
-            for ( let x = 0; x < genericOptions.length; x++ ) {
-                let customOptionMarkup = document.createElement( 'li' );
-                customOptionMarkup.setAttribute( 'data-value', genericOptions[ x ].value );
-                customOptionMarkup.innerText = genericOptions[ x ].innerText;
-                customSelectMarkup.appendChild( customOptionMarkup );
-
-            }
-            genericSelects[ i ].style.display = 'none';
-            genericSelects[ i ].parentNode.appendChild( customSelectMarkup );
-            Utils.delegate( 'click', '.custom-select', ( event ) => {
-                if ( event.target.className.indexOf( 'active' ) === -1 ) {
-                    event.target.classList.add( 'active' );
-                } else {
-                    event.target.classList.remove( 'active' );
-                }
-            } );
-
         }
     }
 };

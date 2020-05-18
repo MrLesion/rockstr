@@ -3,21 +3,16 @@ import Store from './Store.js';
 import Utils from './Utils.js';
 
 const Settings = {
-	construct: () => {
-		let stored = Store.get( 'settings' );
-		let model = Models.settings();
-		if(Utils.isNullOrUndefined( stored ) === true){
-			stored = model;
-		}
-		Settings.model = Object.assign(model, stored);
-		Store.set( 'settings', Settings.model );
-		Settings.bindings();
-	},
-	get: ( prop ) => {
-        return Settings.model[ prop ];
+    construct: () => {
+        Settings.model = Models.construct( 'settings' );
+        Settings.bindings();
     },
-    set: ( prop, value) => {
-        Settings.model[ prop ] = value;
+    get: ( prop ) => {
+        let queryObj = Utils.getter( Settings.model, prop );
+        return queryObj;
+    },
+    set: ( prop, value ) => {
+        Settings.model = Utils.setter( Settings.model, prop, value );
         Store.set( 'settings', Settings.model );
     },
     bindings: () => {
