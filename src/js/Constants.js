@@ -34,8 +34,9 @@ const Constants = {
     BATTLE_PRIZE_FAME: 50,
     BATTLE_END_TIMEOUT: 8000,
     BATTLE_ATTACK_0: 'Killer Lyrics',
-    BATTLE_ATTACK_1: 'Power Solo',
-    BATTLE_ATTACK_2: 'Dirty Dance',
+    BATTLE_ATTACK_1: 'Teeth Picking',
+    BATTLE_ATTACK_2: 'Hips Shaking',
+    BATTLE_ATTACK_3: 'Guitar Smashing',
 
     INTERVIEW_MAX_SCORE: 50,
     INTERVIEW_INDEX_SCORE: 10,

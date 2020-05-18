@@ -1,4 +1,4 @@
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
 import { TPL_TOUR } from '../Templates.js';
 

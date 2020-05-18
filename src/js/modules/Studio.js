@@ -1,6 +1,6 @@
 import { TPL_STUDIO } from '../Templates.js';
 
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
 import Constants from '../Constants.js';
 import Models from '../Models.js';

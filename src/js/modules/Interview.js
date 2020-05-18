@@ -1,4 +1,4 @@
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
 import { TPL_EVENT_INTERVIEW_MODAL } from '../Templates.js';
 

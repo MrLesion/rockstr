@@ -1,6 +1,6 @@
 import { TPL_TOP_BAR, TPL_END_MODAL } from '../Templates.js';
 
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
 import Models from '../Models.js';
 import Utils from './Utils.js';

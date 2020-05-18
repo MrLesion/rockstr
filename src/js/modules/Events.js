@@ -1,4 +1,4 @@
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
 import Constants from '../Constants.js';
 import Utils from './Utils.js';
