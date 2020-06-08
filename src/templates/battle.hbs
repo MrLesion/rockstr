@@ -1,6 +1,6 @@
 <div class="modal event-battle">
 	<div class="modal-inner">
-		<h2 class="modal-header">Battle of the bands</h2>
+		<h2 class="modal-header">{{getStaticText 'battle_header'}}</h2>
 		<div class="modal-content">
 			<div class="event-battle-row">
 				<div class="event-battle-column {{#compare turn '===' 'player'}}active{{/compare}}">
@@ -36,7 +36,7 @@
 					<div class="event-battle-content">
 						<h2>{{opponent.name}}</h2>
 						<h4>{{opponent.genre}}</h4>
-						<div>Health: {{opponent.health}}</div>
+						<div>{{getStaticText 'global_health'}}: {{opponent.health}}</div>
 					</div>
 				</div>
 			</div>

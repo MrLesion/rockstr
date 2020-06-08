@@ -1,4 +1,4 @@
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Utils from './Utils.js';
 import Store from './Store.js';
 import Time from './Time.js';
@@ -30,8 +30,8 @@ const Schedule = {
                 center: '',
                 right: ''
             },
-            defaultDate: moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ),
-            now: moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ),
+            defaultDate: moment( time ).format( Constants.SCHEDULE_DATE_FORMAT ),
+            now: moment( time ).format( Constants.SCHEDULE_DATE_FORMAT ),
             events: []
         } );
         Schedule.month = moment( time ).month();
@@ -40,7 +40,7 @@ const Schedule = {
             Utils.each( events, ( prop, value ) => {
                 let event = {
                     title: value.title || value.schedule.title,
-                    start: moment( prop ).format( Settings.SCHEDULE_DATE_FORMAT ),
+                    start: moment( prop ).format( Constants.SCHEDULE_DATE_FORMAT ),
                     extendedProps: value
                 };
                 Schedule.calendar.addEvent( event );
@@ -51,13 +51,13 @@ const Schedule = {
         if ( Utils.isNullOrUndefined( eventObj ) === false ) {
             let event = {
                 title: eventObj.title || eventObj.schedule.title,
-                start: moment( eventObj.start ).format( Settings.SCHEDULE_DATE_FORMAT ),
-                //end: eventObj.end ? eventObj.end.format( Settings.SCHEDULE_DATE_FORMAT ) : '',
+                start: moment( eventObj.start ).format( Constants.SCHEDULE_DATE_FORMAT ),
+                //end: eventObj.end ? eventObj.end.format( Constants.SCHEDULE_DATE_FORMAT ) : '',
                 extendedProps: eventObj
             };
             Schedule.calendar.addEvent( event );
             let storedEvents = Object.assign( {}, Store.get( 'schedule' ) );
-            storedEvents[ moment( eventObj.start ).format( Settings.SCHEDULE_DATE_FORMAT ) ] = eventObj;
+            storedEvents[ moment( eventObj.start ).format( Constants.SCHEDULE_DATE_FORMAT ) ] = eventObj;
             Store.set( 'schedule', storedEvents );
         }
     },
@@ -66,8 +66,8 @@ const Schedule = {
         let returnEvent = {};
         let storedEvents = Object.assign( {}, Store.get( 'schedule' ) );
 
-        if ( storedEvents[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ] ) {
-            returnEvent = storedEvents[ moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) ];
+        if ( storedEvents[ moment( time ).format( Constants.SCHEDULE_DATE_FORMAT ) ] ) {
+            returnEvent = storedEvents[ moment( time ).format( Constants.SCHEDULE_DATE_FORMAT ) ];
         }
         return returnEvent;
     },
@@ -75,7 +75,7 @@ const Schedule = {
         let scheduledEvent = {};
         if ( Utils.isNullOrUndefined( Schedule.calendar ) === false ) {
             let time = Time.today();
-            Schedule.calendar.setOption( 'now', moment( time ).format( Settings.SCHEDULE_DATE_FORMAT ) );
+            Schedule.calendar.setOption( 'now', moment( time ).format( Constants.SCHEDULE_DATE_FORMAT ) );
 
             scheduledEvent = Schedule.hasEvent();
 

@@ -1,10 +1,10 @@
 import { TPL_TOP_BAR, TPL_END_MODAL } from '../Templates.js';
 
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
 import Models from '../Models.js';
 import Utils from './Utils.js';
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Store from './Store.js';
 import Time from './Time.js';
 import Feed from './Feed.js';
@@ -17,42 +17,16 @@ import Achievements from './Achievements.js';
 import * as moment from 'moment';
 
 const Protagonist = {
-    model: {},
     construct: ( stdName = 'PlayerOne', stdGenre = 'Pop' ) => {
-        let savedGamePlayer = Store.get( 'protagonist' );
-
-        let name = Utils.isNullOrUndefined( savedGamePlayer ) ? stdName : savedGamePlayer.name;
-        let genre = Utils.isNullOrUndefined( savedGamePlayer ) ? stdGenre : savedGamePlayer.genre;
-        let isPlayer = Utils.isNullOrUndefined( savedGamePlayer ) ? true : savedGamePlayer.isPlayer;
-        let fame = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_FAME : savedGamePlayer.fame;
-        let money = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_MONEY : savedGamePlayer.money;
-        let health = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_HEALTH : savedGamePlayer.health;
-        let mentality = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_MENTALITY : savedGamePlayer.mentality;
-        let creativity = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_CREATIVITY : savedGamePlayer.creativity;
-        let happiness = Utils.isNullOrUndefined( savedGamePlayer ) ? Settings.INITIAL_VALUE_HAPPINESS : savedGamePlayer.happiness;
-        let activity = Utils.isNullOrUndefined( savedGamePlayer ) ? 'activity_idle' : savedGamePlayer.activity;
-
-        Protagonist.model.name = name;
-        Protagonist.model.genre = genre;
-        Protagonist.model.isPlayer = isPlayer;
-        Protagonist.model.fame = fame;
-        Protagonist.model.money = money;
-        Protagonist.model.health = health;
-        Protagonist.model.mentality = mentality;
-        Protagonist.model.creativity = creativity;
-        Protagonist.model.happiness = happiness;
-        Protagonist.model.activity = activity;
-        Store.set( 'protagonist', Protagonist.model );
+        let model = Models.protagonist();
+        model.name = stdName;
+        model.genre = stdGenre;
+        Protagonist.model = Models.construct( 'protagonist', model );
         Protagonist.bindings();
         Protagonist.update();
     },
     get: ( prop ) => {
-        let stored = Store.get( 'protagonist' );
-        if ( Utils.isNullOrUndefined( stored ) === true ) {
-            return Protagonist.model[ prop ];
-        } else {
-            return stored[ prop ];
-        }
+        return Utils.getter(Protagonist.model, prop);
     },
     set: ( prop, value, update = false, callback = Protagonist.status ) => {
         if ( update === true ) {
@@ -88,8 +62,8 @@ const Protagonist = {
         } );
 
         Utils.delegate( 'click', '.protagonist-action-holiday', () => {
-            let ach = Achievements.get('firstSong', true);
-            console.log(ach);
+            let ach = Achievements.get( 'firstSong', true );
+            console.log( ach );
         } );
 
         Utils.delegate( 'click', '.protagonist-action-continue', ( event ) => {
@@ -128,12 +102,12 @@ const Protagonist = {
 
         //let addictionsLevels = Data.core.addictLevels;
 
-        if ( addictions[ drug ].addictionLevel > Settings.ADDICTION_LEVEL_LOW[ 0 ] && addictions[ drug ].addictionLevel < Settings.ADDICTION_LEVEL_LOW[ 1 ] ) {
+        if ( addictions[ drug ].addictionLevel > Constants.ADDICTION_LEVEL_LOW[ 0 ] && addictions[ drug ].addictionLevel < Constants.ADDICTION_LEVEL_LOW[ 1 ] ) {
             addictions[ drug ].addictionText = Data.core.addictLevels.low;
-        } else if ( addictions[ drug ].addictionLevel >= Settings.ADDICTION_LEVEL_MEDIUM[ 0 ] && addictions[ drug ].addictionLevel < Settings.ADDICTION_LEVEL_MEDIUM[ 1 ] ) {
+        } else if ( addictions[ drug ].addictionLevel >= Constants.ADDICTION_LEVEL_MEDIUM[ 0 ] && addictions[ drug ].addictionLevel < Constants.ADDICTION_LEVEL_MEDIUM[ 1 ] ) {
             addictions[ drug ].addictionText = Data.core.addictLevels.medium;
 
-        } else if ( addictions[ drug ].addictionLevel >= Settings.ADDICTION_LEVEL_HIGH[ 0 ] ) {
+        } else if ( addictions[ drug ].addictionLevel >= Constants.ADDICTION_LEVEL_HIGH[ 0 ] ) {
             addictions[ drug ].addictionText = Data.core.addictLevels.high;
         }
 

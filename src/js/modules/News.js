@@ -1,6 +1,6 @@
 import { TPL_NEWS_PANEL } from '../Templates.js';
 
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Fetch from './Fetch.js';
 import Utils from './Utils.js';
 import Time from './Time.js';
@@ -29,7 +29,7 @@ const News = {
         let date = moment( Time.get().date );
         News.fetchedJSON.forEach( ( element ) => {
             var elementDate = moment( element.pub_date );
-            if ( elementDate.date() === date.date() && element.document_type === Settings.NYT_TYPE ) {
+            if ( elementDate.date() === date.date() && element.document_type === Constants.NYT_TYPE ) {
                 if ( element.lead_paragraph !== null && element.lead_paragraph.length > 40 ) {
                     daysNews.push( element );
                 }
@@ -39,7 +39,7 @@ const News = {
         News.store.nyt = Utils.sortByInt( daysNews, 'print_page' );
         News.store.nyt.length = 15;
         News.store.date = Time.get().date;
-        if ( Settings.ACTIVE_MODULES_NEWS === true ) {
+        if ( Constants.ACTIVE_MODULES_NEWS === true ) {
             News.build();
         }
     },
@@ -49,9 +49,9 @@ const News = {
             return;
         }
         if ( News.fetchedMonth !== ( date.month() + 1 ) ) {
-            if ( Settings.ACTIVE_MODULES_NEWS === true ) {
+            if ( Constants.ACTIVE_MODULES_NEWS === true ) {
                 News.fetching = true;
-                let newsApiEndpoint = Settings.NYT_LOCAL_ENDPOINT.replace( '{file}', date.year() + '-' + ( date.month() + 1 ) ).replace( '{year}', date.year() ).replace( '{month}', date.month() + 1 );
+                let newsApiEndpoint = Constants.NYT_LOCAL_ENDPOINT.replace( '{file}', date.year() + '-' + ( date.month() + 1 ) ).replace( '{year}', date.year() ).replace( '{month}', date.month() + 1 );
                 Fetch( newsApiEndpoint )
                     .then( ( json ) => {
                         if ( Utils.isNullOrUndefined( json.data ) === false ) {

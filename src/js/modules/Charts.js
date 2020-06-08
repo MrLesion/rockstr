@@ -1,7 +1,7 @@
 import { TPL_CHARTS_PANEL } from '../Templates.js';
 
 import Utils from './Utils.js';
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Bands from './Bands.js';
 import Songs from './Songs.js';
 import Store from './Store.js';
@@ -36,7 +36,7 @@ const Charts = {
         let newList = [];
         let userSongs = Songs.get();
 
-        for ( let i = 0; i < Settings.CHARTS_LENGTH; i++ ) {
+        for ( let i = 0; i < Constants.CHARTS_LENGTH; i++ ) {
             const entry = Charts.addEntry();
             newList.push( entry );
         }
@@ -47,7 +47,7 @@ const Charts = {
     },
     handleCharts: ( list ) => {
         let sortedList = Utils.sortByInt( list, 'quality' );
-        sortedList.length = Settings.CHARTS_LENGTH;
+        sortedList.length = Constants.CHARTS_LENGTH;
         sortedList.forEach( ( entry, i ) => {
             if ( entry.quality > 0 ) {
                 entry.position = ( i + 1 );
@@ -78,22 +78,22 @@ const Charts = {
     addIcons: ( chartEntry ) => {
         let icons = [];
         if ( chartEntry.new === true ) {
-            icons.push( Settings.CHARTS_ICON_NEW );
+            icons.push( Constants.CHARTS_ICON_NEW );
         }
         if ( chartEntry.myEntry === true ) {
-            icons.push( Settings.CHARTS_ICON_MYENTRY );
+            icons.push( Constants.CHARTS_ICON_MYENTRY );
         }
         if ( chartEntry.weeksAsOne > 0 ) {
-            icons.push( Settings.CHARTS_ICON_WEEKSASONE + chartEntry.weeksAsOne );
+            icons.push( Constants.CHARTS_ICON_WEEKSASONE + chartEntry.weeksAsOne );
         }
-        if ( chartEntry.sales >= Settings.CHARTS_SALES_GOLD_LIMIT && chartEntry.sales < Settings.CHARTS_SALES_PLATINIUM_LIMIT ) {
-            icons.push( Settings.CHARTS_ICON_GOLD );
+        if ( chartEntry.sales >= Constants.CHARTS_SALES_GOLD_LIMIT && chartEntry.sales < Constants.CHARTS_SALES_PLATINIUM_LIMIT ) {
+            icons.push( Constants.CHARTS_ICON_GOLD );
         }
-        if ( chartEntry.sales >= Settings.CHARTS_SALES_PLATINIUM_LIMIT && chartEntry.sales < Settings.CHARTS_SALES_DOUBLE_PLATINIUM_LIMIT ) {
-            icons.push( Settings.CHARTS_ICON_PLATINIUM );
+        if ( chartEntry.sales >= Constants.CHARTS_SALES_PLATINIUM_LIMIT && chartEntry.sales < Constants.CHARTS_SALES_DOUBLE_PLATINIUM_LIMIT ) {
+            icons.push( Constants.CHARTS_ICON_PLATINIUM );
         }
-        if ( chartEntry.sales >= Settings.CHARTS_SALES_DOUBLE_PLATINIUM_LIMIT ) {
-            icons.push( Settings.CHARTS_ICON_DOUBLEPLATINIUM );
+        if ( chartEntry.sales >= Constants.CHARTS_SALES_DOUBLE_PLATINIUM_LIMIT ) {
+            icons.push( Constants.CHARTS_ICON_DOUBLEPLATINIUM );
         }
         return icons;
     },
@@ -106,7 +106,7 @@ const Charts = {
         Feed.add( 'charts_user_entry', entry );
         //let money = Protagonist.get( 'money' );
         //let fame = Protagonist.get( 'fame' );
-        //let earnedMoney = ( entry.sales - entry.presales ) * Settings.AMOUNT_PER_SALE;
+        //let earnedMoney = ( entry.sales - entry.presales ) * Constants.AMOUNT_PER_SALE;
         //let earnedFame = ( entry.sales - entry.presales ) / 2;
         //Protagonist.set( 'money', earnedMoney );
         //Protagonist.set( 'fame', earnedFame );

@@ -1,6 +1,6 @@
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Utils from './Utils.js';
 import Feed from './Feed.js';
 import Protagonist from './Protagonist.js';
@@ -52,8 +52,8 @@ const Events = {
         }
     },
     rentDue: () => {
-        Feed.add( 'eventRentDue', { rent: Settings.RENT_AMOUNT } );
-        Protagonist.set( 'money', -Settings.RENT_AMOUNT, true );
+        Feed.add( 'eventRentDue', { rent: Constants.RENT_AMOUNT } );
+        Protagonist.set( 'money', -Constants.RENT_AMOUNT, true );
     },
     chartsUpdate: () => {
         Feed.add( 'eventChartsUpdated' );

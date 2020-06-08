@@ -1,8 +1,8 @@
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
 import { TPL_TOUR } from '../Templates.js';
 
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Utils from './Utils.js';
 import Modal from './Modal.js';
 import Store from './Store.js';
@@ -106,7 +106,7 @@ const Tour = {
 		let venueOptions = venue.getElementsByTagName( 'option' );
 		let scaleOptions = scale.getElementsByTagName( 'option' );
 
-		let rentFactor = Math.ceil( Settings.RENT_AMOUNT * ( Settings.RENT_DUE_INTERVAL % Tour.model.time ) );
+		let rentFactor = Math.ceil( Constants.RENT_AMOUNT * ( Constants.RENT_DUE_INTERVAL % Tour.model.time ) );
 
 		for ( let i = 0; i < venueOptions.length; i++ ) {
 			if ( time.value === '' ) {
@@ -172,12 +172,15 @@ const Tour = {
 				title: eventObj.title,
 				venue: venues[ eventObj.extendedProps.venue ].label,
 				scale: scales[ eventObj.extendedProps.scale ].label,
+				attendees: venues[ eventObj.extendedProps.venue ].level,
+				level: scales[ eventObj.extendedProps.scale ].level,
 				day: eventObj.extendedProps.day,
 				isGig: true,
 				feedback: 0,
-				skill: Settings.TOUR_GIG_GRID
+				skill: Constants.TOUR_GIG_GRID
 			};
 			dataObj.feedback = Tour.gig.getFeedback( dataObj );
+			console.log(dataObj);
 			Tour.build( dataObj );
 		},
 		bindings: ( modalContainer ) => {
@@ -197,7 +200,7 @@ const Tour = {
 			}
 			Tour.gig.model.points = 0;
 			Tour.gig.model.rounds = 10;
-			audience.style.height = Settings.TOUR_GIG_AUDIENCE + 'px';
+			audience.style.height = Constants.TOUR_GIG_AUDIENCE + 'px';
 
 			readySpot.addEventListener( 'click', Tour.gig.onStage, false );
 
@@ -233,7 +236,7 @@ const Tour = {
 			let audience = document.querySelector( '.gig-audience' );
 			Tour.gig.model.audience = setInterval( () => {
 				audience.style.height = Tour.gig.getAudienceHeight() - 1 + 'px';
-			}, Settings.TOUR_GIG_SPEED );
+			}, Constants.TOUR_GIG_SPEED );
 		},
 		onStage: () => {
 			Tour.gig.audience();
@@ -273,7 +276,7 @@ const Tour = {
 			Tour.gig.model.rounds--;
 			let milliseconds = Math.floor( ( Tour.gig.model.result % ( 1000 * 60 ) ) / 100 );
 			Tour.gig.model.points += milliseconds;
-			audience.style.height = Math.ceil( Tour.gig.getAudienceHeight() + milliseconds / Settings.TOUR_GIG_SKILL ) + 'px';
+			audience.style.height = Math.ceil( Tour.gig.getAudienceHeight() + milliseconds / Constants.TOUR_GIG_SKILL ) + 'px';
 			if ( Tour.gig.model.rounds === 0 ) {
 				Tour.gig.end();
 			} else {
@@ -289,7 +292,7 @@ const Tour = {
 			let modalContainer = Modal.getSelector();
 			let blocks = modalContainer.getElementsByClassName( 'gig-game-block' );
 			let readySpot = modalContainer.querySelector( '.gig-game-ready' );
-			let finalScore = Math.floor( Tour.gig.getAudienceHeight() * ( 100 / Settings.TOUR_GIG_AUDIENCE ) );
+			let finalScore = Math.floor( Tour.gig.getAudienceHeight() * ( 100 / Constants.TOUR_GIG_AUDIENCE ) );
 			readySpot.removeEventListener( 'click', Tour.gig.onStage, false );
 			for ( var i = 0; i < blocks.length; i++ ) {
 				( ( x ) => {
@@ -299,15 +302,15 @@ const Tour = {
 
 			if ( finalScore > 50 ) {
 				if ( finalScore > 70 ) {
-					console.log( 'You did great' );
+					console.log( '3 ENCORES' );
 				} else {
-					console.log( 'You did good' );
+					console.log( 'The crowd was wild' );
 				}
 			} else {
 				if ( finalScore < 30 ) {
-					console.log( 'You did poorly' );
+					console.log( 'Booed off' );
 				} else {
-					console.log( 'You did okay' );
+					console.log( 'You get an applaud or two' );
 				}
 			}
 		}

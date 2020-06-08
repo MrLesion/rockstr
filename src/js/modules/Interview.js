@@ -1,8 +1,8 @@
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
 import { TPL_EVENT_INTERVIEW_MODAL } from '../Templates.js';
 
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Feed from './Feed.js';
 import Utils from './Utils.js';
 import Modal from './Modal.js';
@@ -30,7 +30,7 @@ const Interview = {
 			for ( let o = 0; o < options.length; o++ ) {
 				questionModel.options.push( {
 					text: options[ o ],
-					value: Utils.randInt( Settings.INTERVIEW_INDEX_SCORE )
+					value: Utils.randInt( Constants.INTERVIEW_INDEX_SCORE )
 				} );
 			}
 			interviewModel.questions.push( questionModel );
@@ -52,7 +52,7 @@ const Interview = {
 		}
 	},
 	answer: ( score, text ) => {
-		let medio = Settings.INTERVIEW_INDEX_SCORE / 2;
+		let medio = Constants.INTERVIEW_INDEX_SCORE / 2;
 		let answerText = '';
 		if ( score > medio ) {
 			answerText = 'Alright - well done!';
@@ -71,7 +71,7 @@ const Interview = {
 		}
 	},
 	calculateScore: () => {
-		let medio = Settings.INTERVIEW_MAX_SCORE / 2;
+		let medio = Constants.INTERVIEW_MAX_SCORE / 2;
 		let scoreText = '';
 		let updateObj = {
 			fame: 0,

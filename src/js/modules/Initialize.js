@@ -1,7 +1,8 @@
-import * as Data from './Data.js';
+import Data from '../Data.js';
 import { TPL_GENRE_SELECT } from '../Templates.js';
 
 import Utils from './Utils.js';
+import Settings from './Settings.js';
 import Bands from './Bands.js';
 import Store from './Store.js';
 import Navigation from './Navigation.js';
@@ -60,6 +61,7 @@ const Initialize = {
         container.innerHTML = TPL_GENRE_SELECT( Data.genres );
     },
     run: ( name = '', genre = '' ) => {
+        Settings.construct();
         Protagonist.construct( name, genre );
         Achievements.construct();
         Bands.construct();

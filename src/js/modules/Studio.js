@@ -1,8 +1,8 @@
 import { TPL_STUDIO } from '../Templates.js';
 
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Models from '../Models.js';
 import Utils from './Utils.js';
 import Modal from './Modal.js';
@@ -16,7 +16,7 @@ const Studio = {
 	model: {},
 	run: () => {
 		Object.assign( Studio.model, Models.studio() );
-		Studio.model.days = Utils.randInt( Settings.EVENTS_STUDIO_DAYS_INTERVAL );
+		Studio.model.days = Utils.randInt( Constants.EVENTS_STUDIO_DAYS_INTERVAL );
 		let studios = Object.assign( {}, Data.core.record.studios );
 		let producers = Object.assign( {}, Data.core.record.producers );
 
@@ -87,7 +87,7 @@ const Studio = {
 		let producer = document.getElementById( 'producerSelect' );
 		let studioOptions = studio.getElementsByTagName( 'option' );
 		let producerOptions = producer.getElementsByTagName( 'option' );
-		let rentFactor = Math.ceil( Settings.RENT_AMOUNT * ( Settings.RENT_DUE_INTERVAL % Studio.model.days ) );
+		let rentFactor = Math.ceil( Constants.RENT_AMOUNT * ( Constants.RENT_DUE_INTERVAL % Studio.model.days ) );
 
 		for ( let i = 0; i < studioOptions.length; i++ ) {
 			if ( studioOptions[ i ].value !== '' ) {

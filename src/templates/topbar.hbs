@@ -10,7 +10,7 @@
     
     <div class="top-bar">
         <div class="top-bar-item">
-            <span>{{protagonist.name}}</span> (<span>{{getText protagonist.activity}}</span>)
+            <span class="toggle-settings">☷</span> <span>{{protagonist.name}}</span> (<span>{{getText protagonist.activity}}</span>)
         </div>
         <div class="flex-right">
             <div class="top-bar-item {{#compare protagonist.money '<' 1}}danger-color{{/compare}}">
@@ -74,27 +74,25 @@
         {{/hasAchievements}}
         <div class="flex-right">
             <div class="top-bar-item stats-bar-item">
-                Health
+              {{getStaticText 'global_health'}}
                 <div class="progress-bar small-bar">
                     <span class="stats-progress {{#compare protagonist.health '<' 10}}danger{{/compare}}" style="width:{{getProgress protagonist.health}}%"></span>
                 </div>
             </div>
             <div class="top-bar-item stats-bar-item">
-                Creativity
+              {{getStaticText 'global_creativity'}}
                  <div class="progress-bar small-bar">
                     <span class="stats-progress {{#compare protagonist.creativity '<' 10}}danger{{/compare}}" style="width:{{getProgress protagonist.creativity}}%"></span>
                 </div>
             </div>
             <div class="top-bar-item stats-bar-item">
-                
-                Mentality
+              {{getStaticText 'global_mentality'}}
                 <div class="progress-bar small-bar">
                     <span class="stats-progress {{#compare protagonist.mentality '<' 10}}danger{{/compare}}" style="width:{{getProgress protagonist.mentality}}%"></span>
                 </div>
             </div>
             <div class="top-bar-item stats-bar-item">
-                
-                Happiness
+              {{getStaticText 'global_happiness'}}
                 <div class="progress-bar small-bar">
                     <span class="stats-progress {{#compare protagonist.happiness '<' 10}}danger{{/compare}}" style="width:{{getProgress protagonist.happiness}}%"></span>
                 </div>

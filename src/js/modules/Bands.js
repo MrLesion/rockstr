@@ -1,4 +1,4 @@
-import * as Data from './Data.js';
+import Data from '../Data.js';
 
 import Utils from './Utils.js';
 import Store from './Store.js';

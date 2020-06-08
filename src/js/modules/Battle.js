@@ -1,6 +1,6 @@
 import { TPL_EVENT_BATTLE_MODAL } from '../Templates.js';
 
-import Settings from '../Settings.js';
+import Constants from '../Constants.js';
 import Models from '../Models.js';
 import Modal from './Modal.js';
 import Utils from './Utils.js';
@@ -23,15 +23,15 @@ const Battle = {
 			health: Protagonist.get( 'health' ),
 			creativity: Protagonist.get( 'creativity' ),
 			mentality: Protagonist.get( 'mentality' ),
-			fame: Protagonist.get( 'fame' ) / Settings.FAME_PROGRESS_FACTOR * 100
+			fame: Protagonist.get( 'fame' ) / Constants.FAME_PROGRESS_FACTOR * 100
 		};
 		battleObject.opponent = {
 			name: band.name,
 			genre: band.genre,
-			health: Math.floor( Utils.randInt( Settings.BATTLE_MAX_POWER ) ),
-			creativity: Math.floor( Utils.randInt( Settings.BATTLE_MAX_POWER ) ),
-			mentality: Math.floor( Utils.randInt( Settings.BATTLE_MAX_POWER ) ),
-			fame: Math.floor( Utils.randInt( Settings.BATTLE_MAX_POWER ) )
+			health: Math.floor( Utils.randInt( Constants.BATTLE_MAX_POWER ) ),
+			creativity: Math.floor( Utils.randInt( Constants.BATTLE_MAX_POWER ) ),
+			mentality: Math.floor( Utils.randInt( Constants.BATTLE_MAX_POWER ) ),
+			fame: Math.floor( Utils.randInt( Constants.BATTLE_MAX_POWER ) )
 		};
 		Object.assign( Battle.model, battleObject );
 	},
@@ -66,12 +66,12 @@ const Battle = {
 	},
 	calculateDamage: ( isUser, type ) => {
 		let damage = 0;
-		if ( type === Settings.BATTLE_ATTACK_0 ) {
-			damage = isUser ? Protagonist.get( 'creativity' ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
-		} else if ( type === Settings.BATTLE_ATTACK_1 ) {
-			damage = isUser ? Protagonist.get( 'mentality' ) : Utils.randInt( Settings.BATTLE_MAX_POWER );
-		} else if ( type === Settings.BATTLE_ATTACK_2 ) {
-			damage = isUser ? ( Protagonist.get( 'creativity' ) + Protagonist.get( 'health' ) ) : Utils.randInt( Settings.BATTLE_MAX_POWER * 2 );
+		if ( type === Constants.BATTLE_ATTACK_0 ) {
+			damage = isUser ? Protagonist.get( 'creativity' ) : Utils.randInt( Constants.BATTLE_MAX_POWER );
+		} else if ( type === Constants.BATTLE_ATTACK_1 ) {
+			damage = isUser ? Protagonist.get( 'mentality' ) : Utils.randInt( Constants.BATTLE_MAX_POWER );
+		} else if ( type === Constants.BATTLE_ATTACK_2 ) {
+			damage = isUser ? ( Protagonist.get( 'creativity' ) + Protagonist.get( 'health' ) ) : Utils.randInt( Constants.BATTLE_MAX_POWER * 2 );
 		}
 		return damage;
 	},
@@ -90,7 +90,7 @@ const Battle = {
 
 	},
 	fight: ( isUser, power, type ) => {
-		let defense = Utils.randInt( Settings.BATTLE_MAX_POWER );
+		let defense = Utils.randInt( Constants.BATTLE_MAX_POWER );
 		let outcome = Object.assign( {}, Models.fight() );
 		let attacker = isUser ? Battle.model.player : Battle.model.opponent;
 		let defender = isUser ? Battle.model.opponent : Battle.model.player;
@@ -128,8 +128,8 @@ const Battle = {
 	},
 	end: ( winner ) => {
 		let prize = {
-			money: Utils.randInt( Settings.BATTLE_PRIZE_MONEY ),
-			fame: Utils.randInt( Settings.BATTLE_PRIZE_FAME )
+			money: Utils.randInt( Constants.BATTLE_PRIZE_MONEY ),
+			fame: Utils.randInt( Constants.BATTLE_PRIZE_FAME )
 		};
 		let outcome = Object.assign( {}, Models.fight() );
 
@@ -147,7 +147,7 @@ const Battle = {
 		Battle.reset();
 		setTimeout( () => {
 			Utils.eventEmitter.emit( 'modal.hide' );
-		}, Settings.BATTLE_END_TIMEOUT );
+		}, Constants.BATTLE_END_TIMEOUT );
 	},
 	reset: () => {
 		Battle.model.feed = [];
