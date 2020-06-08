@@ -9,23 +9,23 @@ import * as names from '../data/names.json';
 import * as promotions from '../data/promotions.json';
 import * as studio from '../data/studio.json';
 import * as words from '../data/words.json';
-import * as interview from '../../data/interview.json';
+import * as interview from '../data/interview.json';
 import * as news from '../data/news.json';
 
 const Data = {
-    core: core,
-    bands: bands,
-    drugs: drugs,
-    events: events,
-    genres: genres,
-    jobs: jobs,
-    life: life,
-    names: names,
-    promotions: promotions,
-    studio: studio,
-    words: words,
-    interview: interview,
-    news: news
+    core: core.default,
+    bands: bands.default,
+    drugs: drugs.default,
+    events: events.default,
+    genres: genres.default,
+    jobs: jobs.default,
+    life: life.default,
+    names: names.default,
+    promotions: promotions.default,
+    studio: studio.default,
+    words: words.default,
+    interview: interview.default,
+    news: news.default
 };
 
 export default Data;

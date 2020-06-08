@@ -19,8 +19,8 @@ import Achievements from './Achievements.js';
 
 const Initialize = {
     construct: () => {
-        let savedGamePlayer = Store.get( 'protagonist' );
-        if ( Utils.isNullOrUndefined( savedGamePlayer ) === true ) {
+        let savedGamePlayer = Store.get('protagonist');
+        if (Utils.isNullOrUndefined(savedGamePlayer) === true) {
             Initialize.bindings();
             Initialize.build();
             Initialize.showIntro();
@@ -32,37 +32,35 @@ const Initialize = {
         Initialize.loader.hide();
     },
     hideIntro: () => {
-        let container = document.querySelector( '.intro-container' );
-        container.parentElement.removeChild( container );
+        let container = document.querySelector('.intro-container');
+        container.parentElement.removeChild(container);
         Initialize.loader.hide();
-        
+
     },
     bindings: () => {
-        document.querySelector( '.intro-generate-band' ).addEventListener( 'click', () => {
+        document.querySelector('.intro-generate-band').addEventListener('click', () => {
             let band = Bands.generateBand();
-            document.getElementById( 'rockstrStageName' ).value = band.name;
-            document.getElementById( 'rockstrStageGenre' ).value = band.genre;
-        } );
-        document.querySelector( '.initialize-game' ).addEventListener( 'click', () => {
-            let name = document.getElementById( 'rockstrStageName' ).value;
-            let genre = document.getElementById( 'rockstrStageGenre' ).value;
-
-            Initialize.run( name, genre );
-
-            let container = document.querySelector( '.intro-container' );
-            if ( Utils.isNullOrUndefined( container ) === false ) {
-                container.parentElement.removeChild( container );
+            document.getElementById('rockstrStageName').value = band.name;
+            document.getElementById('rockstrStageGenre').value = band.genre;
+        });
+        document.querySelector('.initialize-game').addEventListener('click', () => {
+            let name = document.getElementById('rockstrStageName').value;
+            let genre = document.getElementById('rockstrStageGenre').value;
+            Initialize.run(name, genre);
+            let container = document.querySelector('.intro-container');
+            if (Utils.isNullOrUndefined(container) === false) {
+                container.parentElement.removeChild(container);
             }
 
-        } );
+        });
     },
     build: () => {
-        const container = document.querySelector( '.hbs-container-genreSelect' );
-        container.innerHTML = TPL_GENRE_SELECT( Data.genres );
+        const container = document.querySelector('.hbs-container-genreSelect');
+        container.innerHTML = TPL_GENRE_SELECT(Data.genres);
     },
-    run: ( name = '', genre = '' ) => {
+    run: (name = '', genre = '') => {
         Settings.construct();
-        Protagonist.construct( name, genre );
+        Protagonist.construct(name, genre);
         Achievements.construct();
         Bands.construct();
         Speech.construct();
@@ -78,15 +76,15 @@ const Initialize = {
     },
     loader: {
         show: () => {
-            let loader = document.querySelector( '.loading-container' );
-            if ( loader ) {
-                loader.classList.remove( 'd-none' );
+            let loader = document.querySelector('.loading-container');
+            if (loader) {
+                loader.classList.remove('d-none');
             }
         },
         hide: () => {
-            let loader = document.querySelector( '.loading-container' );
-            if ( loader ) {
-                loader.classList.add( 'd-none' );
+            let loader = document.querySelector('.loading-container');
+            if (loader) {
+                loader.classList.add('d-none');
             }
 
         }

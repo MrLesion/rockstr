@@ -113,6 +113,10 @@ const Models = {
 			firstBattleWon: {
 				achieved: false,
 				label: 'First time winning Battle og the Bands'
+			},
+			firstTour: {
+				achieved: false,
+				label: 'First tour'
 			}
 		}
 	},
